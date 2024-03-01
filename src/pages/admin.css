@@ -1,0 +1,46 @@
+.admin {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.admin-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.admin-heading {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.admin-menu {
+  display: flex;
+  gap: 20px;
+  height: 100%;
+  list-style-type: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.admin-menu li {
+  margin-bottom: 10px;
+}
+
+.admin-menu li.selected {
+  text-decoration: underline;
+}
+
+.admin-menu li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+}
+
+.admin-menu li a:hover {
+  color: #007bff;
+}
