@@ -1,8 +1,11 @@
+// import { api } from './axiosInstance';
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:2000/api',
+  baseURL: 'https://miner-server-hzkn.onrender.com/api',
+  // baseURL: 'http://localhost:2000/api',
 });
+
 
 export const startMining = async () => {
   try {
@@ -28,6 +31,7 @@ export const startMining = async () => {
 };
 
 export const getUserMiningRecord = async (userId) => {
+  // console.log(api)
     try {
       const authToken = localStorage.getItem('token');
       const config = {
