@@ -7,6 +7,7 @@ const api = axios.create({
 export const registerUser = async (userData) => {
   try {
     const response = await api.post('/auth/register', userData);
+    console.log(response)
     if (response.data.success) {
       console.log('User registered successfully');
 
@@ -40,5 +41,3 @@ export const loginUser = async (userData) => {
     return null;
   }
 };
-
-console.log("test")
