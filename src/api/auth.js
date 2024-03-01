@@ -40,3 +40,5 @@ export const loginUser = async (userData) => {
     return null;
   }
 };
+
+console.log("test")
