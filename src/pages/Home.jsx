@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './home.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export const Home = () => {
@@ -22,7 +22,9 @@ export const Home = () => {
         <p>Start mining cryptocurrency today and earn rewards!</p>
         <p>Opt out anytime and withdrawals are processed at the end of each month.</p>
         <p>Withdrawal requests take 4 days to complete.</p>
-        <button className="cta-button">Get Started</button>
+        <Link to="/register">
+          <button className="cta-button">Get Started</button>
+        </Link>
       </div>
     </div>
   );

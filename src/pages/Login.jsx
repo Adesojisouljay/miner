@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -53,7 +54,7 @@ const Login = () => {
     <div className="login-container">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="login-form-group">
           <label>Email</label>
           <input
             type="email"
@@ -63,7 +64,7 @@ const Login = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="login-form-group">
           <label>Password</label>
           <input
             type="password"
@@ -74,8 +75,11 @@ const Login = () => {
           />
         </div>
         {error && <p className="error-message">{error}</p>}
-        <button type="submit">Login</button>
+        <button disabled={global.apexMiner?.isLoading} type="submit">Login</button>
       </form>
+      <div className='reg-link'>
+        <span>Dont't have an account? <Link to="/register">Register</Link></span>
+      </div>
       {global.apexMiner.isLoading && 
       <Loader/>
       }

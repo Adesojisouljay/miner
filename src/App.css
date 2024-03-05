@@ -31,3 +31,13 @@ body {
   scroll-behavior: smooth;
   background-image: linear-gradient(to bottom, #091e32, #5f5a5a);
 }
+
+a{
+  text-decoration: none;
+  font-weight: bold;
+  color: inherit;
+}
+
+a:hover {
+  color: #091e32;
+}
