@@ -16,7 +16,7 @@
     align-items: center;
   }
   
-  .form-group {
+  .reg-form-group {
     width: 50%;
     margin-bottom: 20px;
   }
@@ -26,15 +26,14 @@
     margin-bottom: 5px;
   }
   
-  input[type="email"],
-  input[type="password"],
-  input[type="text"] {
+  .reg-form-group input {
     width: 100%;
-    padding: 20px;
+    padding: 15px;
+    font-size: 16px;
     border-radius: 5px;
     box-sizing: border-box;
   }
-  
+
   button {
     width: 25%;
     padding: 15px;
@@ -47,5 +46,9 @@
   
   button:hover {
     background-color: #0056b3;
+  }
+
+  .reg-link{
+    margin-top: 5px;
   }
   

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../api/auth';
 import './register.css';
 
@@ -7,6 +9,8 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
+
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +23,10 @@ const Register = () => {
     try {
       const userData = { email, password, walletAddress };
       const resp = await registerUser(userData);
-      console.log(resp)
+      if (resp.data.success){
+        navigate("/login")
+        console.log(resp)
+      }
     } catch (error) {
       console.error('Error registering user:', error);
       alert("Registration failed. Please try again later.");
@@ -30,7 +37,7 @@ const Register = () => {
     <div className="register-container">
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="reg-form-group">
           <label>Email</label>
           <input
             type="email"
@@ -40,7 +47,7 @@ const Register = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="reg-form-group">
           <label>Wallet Address</label>
           <input
             type="text"
@@ -50,7 +57,7 @@ const Register = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="reg-form-group">
           <label>Password</label>
           <input
             type="password"
@@ -60,9 +67,10 @@ const Register = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="reg-form-group">
           <label>Confirm Password</label>
           <input
+          className='test'
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -72,6 +80,9 @@ const Register = () => {
         </div>
         <button type="submit">Register</button>
       </form>
+      <div className='reg-link'>
+        <span>Already have an account? <Link to="/login">Login</Link></span>
+      </div>
     </div>
   );
 };

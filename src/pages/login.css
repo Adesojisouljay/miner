@@ -16,7 +16,7 @@
     align-items: center;
   }
   
-  .form-group {
+  .login-form-group {
     width: 50%;
     margin-bottom: 20px;
   }
@@ -26,11 +26,12 @@
     margin-bottom: 5px;
   }
   
-  input[type="password"],
-  input[type="text"] {
+  .login-form-group input {
     width: 100%;
-    padding: 20px;
+    padding: 15px;
     border-radius: 5px;
+    border: none;
+    font-size: 16px;
     box-sizing: border-box;
   }
   
@@ -48,3 +49,6 @@
     background-color: #0056b3;
   }
   
+  .reg-link{
+    margin-top: 5px;
+  }

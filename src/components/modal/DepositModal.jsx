@@ -32,13 +32,14 @@ export const DepositModal = ({ isOpen, onClose }) => {
 
   const generatewalletAddress = () => {
 
-    return 'test';
+    return 'TCKZxNujnPbY8sDtRc2jzG1SQK1zt9Yach';
   };
 
   const handleDeposit = async () => {
     console.log({walletAddress, amount })
+    if(!amount || !walletAddress) return
     try {
-      const depositData = {walletAddress: "test", amount }
+      const depositData = {walletAddress: walletAddress, amount }
 
       const data = await initiateDeposit(depositData);
       console.log('Deposit request initiated successfully', data);
@@ -66,7 +67,7 @@ export const DepositModal = ({ isOpen, onClose }) => {
         <span className="close-btn" onClick={onClose}>X</span>
         <h2>Deposit</h2> 
         <div className="input-group">
-          <label htmlFor="deposit-amount">Amount ($100 - $10,000):</label>
+          <label htmlFor="deposit-amount">Amount ($100 - $10,000)</label>
           <input 
             type="number" 
             id="deposit-amount" 
@@ -79,8 +80,8 @@ export const DepositModal = ({ isOpen, onClose }) => {
         </div>
         {walletAddress && (
           <div className="deposit-address">
-            <p>Deposit Address:</p>
-            <p>{walletAddress}</p>
+            <span>Deposit Address:</span>
+            <span>{walletAddress}</span>
           </div>
         )}
         {!walletAddress && (
