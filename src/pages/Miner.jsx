@@ -18,21 +18,30 @@ export const Miner = () => {
   useEffect(() => {
     if(global.apexMiner?.isAuthenticated) {
       getMiningRecord()
+      // console.log(global.apexMiner.user?.balance > 0)
     } else {
       navigate("/login")
     }
   }, [miningData])
 
   const getMiningRecord = async () => {
-    const userId = global.apexMiner.user?._id
-    
-    const response = await getUserMiningRecord(userId)
-    if (response.data.success) {
-      setMiningData(response.data.miningRecord);
-    } else {
-      console.error('Failed to fetch mining record:', response.data.error);
+    try {
+      const userId = global.apexMiner.user?._id;
+  
+      const response = await getUserMiningRecord(userId);
+      if (!response) return;
+      if (response.data.success) {
+        setMiningData(response.data.miningRecord);
+      } else {
+        console.error('Failed to fetch mining record:', response.data.error);
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching mining record:', error);
+      // Handle the error here, such as setting a default mining record or displaying an error message to the user
     }
-  }
+  };
+  
 
   const handleStartMining = async () => {
     try {
@@ -90,22 +99,20 @@ export const Miner = () => {
         </div>
         <div className="description">
           {!miningData ? <h1>You can start your mining after your first deposit</h1> :
-          <h1>You are mining at {miningData?.miningRate}/sec</h1>
+          <h1>You are mining at {miningData?.miningRate.toFixed(10)}/sec</h1>
           }     
         </div>
         <div className="mining-details">
-          {miningData ? (
+          {miningData?.isMining &&  (
             <>
-              <p>Mining Rate: {miningData.miningRate}</p>
-              <p>Total Mined: {miningData.totalMined}</p>
-            </>
-          ) : (
-            global.apexMiner.user?.balance > 0 ? 
-              <button onClick={handleStartMining}>Start mining</button> :
-              <h2>You must deposit to start mining</h2>
-              )}
+              <p>Mining Rate: {miningData?.miningRate.toFixed(10)}</p>
+              <p>Total Mined: {miningData?.totalMined.toFixed(10)}</p>
+            </>)}
+            {(global.apexMiner.user?.balance > 0 && !miningData?.isMining) &&
+              <button onClick={handleStartMining}>Start mining</button> }
+              {global.apexMiner.user?.balance < 0 && <h2>You must deposit to start mining</h2>}
         </div>
-          {global.apexMiner.isLoading && 
+          {global.apexMiner?.isLoading && 
         <Loader/>
         }
       </div>
