@@ -93,12 +93,12 @@ export const Miner = () => {
           <h3>Deposit balance: {global.apexMiner.user?.balance} USDT</h3>
         </div>
         <div className="button-mine">
-          <button onClick={handleOpenDepositModal}>Deposit</button>
-          <button onClick={handleOpenWithdrawalModal}>Withdraw</button>
-          <button onClick={handleTransferMinedBalance}>Transfer  mined</button>
+          <button className="btn" onClick={handleOpenDepositModal}>Deposit</button>
+          <button className="btn" onClick={handleOpenWithdrawalModal}>Withdraw</button>
+          <button  className="btn" onClick={handleTransferMinedBalance}>Transfer</button>
         </div>
         <div className="description">
-          {!miningData ? <h1>You can start your mining after your first deposit</h1> :
+          {!miningData ? <h1 className="discription-text">You can start your mining after your first deposit</h1> :
           <h1>You are mining at {miningData?.miningRate.toFixed(10)}/sec</h1>
           }     
         </div>

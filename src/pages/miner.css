@@ -1,41 +1,67 @@
 .miner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px;
+  width: 100%;
+}
+
+.button-mine{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.btn{
+  font-size: 20px;
+}
+
+.mining-details {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.mining-details p{
+  font-size: 22px;
+}
+
+.mining-details button {
+  padding: 15px;
+  width: 200px;
+  background-color: #091e32;
+  color: whitesmoke;
+  font-size: 20px;
+}
+
+/* *************************media-query**************************** */
+
+@media (min-width: 320px) and (max-width:480px){
+  .button-mine {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    padding: 20px;
+    justify-content: flex-start;
+    gap: 7px;
     width: 100%;
   }
-
-  .button-mine{
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
+  .btn{
+    font-size: 16px !important;
+    padding: 12px 25px !important;
+    text-align: center;
+    width: fit-content;
   }
-
-  .button-mine button{
-    font-size: 20px;
+  .discription-text{
+    text-align: center;
   }
+ 
+}
+@media (min-width: 481px) and (max-width:1024px){
   
-  .mining-details {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px;
-    border-radius: 5px;
-  }
-
-  .mining-details p{
-    font-size: 22px;
-  }
+}
+@media (min-width: 1024px) {
   
-  .mining-details button {
-    padding: 15px;
-    width: 200px;
-    background-color: #091e32;
-    color: whitesmoke;
-    font-size: 20px;
-  }
-  
+}
