@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import miner from "../../assets/miner.png";
+import loggo from "../../assets/loggo1.png";
 import './navbar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/userReducer';
@@ -25,7 +26,9 @@ export const NavBar = () => {
     <nav className="navbar">
       <div className="nav-content">
         <div className="logo">
-          <img src={miner} alt="" />
+          <h3 className='hhh'>Cam</h3>
+          <img src={loggo} alt="" />
+          <h3 className='fff'>dex</h3>
         </div>
         <ul className="nav-links">
           <li><Link to="/">Home</Link></li>

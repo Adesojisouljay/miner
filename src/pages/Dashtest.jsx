@@ -8,17 +8,23 @@ import usdt from "../assets/usdt.svg";
 import dai from "../assets/dai.svg";
 import usdc from "../assets/usdc.svg";
 import tusd from "../assets/tusd.svg";
+import hive from "../assets/hive-logo.png";
+import hbd from "../assets/hbdl.png";
 import { FaRegCopyright } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 
 export default function Dashtest() {
+
+  const user = useSelector(state => state.apexMiner.user)
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-wrap">
       <div className=" total-balance-wrap">
         <div className="total-left">
           <h3>Total balance:</h3>
-          <h2>$0.00</h2>
+          <h2>{user?.totalBalance.toFixed(3)}</h2>
         </div>
         <div className="total-right">
           <h4>Bronze Merbership</h4>
@@ -75,7 +81,7 @@ export default function Dashtest() {
             <div className="card-icon">
               <FaGift size={20} />
             </div>
-            <h4>Rewards</h4>
+            <h4>Assets</h4>
           </div>
 
           <div className="card-bal">
@@ -92,27 +98,27 @@ export default function Dashtest() {
                 </div>
               </div>
               <div className="card-reward-wrap staked-assets-wrap">
-              <img src={dai} alt="" />
+              <img src={usdc} alt="" />
                 <div className="reward-value">
-                  <h5>DAI</h5>
-                  <p>$0.00</p>
+                  <h5>USDC</h5>
+                  <p>0.00</p>
                 </div>
               </div>
               
             </div>
             <div className="card-component-2">
               <div className="card-reward-wrap Leverage-wrap">
-              <img src={usdc} alt="" />
+              <img src={hbd} alt="" />
                 <div className="reward-value">
-                  <h5>USDC</h5>
-                  <p>$0.00</p>
+                  <h5>HBD</h5>
+                  <p>{user?.hbdBalance.toFixed(3)}</p>
                 </div>
               </div>
               <div className="card-reward-wrap perpetual-positions-wrap">
-              <img src={tusd} alt="" />
+              <img src={hive} alt="" />
                 <div className="reward-value">
-                  <h5>TUSD</h5>
-                  <p>$0.00</p>
+                  <h5>HIVE</h5>
+                  <p>{user?.hiveBalance.toFixed(3)}</p>
                 </div>
               </div>
               
@@ -125,7 +131,8 @@ export default function Dashtest() {
         <div className="funding-wrap">
           <button>Deposit</button>
           <button>Withdraw</button>
-          <button>Transfer mined</button>
+          <button>Buy</button>
+          <button>Sell</button>
         </div>
         <div className="mining-value-wrap">
           <div className="mine-wrap">

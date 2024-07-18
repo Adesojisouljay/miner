@@ -13,14 +13,31 @@ import "aos/dist/aos.css"
 import { useEffect } from "react";
 import Dashtest from "./pages/Dashtest";
 import Spinner from "./pages/Spinner";
+import { getUserProfile } from "./api/profile";
+import { loginSuccess } from "./redux/userReducer";
+import { useDispatch } from "react-redux";
 
 function App() {
-  // const global = useSelector(state => state)
-  // console.log(global)
+  const dispatch = useDispatch()
+
   useEffect(() => {
     Aos.init({duration:1000});
-    
   }, [])
+
+  useEffect(() => {
+    //should work on a more effectife way to do this, but we can keep this as a temporal solution
+    getProfile()
+  }, [dispatch])
+
+  const getProfile = async () => {
+    try {
+      const data = await getUserProfile()
+      console.log(data)
+      dispatch(loginSuccess(data.data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="app">
