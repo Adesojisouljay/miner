@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../api/auth';
+import cat from "../assets/document_shape.webp"
+import eth from "../assets/eth-icon.webp"
 import './register.css';
 
 const Register = () => {
@@ -34,6 +36,11 @@ const Register = () => {
   };
 
   return (
+    
+      
+   <div className="reg-wrap">
+    <img className="img-1" src={eth} alt="" />
+    <img className="img-2" src={cat} alt="" />
     <div className="register-container">
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
@@ -50,6 +57,7 @@ const Register = () => {
         <div className="reg-form-group">
           <label>Wallet Address</label>
           <input
+          className="yep"
             type="text"
             value={walletAddress}
             onChange={(e) => setWalletAddress(e.target.value)}
@@ -57,9 +65,9 @@ const Register = () => {
             required
           />
         </div>
-        <div className="reg-form-group">
+        <div className="reg-form-group ">
           <label>Password</label>
-          <input
+          <input className="yep"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -67,7 +75,7 @@ const Register = () => {
             required
           />
         </div>
-        <div className="reg-form-group">
+        <div className="reg-form-group ">
           <label>Confirm Password</label>
           <input
           className='test'
@@ -78,12 +86,19 @@ const Register = () => {
             required
           />
         </div>
-        <button type="submit">Register</button>
+        <button className="reg-btn" type="submit">Register</button>
       </form>
       <div className='reg-link'>
-        <span>Already have an account? <Link to="/login">Login</Link></span>
+        <span>Already have an account? <Link className="login-span" to="/login">Login</Link></span>
       </div>
     </div>
+   </div>     
+    
+    
+        
+    
+    
+   
   );
 };
 

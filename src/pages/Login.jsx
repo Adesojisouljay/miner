@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import { loginUser } from '../api/auth';
 import { loginStart, loginSuccess, loginFailure } from '../redux/userReducer';
 import { Loader } from '../components/loader/Loader';
+import cat from "../assets/document_shape.webp"
+import eth from "../assets/eth-icon.webp"
 import './login.css'; 
 
 const Login = () => {
@@ -51,9 +53,13 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="login-wrap">
+      <img className="img-1" src={eth} alt="" />
+      <img className="img-2" src={cat} alt="" />
+      <div className="login-wrap2">
+        <div className="login-container">
+         <h2>Login</h2>
+         <form onSubmit={handleSubmit}>
         <div className="login-form-group">
           <label>Email</label>
           <input
@@ -75,15 +81,19 @@ const Login = () => {
           />
         </div>
         {error && <p className="error-message">{error}</p>}
-        <button disabled={global.apexMiner?.isLoading} type="submit">Login</button>
+        <button className="btn-login"  disabled={global.apexMiner?.isLoading} type="submit">Login</button>
       </form>
       <div className='reg-link'>
-        <span>Dont't have an account? <Link to="/register">Register</Link></span>
+        <span>Dont't have an account? <Link className="reg-link-reg" to="/register">Register</Link></span>
       </div>
       {global.apexMiner.isLoading && 
       <Loader/>
       }
     </div>
+      </div>
+      
+    </div>
+    
   );
 };
 
