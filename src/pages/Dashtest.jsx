@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import "./dashtest.scss";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegCircleQuestion } from "react-icons/fa6";
@@ -11,12 +12,20 @@ import tusd from "../assets/tusd.svg";
 import hive from "../assets/hive-logo.png";
 import hbd from "../assets/hbdl.png";
 import { FaRegCopyright } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { DepositHiveModal } from "../components/modal/DepositHive";
 
 
 export default function Dashtest() {
+  const [isOpen, setIsOpen] = useState(false)
 
   const user = useSelector(state => state.apexMiner.user)
+
+  const openDepositModal = () => {
+    setIsOpen(true)
+  }
+  const closeDepositModal = () => {
+    setIsOpen(false)
+  }
 
   return (
     <div className="dashboard-container">
@@ -129,7 +138,7 @@ export default function Dashtest() {
 
       <div className="big-card-wrap">
         <div className="funding-wrap">
-          <button>Deposit</button>
+          <button onClick={openDepositModal}>Deposit</button>
           <button>Withdraw</button>
           <button>Buy</button>
           <button>Sell</button>
@@ -201,6 +210,7 @@ export default function Dashtest() {
        <p>Sojminer,All Rights Reserved </p>
       </div>
       </div>
+      <DepositHiveModal isOpen={isOpen} onClose={closeDepositModal}/>
     </div>
   );
 }

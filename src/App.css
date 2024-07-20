@@ -65,6 +65,10 @@ a:hover {
     animation-timing-function: linear;
 }
 
+.warning{
+  color: rgb(234, 139, 139);
+}
+
 @keyframes alltuchtopdown {
   0% {
       transform: rotateX(0deg) translateY(0)
