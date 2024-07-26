@@ -3,7 +3,8 @@ import axios from "axios";
 
 const api = axios.create({
   // baseURL: 'https://miner-server-hzkn.onrender.com/api',
-  baseURL: 'http://localhost:2000/api',
+  baseURL: 'https://api.testingbreak.com',
+  // baseURL: 'http://localhost:2000/api',
 });
 
 export const initiateDeposit = async (depositData) => {
