@@ -2,13 +2,14 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: 'https://miner-server-hzkn.onrender.com/api',
-  // baseURL: 'http://localhost:2000/api',
+  // baseURL: 'https://miner-server-hzkn.onrender.com/api',
+  baseURL: 'http://localhost:2000/api',
 });
 
 const authToken = localStorage.getItem('token');
 
 export const getUserProfile = async (userData) => {
+  console.log(authToken)
   try {
     const config = {
         headers: {

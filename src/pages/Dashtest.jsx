@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./dashtest.scss";
 import { FaRegEye } from "react-icons/fa";
@@ -13,10 +13,12 @@ import hive from "../assets/hive-logo.png";
 import hbd from "../assets/hbdl.png";
 import { FaRegCopyright } from "react-icons/fa";
 import { DepositHiveModal } from "../components/modal/DepositHive";
+import { fetchTransactionHistory } from "../api/transaction";
 
 
 export default function Dashtest() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [trxHistory, setTrxHistory] = useState([])
 
   const user = useSelector(state => state.apexMiner.user)
 
@@ -26,6 +28,25 @@ export default function Dashtest() {
   const closeDepositModal = () => {
     setIsOpen(false)
   }
+
+  useEffect(() => {
+    getTrx()
+  }, [trxHistory])
+  
+  const getTrx = async () => {
+    try {
+      const data = await fetchTransactionHistory();
+      if (data.success) {
+        setTrxHistory(data.transactionH);
+        console.log("data,", data);
+        console.log("trxHistory,", trxHistory);
+      } else {
+        console.error("Failed to fetch transaction history:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching transaction history:", error);
+    }
+  };
 
   return (
     <div className="dashboard-container">
@@ -165,41 +186,19 @@ export default function Dashtest() {
                 </tr>
               </thead>
               <tbody className="table-body">
-                <tr >
-                  <td className="currency-wrap"> <img src={dai} alt="" /> <span>Dai</span></td>
-                  <td>$1200</td>
-                  <td>dsjhw97dwijwd8</td>
-                  <td>12/05/2024</td>
-                  <td>Deposit</td>
-                </tr>
-                <tr>
-                  <td className="currency-wrap"> <img src={usdt} alt="" /> <span>Usdt</span></td>
-                  <td>$400</td>
-                  <td>dsjhw97dwijwd8</td>
-                  <td>18/05/2024</td>
-                  <td>Deposit</td>
-                </tr>
-                <tr>
-                  <td className="currency-wrap"> <img src={usdc} alt="" /> <span>Usdc</span></td>
-                  <td>$4200</td>
-                  <td>dsjhw97dwijwd8</td>
-                  <td>18/05/2024</td>
-                  <td>Withdraw</td>
-                </tr>
-                <tr>
-                  <td className="currency-wrap"> <img src={usdt} alt="" /> <span>Usdt</span></td>
-                  <td>$500</td>
-                  <td>dsjhw97dwijwd8</td>
-                  <td>18/05/2024</td>
-                  <td>Deposit</td>
-                </tr>
-                <tr>
-                  <td className="currency-wrap"> <img src={tusd} alt="" /> <span>Tusdt</span></td>
-                  <td>$300</td>
-                  <td>dsjhw97dwijwd8</td>
-                  <td>18/05/2024</td>
-                  <td>Withdraw</td>
-                </tr>
+                {trxHistory?.length === 0 && <p>Loading...</p>}
+                {trxHistory?.map(t => (
+                  <tr key={t.trxId}>
+                    <td className="currency-wrap">
+                      <img src={dai} alt="" />
+                      <span>{t.currency}</span>
+                    </td>
+                    <td>${t.amount}</td>
+                    <td>{t.trxId.slice(0, 5)}...{t.trxId.slice(-5)}</td>
+                    <td>{new Date(t.timestamp).toLocaleDateString()}</td>
+                    <td>{t.type}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
