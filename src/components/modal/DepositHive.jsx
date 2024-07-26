@@ -8,11 +8,23 @@ export const DepositHiveModal = ({ isOpen, onClose }) => {
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText("souljay");
-    toast("Address copied to clipboarc!");
+    toast.success("Address copied to clipboarc!",{
+    style: {
+      backgroundColor: 'rgba(229, 229, 229, 0.1)',
+      color: '#fff',
+      fontSize: '16px',
+    },
+  });
   };
   const handleCopyMemo = () => {
     navigator.clipboard.writeText(user?._id);
-    toast("Memo copied to clipboarc!");
+    toast.success("Memo copied to clipboarc!", {
+      style: {
+        backgroundColor: 'rgba(229, 229, 229, 0.1)',
+        color: '#fff',
+        fontSize: '16px',
+      },
+    });
   };
 
   return (
