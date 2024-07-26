@@ -20,7 +20,7 @@ const Login = () => {
 
   useEffect(() => {
     if(global.apexMiner.user)
-    navigate("/mining")
+    navigate("/dashboard")
   }, [])
 
   const handleSubmit = async (e) => {
@@ -37,9 +37,9 @@ const Login = () => {
       if (response && response?.data?.success) {
 
         dispatch(loginSuccess(response.data));
-        console.log('User logged in:', response.data.user);
+        console.log('User logged in:', response);
 
-        navigate('/mining');
+        navigate('/dashboard');
       } else {
         setError('Invalid email or password');
         dispatch(loginFailure('Invalid email or password'));

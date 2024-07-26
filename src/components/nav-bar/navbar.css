@@ -34,9 +34,33 @@ ol {
     align-items: center;
   }
 
+  .logo{
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-left: 50px;
+  }
+
   .logo img {
-    width: 100px;
+    width: 60px;
     object-fit: cover;
+  }
+
+  .hhh{
+    position: absolute;
+    right: 50px;
+    font-size: 35px;
+    font: bold;
+    font-family: cursive;
+    color: aquamarine;
+  }
+  .fff{
+    position: absolute;
+    left: 50px;
+    font-size: 35px;
+    font: bold;
+    font-family: cursive;
+    color: aquamarine;
   }
   
   .nav-links {

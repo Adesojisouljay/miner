@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import "./dashtest.scss";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegCircleQuestion } from "react-icons/fa6";
@@ -8,17 +9,52 @@ import usdt from "../assets/usdt.svg";
 import dai from "../assets/dai.svg";
 import usdc from "../assets/usdc.svg";
 import tusd from "../assets/tusd.svg";
+import hive from "../assets/hive-logo.png";
+import hbd from "../assets/hbdl.png";
 import { FaRegCopyright } from "react-icons/fa";
+import { DepositHiveModal } from "../components/modal/DepositHive";
+import { fetchTransactionHistory } from "../api/transaction";
 
 
 export default function Dashtest() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [trxHistory, setTrxHistory] = useState([])
+
+  const user = useSelector(state => state.apexMiner.user)
+
+  const openDepositModal = () => {
+    setIsOpen(true)
+  }
+  const closeDepositModal = () => {
+    setIsOpen(false)
+  }
+
+  useEffect(() => {
+    getTrx()
+  }, [trxHistory])
+  
+  const getTrx = async () => {
+    try {
+      const data = await fetchTransactionHistory();
+      if (data.success) {
+        setTrxHistory(data.transactionH);
+        console.log("data,", data);
+        console.log("trxHistory,", trxHistory);
+      } else {
+        console.error("Failed to fetch transaction history:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching transaction history:", error);
+    }
+  };
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-wrap">
       <div className=" total-balance-wrap">
         <div className="total-left">
           <h3>Total balance:</h3>
-          <h2>$0.00</h2>
+          <h2>{user?.totalBalance?.toFixed(3)}</h2>
         </div>
         <div className="total-right">
           <h4>Bronze Merbership</h4>
@@ -75,7 +111,7 @@ export default function Dashtest() {
             <div className="card-icon">
               <FaGift size={20} />
             </div>
-            <h4>Rewards</h4>
+            <h4>Assets</h4>
           </div>
 
           <div className="card-bal">
@@ -92,27 +128,27 @@ export default function Dashtest() {
                 </div>
               </div>
               <div className="card-reward-wrap staked-assets-wrap">
-              <img src={dai} alt="" />
+              <img src={usdc} alt="" />
                 <div className="reward-value">
-                  <h5>DAI</h5>
-                  <p>$0.00</p>
+                  <h5>USDC</h5>
+                  <p>0.00</p>
                 </div>
               </div>
               
             </div>
             <div className="card-component-2">
               <div className="card-reward-wrap Leverage-wrap">
-              <img src={usdc} alt="" />
+              <img src={hbd} alt="" />
                 <div className="reward-value">
-                  <h5>USDC</h5>
-                  <p>$0.00</p>
+                  <h5>HBD</h5>
+                  <p>{user?.hbdBalance?.toFixed(3)}</p>
                 </div>
               </div>
               <div className="card-reward-wrap perpetual-positions-wrap">
-              <img src={tusd} alt="" />
+              <img src={hive} alt="" />
                 <div className="reward-value">
-                  <h5>TUSD</h5>
-                  <p>$0.00</p>
+                  <h5>HIVE</h5>
+                  <p>{user?.hiveBalance?.toFixed(3)}</p>
                 </div>
               </div>
               
@@ -123,9 +159,10 @@ export default function Dashtest() {
 
       <div className="big-card-wrap">
         <div className="funding-wrap">
-          <button>Deposit</button>
+          <button onClick={openDepositModal}>Deposit</button>
           <button>Withdraw</button>
-          <button>Transfer mined</button>
+          <button>Buy</button>
+          <button>Sell</button>
         </div>
         <div className="mining-value-wrap">
           <div className="mine-wrap">
@@ -149,41 +186,19 @@ export default function Dashtest() {
                 </tr>
               </thead>
               <tbody className="table-body">
-                <tr >
-                  <td className="currency-wrap"> <img src={dai} alt="" /> <span>Dai</span></td>
-                  <td>$1200</td>
-                  <td>dsjhw97dwijwd8</td>
-                  <td>12/05/2024</td>
-                  <td>Deposit</td>
-                </tr>
-                <tr>
-                  <td className="currency-wrap"> <img src={usdt} alt="" /> <span>Usdt</span></td>
-                  <td>$400</td>
-                  <td>dsjhw97dwijwd8</td>
-                  <td>18/05/2024</td>
-                  <td>Deposit</td>
-                </tr>
-                <tr>
-                  <td className="currency-wrap"> <img src={usdc} alt="" /> <span>Usdc</span></td>
-                  <td>$4200</td>
-                  <td>dsjhw97dwijwd8</td>
-                  <td>18/05/2024</td>
-                  <td>Withdraw</td>
-                </tr>
-                <tr>
-                  <td className="currency-wrap"> <img src={usdt} alt="" /> <span>Usdt</span></td>
-                  <td>$500</td>
-                  <td>dsjhw97dwijwd8</td>
-                  <td>18/05/2024</td>
-                  <td>Deposit</td>
-                </tr>
-                <tr>
-                  <td className="currency-wrap"> <img src={tusd} alt="" /> <span>Tusdt</span></td>
-                  <td>$300</td>
-                  <td>dsjhw97dwijwd8</td>
-                  <td>18/05/2024</td>
-                  <td>Withdraw</td>
-                </tr>
+                {trxHistory?.length === 0 && <p>Loading...</p>}
+                {trxHistory?.map(t => (
+                  <tr key={t.trxId}>
+                    <td className="currency-wrap">
+                      <img src={dai} alt="" />
+                      <span>{t.currency}</span>
+                    </td>
+                    <td>${t.amount}</td>
+                    <td>{t.trxId.slice(0, 5)}...{t.trxId.slice(-5)}</td>
+                    <td>{new Date(t.timestamp).toLocaleDateString()}</td>
+                    <td>{t.type}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -194,6 +209,7 @@ export default function Dashtest() {
        <p>Sojminer,All Rights Reserved </p>
       </div>
       </div>
+      <DepositHiveModal isOpen={isOpen} onClose={closeDepositModal}/>
     </div>
   );
 }
