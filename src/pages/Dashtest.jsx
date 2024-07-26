@@ -33,7 +33,7 @@ export default function Dashtest() {
       <div className=" total-balance-wrap">
         <div className="total-left">
           <h3>Total balance:</h3>
-          <h2>{user?.totalBalance.toFixed(3)}</h2>
+          <h2>{user?.totalBalance?.toFixed(3)}</h2>
         </div>
         <div className="total-right">
           <h4>Bronze Merbership</h4>
@@ -120,14 +120,14 @@ export default function Dashtest() {
               <img src={hbd} alt="" />
                 <div className="reward-value">
                   <h5>HBD</h5>
-                  <p>{user?.hbdBalance.toFixed(3)}</p>
+                  <p>{user?.hbdBalance?.toFixed(3)}</p>
                 </div>
               </div>
               <div className="card-reward-wrap perpetual-positions-wrap">
               <img src={hive} alt="" />
                 <div className="reward-value">
                   <h5>HIVE</h5>
-                  <p>{user?.hiveBalance.toFixed(3)}</p>
+                  <p>{user?.hiveBalance?.toFixed(3)}</p>
                 </div>
               </div>
               

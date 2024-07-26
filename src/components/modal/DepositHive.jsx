@@ -1,5 +1,6 @@
 import './deposit-modal.css';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 export const DepositHiveModal = ({ isOpen, onClose }) => {
 
@@ -7,9 +8,11 @@ export const DepositHiveModal = ({ isOpen, onClose }) => {
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText("souljay");
+    toast("Address copied to clipboarc!");
   };
   const handleCopyMemo = () => {
-    navigator.clipboard.writeText(user._id);
+    navigator.clipboard.writeText(user?._id);
+    toast("Memo copied to clipboarc!");
   };
 
   return (
@@ -25,7 +28,7 @@ export const DepositHiveModal = ({ isOpen, onClose }) => {
           <div className="deposit-address">
             <span>Deposit Memo</span>
             <span className='warning'>(please make sure you copy your memo correctly)</span>
-            <span>{user._id}</span>
+            <span>{user?._id}</span>
             {<button className="generate-address-btn" onClick={handleCopyMemo}>Copy Address</button>}
           </div>
       </div>
