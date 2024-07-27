@@ -38,8 +38,8 @@ export default function Dashtest() {
       const data = await fetchTransactionHistory();
       if (data.success) {
         setTrxHistory(data.transactionH);
-        console.log("data,", data);
-        console.log("trxHistory,", trxHistory);
+        // console.log("data,", data);
+        // console.log("trxHistory,", trxHistory);
       } else {
         console.error("Failed to fetch transaction history:", data.message);
       }
