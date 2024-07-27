@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: 'http://api.testingbreak.com/api',
+  baseURL: 'https://api.testingbreak.com/api',
   // baseURL: 'https://miner-server-hzkn.onrender.com/api',
   // baseURL: 'http://localhost:2000/api',
 });
