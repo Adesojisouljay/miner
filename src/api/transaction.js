@@ -2,7 +2,8 @@ import axios from "axios";
 
 const api = axios.create({
     // baseURL: 'https://miner-server-hzkn.onrender.com/api',
-    baseURL: 'http://localhost:2000/api',
+    baseURL: 'https://api.testingbreak.com/api',
+    // baseURL: 'http://localhost:2000/api',
   });
   const authToken = localStorage.getItem('token');
 export const fetchTransactionHistory = async () => {
