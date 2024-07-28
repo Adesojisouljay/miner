@@ -81,7 +81,7 @@
     border-radius: 5px;
     box-sizing: border-box;
     color: #fff;
-    /* background-color: hsla(0, 0%, 100%, .07) ;  */
+    background-color: hsla(0, 0%, 100%, .07) ; 
   }
   .yep{
     background-color: hsla(0, 0%, 100%, .07) !important; 
