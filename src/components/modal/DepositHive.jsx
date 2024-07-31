@@ -1,4 +1,4 @@
-import './deposit-modal.css';
+import './deposit-modal.scss';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 

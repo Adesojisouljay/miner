@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './deposit-modal.css';
+import './deposit-modal.scss';
 import {initiateDeposit} from '../../api/deposits';
 
 export const DepositModal = ({ isOpen, onClose }) => {
