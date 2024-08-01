@@ -6,7 +6,7 @@ import { Miner } from './pages/Miner';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { Admin } from "./pages/Admin";
-import './App.css';
+import './App.scss';
 import Pagetest from "./pages/Pagetest";
 import Aos from 'aos'
 import "aos/dist/aos.css"
@@ -50,8 +50,9 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route path="/controller" element={<Admin/>}/>
-          <Route path="test" element={<Pagetest />} />
+          <Route path="/test" element={<Pagetest />} />
           <Route path="spinner" element={<Spinner />} />
+          
         </Routes>
       </div>
     </div>

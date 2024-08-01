@@ -138,9 +138,9 @@ export default function Dashtest() {
                 </div>
               </div> */}
               <div className="btn-deposit-withdrwal">
-              <button onClick={openDepositModal}>Deposit</button>
-              <button>Withdraw</button>
-              <button>Action</button>
+               <button onClick={openDepositModal}>Deposit</button>
+               <button>Withdraw</button>
+               <button>Action</button>
               </div>
               
             </div>

@@ -37,7 +37,7 @@ export const NavBar = () => {
           <li><Link to="/dashboard">Dashboard</Link></li>
           <li><Link to="/spinner">Spinner</Link></li>
           {user?.role === "admin" && <li><Link to="/controller">Controllers</Link></li>}
-          <li><Link to="/contact">About</Link></li>
+          <li><Link to="/test">Testp-page</Link></li>
           
         </ul>
 
