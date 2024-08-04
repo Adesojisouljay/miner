@@ -140,7 +140,7 @@ export default function Dashtest() {
               <div className="btn-deposit-withdrwal">
                <button onClick={openDepositModal}>Deposit</button>
                <button>Withdraw</button>
-               <button>Action</button>
+               <button>Buy/Sell</button>
               </div>
               
             </div>
@@ -163,7 +163,7 @@ export default function Dashtest() {
               <div className="btn-deposit-withdrwal">
               <button onClick={openDepositModal}>Deposit</button>
               <button>Withdraw</button>
-              <button>Action</button>
+              <button>Buy/Sell</button>
               {/* <button>Buy</button>
               <button>Sell</button> */}
               </div>
