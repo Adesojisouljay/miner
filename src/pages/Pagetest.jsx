@@ -1,8 +1,14 @@
-import React from 'react'
-import "./pagetest.css"
+import React, { useState } from "react";
+import "./pagetest.css";
 
-export default function Pagetest() {
+export default function Modal() {
+ 
   return (
-    <div className="test">Pagetest</div>
-  )
+
+    <div className="pagetest" >
+      <p>Test Room</p>
+      <p>Add your demo content or component for test  </p>
+    </div>
+    
+  );
 }

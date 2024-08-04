@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import miner from "../../assets/miner.png";
 import loggo from "../../assets/loggo1.png";
-import './navbar.css';
+import './navbar.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/userReducer';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import { FaGreaterThan } from "react-icons/fa";
+// import Profile from "../../assets/p";
 
 export const NavBar = () => {
   const dispatch = useDispatch();
@@ -32,12 +34,12 @@ export const NavBar = () => {
         </div>
         <ul className="nav-links">
           <li><Link to="/">Home</Link></li>
-          <li><Link to="/mining">Mining</Link></li>
+          <li><Link to="/mining">Stake</Link></li>
           <li><Link to="/contact">Contact</Link></li>
           <li><Link to="/dashboard">Dashboard</Link></li>
           <li><Link to="/spinner">Spinner</Link></li>
           {user?.role === "admin" && <li><Link to="/controller">Controllers</Link></li>}
-          <li><Link to="/contact">About</Link></li>
+          <li><Link to="/test">Testp-page</Link></li>
           
         </ul>
 
@@ -53,19 +55,38 @@ export const NavBar = () => {
         </div>
         </div>
         
-        <div className={!nav ? "side-nav " : "side-nav-else"}>
-        <ul className="nav-side-link">
-          <li  ><Link to="/">Home</Link></li>
-          <li><Link to="/mining">Mining</Link></li>
-          <li><Link to="/contact">Contact</Link></li>
-          <li><Link to="/contact">Dashboard</Link></li>
+        <div className={!nav ? "side-nav transition-all " : "side-nav-else transition-all"} onClick={handleNav}>
+          <div className="side-nav-wrap transition-all" >
+            <div className="side-nav-top">
+            <div className="menu-wrap">
+            <h3>MENU</h3>
+            <FaGreaterThan size={10} onClick={handleNav}/>
+          </div>
+          <ul className="nav-side-link">
+          <li onClick={handleNav}><Link to="/">Home</Link></li>
+          <li onClick={handleNav}><Link to="/mining">Stake</Link></li>
+          <li onClick={handleNav}><Link to="/contact">Contact</Link></li>
+          <li onClick={handleNav}><Link to="/dashboard">Dashboard</Link></li>
           {user?.role === "admin" && <li><Link to="/controller">Controllers</Link></li>}
           {isAuthenticated ? (
-            <li><Link to="/" onClick={handleLogout}>Logout</Link></li>
+            <li><Link to="/" onClick={handleLogout} >Logout</Link></li>
           ) : (
-            <li><Link to="/login">Login</Link></li>
+            <li onClick={handleNav}><Link to="/login">Login</Link></li>
           )}
-        </ul>
+         </ul>
+            </div>
+            <div className="side-nav-button">
+              <div className="side-nav-deposit-btn-wrap">
+                <button>Deposit</button>
+                <button>Withdrawal</button>
+              </div>
+              {/* <div className="profile-wrap">
+                <img src="" alt="" />
+                <h4>kesolink</h4>
+              </div> */}
+
+            </div>
+          </div>
         </div>
       </div>
     </nav>

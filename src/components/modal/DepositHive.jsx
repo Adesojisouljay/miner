@@ -1,10 +1,11 @@
-import './deposit-modal.css';
+import './deposit-modal.scss';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 export const DepositHiveModal = ({ isOpen, onClose }) => {
 
   const user = useSelector(state => state.apexMiner.user);
+  console.log(user)
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText("souljay");
@@ -28,8 +29,9 @@ export const DepositHiveModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className={`modal-overlay ${isOpen ? 'open' : ''}`}>
-      <div className="modal">
+    <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
+    <div className={`modal-overlay  ${isOpen ? 'open' : ''}`} onClick={onClose}> </div>
+      <div className="modal animate-slide-in  animate-slide-in-mobile">
         <span className="close-btn" onClick={onClose}>X</span>
         <h2>Deposit</h2> 
           <div className="deposit-address">
@@ -44,6 +46,9 @@ export const DepositHiveModal = ({ isOpen, onClose }) => {
             {<button className="generate-address-btn" onClick={handleCopyMemo}>Copy Address</button>}
           </div>
       </div>
+    
     </div>
+
+    
   );
 };

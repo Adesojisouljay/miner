@@ -13,6 +13,11 @@
   padding-right: 200px;
   position: fixed;
   overflow-y: scroll;
+  @include respond(phone) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
 }
 .dashboard-wrap {
   width: 100%;
@@ -21,38 +26,78 @@
 }
 .total-balance-wrap {
   display: flex;
-  justify-content: space-between;
-  padding: 15px 10px;
+  gap: 20px;
   margin-top: 20px;
+  border-radius: 12px;
+  @include respond(phone) {
+    flex-direction: column;
+  }
+}
+.total-left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 10px;
+  gap: 7px;
   background: linear-gradient(
     127deg,
     hsla(0, 62%, 81%, 0.16) 17.35%,
     hsla(0, 0%, 85%, 0.04) 76.2%
   );
+  width: 50%;
   border-radius: 12px;
+  @include respond(phone) {
+    width: 100%;
+  }
 }
-.total-left {
+.total-left-wrap{
   display: flex;
   align-items: center;
   gap: 7px;
+  h2{
+    @include respond(phone) {
+      font-size: 19px;
+    }
+  }
+  
 }
 .total-right {
   display: flex;
   align-items: center;
+  padding: 15px 10px;
   gap: 7px;
+  background: linear-gradient(
+    127deg,
+    hsla(0, 62%, 81%, 0.16) 17.35%,
+    hsla(0, 0%, 85%, 0.04) 76.2%
+  );
+  width: 50%;
+  border-radius: 12px;
+  @include respond(phone) {
+    width: 100%;
+    display: none;
+  }
 }
 /* **************************************portfolio&reward***************** */
 .portfolio-reward-wraper {
   display: flex;
   gap: 20px;
   margin-top: 30px;
+  @include respond(phone) {
+    flex-direction: column;
+    margin-top: 20px;
+  }
 }
 .card-bal {
   padding: 10px 0px;
+  h2{
+    @include respond(phone) {
+      font-size: 18px;
+    }
+  }
 }
 .card-wrap {
   width: 100%;
-  /* border: 1px solid grey; */
   border-radius: 15px;
   padding: 2rem;
   background: linear-gradient(
@@ -60,7 +105,45 @@
     hsla(0, 0%, 100%, 0.16) 17.35%,
     hsla(0, 0%, 85%, 0.04) 76.2%
   );
+  @include respond(phone) {
+    padding: 15px;
+  }
 }
+
+
+.border-transparent {
+  position: relative;
+}
+
+.border-transparent:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(127deg,hsla(0,0%,80%,.2),hsla(0,0%,80%,0) 100%);
+  border-radius: inherit;
+  padding: 1px;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude
+}
+
+
+
+
+
+
+
+
+
+
+
 .reward-card-wrap {
   width: 100%;
 }
@@ -84,21 +167,30 @@
   display: flex;
   align-items: center;
   width: 100%;
+  
 }
 .card-list-wrap {
   padding-top: 7px;
   border-top: 1px solid;
   border-color: rgba(229, 229, 229, 0.1);
   width: 100%;
+  
+
 }
 .card-wrap h5 {
   color: grey;
   font-weight: 400;
+  @include respond(phone) {
+    font-size: 10px;
+  }
 }
 .card-wrap p {
   margin-bottom: 7px;
   font-size: 18px;
   font-weight: 400;
+  @include respond(phone) {
+    font-size: 13px ;
+  }
 }
 
 .card-component-2 {
@@ -109,15 +201,19 @@
 .card-reward-wrap {
   padding-top: 7px;
   padding-bottom: 3px;
-  border-top: 1px solid;
-  border-color: rgba(229, 229, 229, 0.1);
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 12px;
+  @include respond(phone) {
+    gap: 5px;
+  }
 }
 .card-reward-wrap img {
   width: 50px;
+  @include respond(phone) {
+    width: 30px;
+  }
 }
 .reward-value h5 {
   color: grey;
@@ -126,6 +222,40 @@
 .reward-value p {
   font-size: 18px;
   color: #fff;
+  @include respond(phone) {
+    font-size: 13px;
+  }
+}
+.border-line{
+  border-top: 1px solid;
+  border-color: rgba(229, 229, 229, 0.1);
+  gap: 20px;
+  @include respond(phone) {
+    gap: 10px;
+  }
+}
+.btn-deposit-withdrwal{
+  // border-top: 1px solid;
+  // border-color: rgba(229, 229, 229, 0.1);
+  // padding: 15px 10px;
+  padding-top: 7px;
+  padding-bottom: 3px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  @include respond(phone) {
+    gap: 10px;
+  }
+  button{
+  padding: 10px 20px;
+  border-radius: 7px;
+  background-color: rgb(29 35 43 );
+  color: #fff;
+  @include respond(phone) {
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+  }
 }
 
 /* *******************************************big-card********************************** */
@@ -200,6 +330,15 @@
   top: 0; 
   z-index: 1; 
 }
+.no-history{
+  text-align: center;
+  height: 100px; /* Adjust height as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+}
 
 table {
   width: 100%;
@@ -216,6 +355,10 @@ td {
   border-color: rgba(229, 229, 229, 0.1);
   padding-left: 26px;
   padding-right: 26px;
+  @include respond(phone) {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
 }
 
 th {
@@ -223,6 +366,14 @@ th {
   border-top: 1px solid;
   border-color: rgba(229, 229, 229, 0.1);
   font-weight: bold;
+  @include respond(phone) {
+    font-size: 12px;
+  }
+}
+tbody{
+  @include respond(phone) {
+    font-size: 12px;
+  }
 }
 
 
@@ -237,6 +388,9 @@ th {
   gap: 10px;
   img {
     width: 45px;
+    @include respond(phone) {
+      width: 25px;
+    }
   }
 }
 .copy-right-wrap{
@@ -246,5 +400,17 @@ th {
   border-color: rgba(229, 229, 229, 0.1);
   display: flex;
   align-items: center;
+  @include respond(phone) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
+}
+.deposit {
+  color: green;
+}
+
+.withdrawal {
+  color: red;
 }

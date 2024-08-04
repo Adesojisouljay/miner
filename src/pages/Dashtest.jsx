@@ -52,18 +52,21 @@ export default function Dashtest() {
     <div className="dashboard-container">
       <div className="dashboard-wrap">
       <div className=" total-balance-wrap">
-        <div className="total-left">
-          <h3>Total balance:</h3>
-          <h2>{user?.totalBalance?.toFixed(3)}</h2>
+        <div className="total-left border-transparent">
+          <div className="total-left-wrap">
+            <h3>Total balance:</h3>
+            <h2>{user?.totalBalance?.toFixed(3)}</h2>
+          </div>
+          <FaRegEye />
         </div>
-        <div className="total-right">
+        <div className="total-right border-transparent">
           <h4>Bronze Merbership</h4>
           <FaRegCircleQuestion />
           <FaRegEye />
         </div>
       </div>
       <div className="portfolio-reward-wraper">
-        <div className="card-wrap">
+        <div className="card-wrap border-transparent">
           <div className="card-title-wrap">
             <div className="card-icon">
               <HiMiniWallet size={20} />
@@ -106,7 +109,7 @@ export default function Dashtest() {
             </div>
           </div>
         </div>
-        <div className="card-wrap">
+        <div className="card-wrap border-transparent">
           <div className="card-title-wrap">
             <div className="card-icon">
               <FaGift size={20} />
@@ -119,37 +122,50 @@ export default function Dashtest() {
           </div>
 
           <div className="card-component-wrap">
-            <div className="card-component-1">
+            <div className="card-component-1 border-line">
               <div className="card-reward-wrap liquid-asset-wrap">
-                <img src={usdt} alt="" />
+                <img src={hive} alt="" />
                 <div className="reward-value">
                   <h5>USDT</h5>
-                  <p>$0.00</p>
+                  <p>{user?.hiveBalance?.toFixed(3)}</p>
                 </div>
               </div>
-              <div className="card-reward-wrap staked-assets-wrap">
-              <img src={usdc} alt="" />
+              {/* <div className="card-reward-wrap staked-assets-wrap">
+               <img src={usdc} alt="" />
                 <div className="reward-value">
                   <h5>USDC</h5>
                   <p>0.00</p>
                 </div>
+              </div> */}
+              <div className="btn-deposit-withdrwal">
+               <button onClick={openDepositModal}>Deposit</button>
+               <button>Withdraw</button>
+               <button>Buy/Sell</button>
               </div>
               
             </div>
-            <div className="card-component-2">
+            <div className="card-component-2 border-line">
               <div className="card-reward-wrap Leverage-wrap">
               <img src={hbd} alt="" />
                 <div className="reward-value">
                   <h5>HBD</h5>
                   <p>{user?.hbdBalance?.toFixed(3)}</p>
+                 
                 </div>
               </div>
-              <div className="card-reward-wrap perpetual-positions-wrap">
-              <img src={hive} alt="" />
+              {/* <div className="card-reward-wrap perpetual-positions-wrap">
+               <img src={hive} alt="" />
                 <div className="reward-value">
                   <h5>HIVE</h5>
                   <p>{user?.hiveBalance?.toFixed(3)}</p>
                 </div>
+              </div> */}
+              <div className="btn-deposit-withdrwal">
+              <button onClick={openDepositModal}>Deposit</button>
+              <button>Withdraw</button>
+              <button>Buy/Sell</button>
+              {/* <button>Buy</button>
+              <button>Sell</button> */}
               </div>
               
             </div>
@@ -158,20 +174,20 @@ export default function Dashtest() {
       </div>
 
       <div className="big-card-wrap">
-        <div className="funding-wrap">
+        {/* <div className="funding-wrap">
           <button onClick={openDepositModal}>Deposit</button>
           <button>Withdraw</button>
           <button>Buy</button>
           <button>Sell</button>
-        </div>
-        <div className="mining-value-wrap">
+        </div> */}
+        {/* <div className="mining-value-wrap">
           <div className="mine-wrap">
           <h3>Mining: <span>0.0000000048/sec</span></h3>
           <h3 className="mine-rate">Mining Rate:<span>0.00000048</span> </h3>
           </div>
           <h3 className="total-mine">Total Mined: <span>0.0000000713</span></h3>
 
-        </div>
+        </div> */}
         <div className="histroy-wrap">
           <h3>Transaction History</h3>
           <div className="table-wrap">
@@ -186,17 +202,23 @@ export default function Dashtest() {
                 </tr>
               </thead>
               <tbody className="table-body">
-                {trxHistory?.length === 0 && <p>Loading...</p>}
+              {trxHistory?.length === 0 && (
+              <tr className="no-history">
+                <td colSpan="5">
+                  <p>No History</p>
+                </td>
+              </tr>
+            )}
                 {trxHistory?.map(t => (
                   <tr key={t.trxId}>
                     <td className="currency-wrap">
-                      <img src={dai} alt="" />
+                      <img src={hive} alt="" />
                       <span>{t.currency}</span>
                     </td>
-                    <td>${t.amount}</td>
+                    <td className={t.type  === 'deposit' ? 'deposit' : t.type === 'withdrawal' ? 'withdrawal' : ''}>${t.amount}</td>
                     <td>{t.trxId.slice(0, 5)}...{t.trxId.slice(-5)}</td>
                     <td>{new Date(t.timestamp).toLocaleDateString()}</td>
-                    <td>{t.type}</td>
+                    <td className={t.type  === 'deposit' ? 'deposit' : t.type === 'withdrawal' ? 'withdrawal' : ''}>{t.type}</td>
                   </tr>
                 ))}
               </tbody>
