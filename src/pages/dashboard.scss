@@ -414,3 +414,21 @@ tbody{
 .withdrawal {
   color: red;
 }
+
+
+//KESOLINK TO ADD PROPERLY
+.strike-naira {
+  position: relative;
+  display: inline-block;
+}
+
+.strike-naira::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: currentColor;
+  transform: translateY(-50%);
+}
