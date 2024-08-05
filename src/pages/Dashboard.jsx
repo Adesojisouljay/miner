@@ -19,17 +19,12 @@ import "./dashboard.scss";
 export default function Dashtest() {
   const [isOpen, setIsOpen] = useState(false);
   const [trxHistory, setTrxHistory] = useState([]);
-  // const [address, setAddress] = useState("");
-  // const [memo, setMemo] = useState("");
-  const [selectedAssets, setSelectedAssets] = useState("");
 
   const user = useSelector(state => state.apexMiner.user)
   const assets = user?.assets || []
-  console.log(user)
 
   const openDepositModal = (asset) => {
     setIsOpen(true);
-    setSelectedAssets(asset)
   }
   const closeDepositModal = () => {
     setIsOpen(false)
@@ -44,8 +39,8 @@ export default function Dashtest() {
       const data = await fetchTransactionHistory();
       if (data.success) {
         setTrxHistory(data.transactionH);
-        // console.log("data,", data);
-        // console.log("trxHistory,", trxHistory);
+        console.log("data,", data);
+        console.log("trxHistory,", trxHistory);
       } else {
         console.error("Failed to fetch transaction history:", data.message);
       }
@@ -134,7 +129,8 @@ export default function Dashtest() {
           </div>
 
           <div className="card-bal">
-            <h2>$0.00</h2>
+            <h2>${user.totalUsdValue.toFixed(3)}</h2>
+            <h2><span className="strike-naira">N</span>{user.totalNairaValue.toFixed(3)}</h2>
           </div>
 
               
@@ -145,7 +141,7 @@ export default function Dashtest() {
                   <img src={u.image} alt="" />
                   <div className="reward-value">
                     <h5>{u.currency.toUpperCase()}</h5>
-                    <p>{user?.hiveBalance?.toFixed(3)}</p>
+                    <p>{u.balance?.toFixed(3)}</p>
                   </div>
                 </div>
                 <div className="btn-deposit-withdrwal">
