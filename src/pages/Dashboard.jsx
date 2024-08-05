@@ -54,9 +54,18 @@ export default function Dashtest() {
       <div className="dashboard-wrap">
       <div className=" total-balance-wrap">
         <div className="total-left border-transparent">
-          <div className="total-left-wrap">
-            <h3>Total balance:</h3>
-            <h2>{user?.totalBalance?.toFixed(3)}</h2>
+          <div className="kingsley-to decide-and-style">
+            <div className="currency">
+              <span>Currency</span>
+              <select name="" id="">
+                <option value="Ngn">NGN</option>
+                <option value="Ngn">USD</option>
+              </select>
+            </div>
+            <div className="total-left-wrap">
+              <h3>Total balance:</h3>
+              <h2><span className="strike-naira">N</span>{user?.totalNairaValue?.toFixed(3)}</h2>
+            </div>
           </div>
           <FaRegEye />
         </div>
