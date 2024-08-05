@@ -149,8 +149,8 @@ export default function Dashtest() {
           </div>
 
           <div className="card-bal">
-            <h2>${user.totalUsdValue.toFixed(3)}</h2>
-            <h2><span className="strike-naira">N</span>{user.totalNairaValue.toFixed(3)}</h2>
+            <h2>${user?.totalUsdValue?.toFixed(3)}</h2>
+            <h2><span className="strike-naira">N</span>{user?.totalNairaValue?.toFixed(3)}</h2>
           </div>
 
               
