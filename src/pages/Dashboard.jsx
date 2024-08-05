@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import "./dashtest.scss";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegCircleQuestion } from "react-icons/fa6";
 import { HiMiniWallet } from "react-icons/hi2";
@@ -14,16 +13,23 @@ import hbd from "../assets/hbdl.png";
 import { FaRegCopyright } from "react-icons/fa";
 import { DepositHiveModal } from "../components/modal/DepositHive";
 import { fetchTransactionHistory } from "../api/transaction";
+import "./dashboard.scss";
 
 
 export default function Dashtest() {
   const [isOpen, setIsOpen] = useState(false);
-  const [trxHistory, setTrxHistory] = useState([])
+  const [trxHistory, setTrxHistory] = useState([]);
+  // const [address, setAddress] = useState("");
+  // const [memo, setMemo] = useState("");
+  const [selectedAssets, setSelectedAssets] = useState("");
 
   const user = useSelector(state => state.apexMiner.user)
+  const assets = user?.assets || []
+  console.log(user)
 
-  const openDepositModal = () => {
-    setIsOpen(true)
+  const openDepositModal = (asset) => {
+    setIsOpen(true);
+    setSelectedAssets(asset)
   }
   const closeDepositModal = () => {
     setIsOpen(false)
@@ -67,7 +73,7 @@ export default function Dashtest() {
       </div>
       <div className="big-card-wrap">
         <div className="funding-wrap">
-          <button onClick={openDepositModal}>Receive</button>
+          <button onClick={() => openDepositModal(assets[0])}>Receive</button>
           <button>Send</button>
           <button>Transfer</button>
           <button>Deposit</button>
@@ -131,73 +137,29 @@ export default function Dashtest() {
             <h2>$0.00</h2>
           </div>
 
+              
           <div className="card-component-wrap">
-            <div className="card-component-1 border-line">
-              <div className="card-reward-wrap liquid-asset-wrap">
-                <img src={hive} alt="" />
-                <div className="reward-value">
-                  <h5>USDT</h5>
-                  <p>{user?.hiveBalance?.toFixed(3)}</p>
+            {user?.assets?.map(u => (
+              <div className="card-component-1 border-line">
+                <div className="card-reward-wrap liquid-asset-wrap">
+                  <img src={u.image} alt="" />
+                  <div className="reward-value">
+                    <h5>{u.currency.toUpperCase()}</h5>
+                    <p>{user?.hiveBalance?.toFixed(3)}</p>
+                  </div>
+                </div>
+                <div className="btn-deposit-withdrwal">
+                <button onClick={() => openDepositModal(u)}>Deposit</button>
+                <button>Withdraw</button>
+                <button>Buy/Sell</button>
                 </div>
               </div>
-              {/* <div className="card-reward-wrap staked-assets-wrap">
-               <img src={usdc} alt="" />
-                <div className="reward-value">
-                  <h5>USDC</h5>
-                  <p>0.00</p>
-                </div>
-              </div> */}
-              <div className="btn-deposit-withdrwal">
-               <button onClick={openDepositModal}>Deposit</button>
-               <button>Withdraw</button>
-               <button>Buy/Sell</button>
-              </div>
-              
-            </div>
-            <div className="card-component-2 border-line">
-              <div className="card-reward-wrap Leverage-wrap">
-              <img src={hbd} alt="" />
-                <div className="reward-value">
-                  <h5>HBD</h5>
-                  <p>{user?.hbdBalance?.toFixed(3)}</p>
-                 
-                </div>
-              </div>
-              {/* <div className="card-reward-wrap perpetual-positions-wrap">
-               <img src={hive} alt="" />
-                <div className="reward-value">
-                  <h5>HIVE</h5>
-                  <p>{user?.hiveBalance?.toFixed(3)}</p>
-                </div>
-              </div> */}
-              <div className="btn-deposit-withdrwal">
-              <button onClick={openDepositModal}>Deposit</button>
-              <button>Withdraw</button>
-              <button>Buy/Sell</button>
-              {/* <button>Buy</button>
-              <button>Sell</button> */}
-              </div>
-              
-            </div>
+            ))}
           </div>
         </div>
       </div>
 
       <div className="big-card-wrap">
-        {/* <div className="funding-wrap">
-          <button onClick={openDepositModal}>Deposit</button>
-          <button>Withdraw</button>
-          <button>Buy</button>
-          <button>Sell</button>
-        </div> */}
-        {/* <div className="mining-value-wrap">
-          <div className="mine-wrap">
-          <h3>Mining: <span>0.0000000048/sec</span></h3>
-          <h3 className="mine-rate">Mining Rate:<span>0.00000048</span> </h3>
-          </div>
-          <h3 className="total-mine">Total Mined: <span>0.0000000713</span></h3>
-
-        </div> */}
         <div className="histroy-wrap">
           <h3>Transaction History</h3>
           <div className="table-wrap">
@@ -241,7 +203,7 @@ export default function Dashtest() {
        <p>Sojminer,All Rights Reserved </p>
       </div>
       </div>
-      <DepositHiveModal isOpen={isOpen} onClose={closeDepositModal}/>
+      <DepositHiveModal isOpen={isOpen} assets={assets} onClose={closeDepositModal}/>
     </div>
   );
 }

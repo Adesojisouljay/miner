@@ -11,7 +11,7 @@ import Pagetest from "./pages/Pagetest";
 import Aos from 'aos'
 import "aos/dist/aos.css"
 import { useEffect } from "react";
-import Dashtest from "./pages/Dashtest";
+import Dashtest from "./pages/Dashboard";
 import Spinner from "./pages/Spinner";
 import { getUserProfile } from "./api/profile";
 import { loginSuccess } from "./redux/userReducer";
