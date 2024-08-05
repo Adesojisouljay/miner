@@ -59,7 +59,7 @@ export const DepositHiveModal = ({ isOpen, onClose, assets }) => {
           <span>Deposit Memo</span>
           <span className='warning'>(please make sure you copy your memo correctly)</span>
           <span>{selectedAsset.memo}</span>
-          {<button className="generate-address-btn" onClick={handleCopyMemo}>Copy Address</button>}
+          {<button className="generate-address-btn" onClick={handleCopyMemo}>Copy Memo</button>}
         </div>
       </div>
     
