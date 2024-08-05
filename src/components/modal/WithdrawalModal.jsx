@@ -4,6 +4,9 @@ import './withdraw-modal.css';
 
 export const WithdrawalModal = ({ isOpen, onClose, onWithdraw }) => {
   const [withdrawAmount, setWithdrawAmount] = useState('');
+  const [memo, setMemo] = useState('');
+
+  console.log(memo)
 
   const handleWithdraw = async () => {
     try {
@@ -35,9 +38,20 @@ export const WithdrawalModal = ({ isOpen, onClose, onWithdraw }) => {
             onChange={(e) => setWithdrawAmount(e.target.value)} 
             placeholder="Enter amount" 
           />
+          <label htmlFor="memo">Memo:</label>
+          <input 
+            type="text" 
+            id="memo" 
+            value={memo} 
+            onChange={(e) => setMemo(e.target.value)} 
+            placeholder="Enter memo" 
+          />
         </div>
         <button className="withdraw-btn" onClick={handleWithdraw}>Withdraw</button>
       </div>
     </div>
   );
 };
+
+
+///KINGSLE, CREATE 2 OTHER MODAL FOR WITHDRAWAL FAIL AND SUCCESS IN THIS COMPONENT

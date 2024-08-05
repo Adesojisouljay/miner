@@ -14,10 +14,12 @@ import { FaRegCopyright } from "react-icons/fa";
 import { DepositHiveModal } from "../components/modal/DepositHive";
 import { fetchTransactionHistory } from "../api/transaction";
 import "./dashboard.scss";
+import { WithdrawalModal } from "../components/modal/WithdrawalModal";
 
 
 export default function Dashtest() {
   const [isOpen, setIsOpen] = useState(false);
+  const [withdrawalOpen, setWithdrawalOpen] = useState(false);
   const [trxHistory, setTrxHistory] = useState([]);
 
   const user = useSelector(state => state.apexMiner.user)
@@ -26,8 +28,17 @@ export default function Dashtest() {
   const openDepositModal = (asset) => {
     setIsOpen(true);
   }
+  
   const closeDepositModal = () => {
     setIsOpen(false)
+  }
+  
+  const openWithdrawalModal = (asset) => {
+    setWithdrawalOpen(true);
+  }
+
+  const closeWithdrawalModal = () => {
+    setWithdrawalOpen(false)
   }
 
   useEffect(() => {
@@ -54,9 +65,18 @@ export default function Dashtest() {
       <div className="dashboard-wrap">
       <div className=" total-balance-wrap">
         <div className="total-left border-transparent">
-          <div className="total-left-wrap">
-            <h3>Total balance:</h3>
-            <h2>{user?.totalBalance?.toFixed(3)}</h2>
+          <div className="kingsley-to decide-and-style">
+            <div className="currency">
+              <span>Currency</span>
+              <select name="" id="">
+                <option value="Ngn">NGN</option>
+                <option value="Ngn">USD</option>
+              </select>
+            </div>
+            <div className="total-left-wrap">
+              <h3>Total balance:</h3>
+              <h2><span className="strike-naira">N</span>{user?.totalNairaValue?.toFixed(3)}</h2>
+            </div>
           </div>
           <FaRegEye />
         </div>
@@ -69,9 +89,9 @@ export default function Dashtest() {
       <div className="big-card-wrap">
         <div className="funding-wrap">
           <button onClick={() => openDepositModal(assets[0])}>Receive</button>
-          <button>Send</button>
-          <button>Transfer</button>
-          <button>Deposit</button>
+          <button onClick={openWithdrawalModal}>Send</button>
+          <button>Fiat Transfer</button>
+          <button>Fiat Deposit</button>
           <button>Buy</button>
           <button>Sell</button>
         </div>
@@ -200,6 +220,7 @@ export default function Dashtest() {
       </div>
       </div>
       <DepositHiveModal isOpen={isOpen} assets={assets} onClose={closeDepositModal}/>
+      <WithdrawalModal isOpen={withdrawalOpen} onClose={closeWithdrawalModal}/>
     </div>
   );
 }
