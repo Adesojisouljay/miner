@@ -9,7 +9,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [walletAddress, setWalletAddress] = useState('');
+  const [username, setUsername] = useState('');
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const Register = () => {
     }
 
     try {
-      const userData = { email, password, walletAddress };
+      const userData = { email, password, username };
       const resp = await registerUser(userData);
       console.log(resp);
 
@@ -60,8 +60,8 @@ const Register = () => {
             <input
               className="yep"
               type="text"
-              value={walletAddress}
-              onChange={(e) => setWalletAddress(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter your wallet address"
               required
             />

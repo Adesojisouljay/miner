@@ -65,6 +65,16 @@ export default function Dashtest() {
           <FaRegEye />
         </div>
       </div>
+      <div className="big-card-wrap">
+        <div className="funding-wrap">
+          <button onClick={openDepositModal}>Receive</button>
+          <button>Send</button>
+          <button>Transfer</button>
+          <button>Deposit</button>
+          <button>Buy</button>
+          <button>Sell</button>
+        </div>
+      </div>
       <div className="portfolio-reward-wraper">
         <div className="card-wrap border-transparent">
           <div className="card-title-wrap">
