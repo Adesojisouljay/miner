@@ -1,0 +1,53 @@
+@import  "../../mixins.scss";
+  
+  .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 25px;
+  }
+  
+  .withdrawl-input-group {
+    width: 70%;
+    padding: 10px;
+    margin-bottom: 20px;
+    @include respond(phone) {
+      margin-bottom: 15px;
+    }
+  }
+  
+  .input-group label {
+    display: block;
+  }
+  
+  .withdrawl-input-group input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    @include respond(phone) {
+      padding: 12px;
+    }
+  
+  }
+  
+  .withdraw-btn {
+    padding: 7px 20px;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    @include respond(phone) {
+      padding: 7px 20px;
+      font-size: 16px;
+    }
+  }
+  
+  
+  .open {
+    display: flex;
+  }
+  

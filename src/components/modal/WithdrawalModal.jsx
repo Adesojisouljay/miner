@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { initiateWithdrawal } from '../../api/withdrawal';
-import './withdraw-modal.css';
+import './withdraw-modal.scss';
 
 export const WithdrawalModal = ({ isOpen, onClose, onWithdraw }) => {
   const [withdrawAmount, setWithdrawAmount] = useState('');
   const [memo, setMemo] = useState('');
 
-  console.log(memo)
+  // console.log(memo)
 
   const handleWithdraw = async () => {
     try {
@@ -25,11 +25,13 @@ export const WithdrawalModal = ({ isOpen, onClose, onWithdraw }) => {
   };
 
   return (
+    <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
+    <div className={`modal-overlay  ${isOpen ? 'open' : ''}`}  onClick={onClose}> </div>
     <div className={`modal-overlay ${isOpen ? 'open' : ''}`}>
-      <div className="modal">
-        <span className="close-btn" onClick={onClose}>X</span>
+      <div className="modal animate-slide-in  animate-slide-in-mobile">
+        <span className="close-btn" onClick={onClose} >X</span>
         <h2>Withdrawal</h2> 
-        <div className="input-group">
+        <div className="withdrawl-input-group">
           <label htmlFor="withdraw-amount">Amount:</label>
           <input 
             type="number" 
@@ -49,6 +51,7 @@ export const WithdrawalModal = ({ isOpen, onClose, onWithdraw }) => {
         </div>
         <button className="withdraw-btn" onClick={handleWithdraw}>Withdraw</button>
       </div>
+    </div>
     </div>
   );
 };
