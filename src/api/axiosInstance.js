@@ -1,9 +1,6 @@
 import axios from 'axios';
 
 export const api = axios.create({
-    // baseUrl : "https://miner-server-hzkn.onrender.com/api",
-    baseURL: 'https://api.testingbreak.com/api',
-    // baseURL: 'http://localhost:2000/api',
+    //     // baseURL: 'http://localhost:2000/api',
+    baseURL: "https://api.testingbreak.com/api",
   });
-
-  console.log()
