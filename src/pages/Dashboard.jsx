@@ -118,49 +118,6 @@ export default function Dashtest() {
 
           </div>
         <div className="portfolio-reward-wraper">
-          {/* <div className="card-wrap border-transparent">
-          <div className="card-title-wrap">
-            <div className="card-icon">
-              <HiMiniWallet size={20} />
-            </div>
-            <h4>Portfolio</h4>
-          </div>
-
-          <div className="card-bal">
-            <h2>$0.00</h2>
-          </div>
-
-          <div className="card-component-wrap">
-            <div className="card-component-1">
-              <div className="card-list-wrap liquid-asset-wrap">
-                <h5>Liqud asset</h5>
-                <p>$0.00</p>
-              </div>
-              <div className="card-list-wrap staked-assets-wrap">
-                <h5>Staked Assets</h5>
-                <p>$0.00</p>
-              </div>
-              <div className="card-list-wrap liquidity-positions-wrap">
-                <h5>Staked Assets</h5>
-                <p>$0.00</p>
-              </div>
-            </div>
-            <div className="card-component-2">
-              <div className="card-list-wrap Leverage-wrap">
-                <h5>Leverage LP</h5>
-                <p>$0.00</p>
-              </div>
-              <div className="card-list-wrap perpetual-positions-wrap">
-                <h5>Perpetual Positions</h5>
-                <p>$0.00</p>
-              </div>
-              <div className="card-list-wrap Borrows-wrap">
-                <h5>Borrows</h5>
-                <p>$0.00</p>
-              </div>
-            </div>
-          </div>
-        </div> */}
           <div className="card-wrap border-transparent">
             <div className="card-title-wrap">
               <div className="card-icon">
@@ -176,7 +133,7 @@ export default function Dashtest() {
                 {user.totalNairaValue.toFixed(3)}
               </h2>
             </div>
-
+          
             <div className="card-component-wrap">
               {user?.assets?.map((u) => (
                 <div className="card-component-1 border-line">
@@ -270,8 +227,13 @@ export default function Dashtest() {
         assets={assets}
         onClose={closeDepositModal}
       />
-      <Fiatdeposit onClose={closeFiatDepositModal } isOpen={fiatDopositOpen} />
       <WithdrawalModal isOpen={withdrawalOpen} assets={assets} onClose={closeWithdrawalModal}/>
-    </div>
+      <Fiatdeposit onClose={closeFiatDepositModal } isOpen={fiatDopositOpen} />
+      <div className="copy-right-wrap">
+       <FaRegCopyright />
+       <p>Sojminer,All Rights Reserved </p>
+      </div>
+      </div>
+    // </div>
   );
 }
