@@ -223,7 +223,8 @@ export default function Dashtest() {
                   {trxHistory?.map((t) => (
                     <tr key={t.trxId}>
                       <td className="currency-wrap">
-                        <img src={hive} alt="" />
+                        {/* to be fixed */}
+                        <img src={"hive"} alt="" />
                         <span>{t.currency}</span>
                       </td>
                       <td
