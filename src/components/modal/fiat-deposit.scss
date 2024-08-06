@@ -1,0 +1,82 @@
+@import "../../mixins.scss";
+
+.fait-deposit-wrap{
+    h3{
+        margin-bottom: 10px;
+    }
+}
+.modal-fiat {
+    width: 40%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    // justify-content: center;
+    background-color: var(--modal-background-color);
+    padding: 20px;
+    border-radius: 12px;
+    position: relative;
+    button{
+        display: block;
+        margin: 0 auto;
+        padding: 10px 20px;
+        border-radius: 7px;
+        width: 70%;
+    }
+    @include respond(phone) {
+      width: 100%;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+    }
+  }
+
+  .fiat-deposit-amount{
+    label{
+        font-size: 12.32px;
+        font-weight: bold;
+    }
+    input{
+        padding:12px 20px;
+        border-radius: 7px;
+        outline: none;
+        margin-bottom: 10px;
+        width: 100%;
+        
+    }
+}
+
+// *********************Step-2**********************************
+.deposit-head-text-wrap{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.copy-text-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.acc-num{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    h4{
+        width: fit-content;
+    }
+    
+}
+.bank-name{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    h4{
+        width: fit-content;
+    }
+}
+.acc-name{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}

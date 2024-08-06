@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { processHiveWithdrawal } from '../../api/ekzat';
-import './withdraw-modal.css';
+import './withdraw-modal.scss';
 
 export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
   const [memo, setMemo] = useState('');
@@ -24,6 +24,8 @@ export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
   };
 
   return (
+    <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
+    <div className={`modal-overlay  ${isOpen ? 'open' : ''}`}  onClick={onClose}> </div>
     <div className={`modal-overlay ${isOpen ? 'open' : ''}`}>
       <div className="modal">
         <span className="close-btn" onClick={onClose}>X</span>
@@ -69,6 +71,7 @@ export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
         </div>
         <button className="withdraw-btn" onClick={handleWithdrawal}>Withdraw</button>
       </div>
+    </div>
     </div>
   );
 };
