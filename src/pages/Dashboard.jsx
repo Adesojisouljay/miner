@@ -2,14 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegCircleQuestion } from "react-icons/fa6";
-import { HiMiniWallet } from "react-icons/hi2";
 import { FaGift } from "react-icons/fa6";
-import usdt from "../assets/usdt.svg";
-import dai from "../assets/dai.svg";
-import usdc from "../assets/usdc.svg";
-import tusd from "../assets/tusd.svg";
-import hive from "../assets/hive-logo.png";
-import hbd from "../assets/hbdl.png";
 import { FaRegCopyright } from "react-icons/fa";
 import { DepositHiveModal } from "../components/modal/DepositHive";
 import { fetchTransactionHistory } from "../api/transaction";
@@ -276,9 +269,8 @@ export default function Dashtest() {
         assets={assets}
         onClose={closeDepositModal}
       />
-      <WithdrawalModal isOpen={withdrawalOpen} onClose={closeWithdrawalModal} />
       <Fiatdeposit onClose={closeFiatDepositModal } isOpen={fiatDopositOpen} />
-
+      <WithdrawalModal isOpen={withdrawalOpen} assets={assets} onClose={closeWithdrawalModal}/>
     </div>
   );
 }

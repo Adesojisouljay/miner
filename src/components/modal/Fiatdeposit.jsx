@@ -4,7 +4,6 @@ import { IoIosCopy } from "react-icons/io";
 import { FaLessThan } from "react-icons/fa6";
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { getRandomMerchant } from "../api/ekzat";
 
 function Fiatdeposit({ isOpen, onClose}) {
   const [depositAmout, setDepositAmount] = useState("")
@@ -13,14 +12,6 @@ function Fiatdeposit({ isOpen, onClose}) {
   const nextStep = () =>{
     if(depositAmout => 1000 ){
       setStep(2)
-    }
-  }
-  const getDepositMerchant = async ()=> {
-    try {
-      const merchants = await getRandomMerchant("66aab4a50f6c87eb67afde17")
-      console.log(merchants)
-    } catch (error) {
-      console.log(error)
     }
   }
 
