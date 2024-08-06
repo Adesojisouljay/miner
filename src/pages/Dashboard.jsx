@@ -220,7 +220,7 @@ export default function Dashtest() {
       </div>
       </div>
       <DepositHiveModal isOpen={isOpen} assets={assets} onClose={closeDepositModal}/>
-      <WithdrawalModal isOpen={withdrawalOpen} onClose={closeWithdrawalModal}/>
+      <WithdrawalModal isOpen={withdrawalOpen} assets={assets} onClose={closeWithdrawalModal}/>
     </div>
   );
 }
