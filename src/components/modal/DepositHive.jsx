@@ -8,7 +8,6 @@ export const DepositHiveModal = ({ isOpen, onClose, assets }) => {
   const user = useSelector(state => state.apexMiner.user);
 
   const [selectedAsset, setSelectedAsset] = useState(assets[0]);
-  // console.log(user)
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText(selectedAsset?.depositAddress);
@@ -20,6 +19,7 @@ export const DepositHiveModal = ({ isOpen, onClose, assets }) => {
     },
   });
   };
+  
   const handleCopyMemo = () => {
     navigator.clipboard.writeText(selectedAsset?.memo);
     toast.success("Memo copied to clipboarc!", {
@@ -64,7 +64,5 @@ export const DepositHiveModal = ({ isOpen, onClose, assets }) => {
       </div>
     
     </div>
-
-    
   );
 };

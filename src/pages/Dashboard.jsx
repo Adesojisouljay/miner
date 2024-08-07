@@ -9,16 +9,23 @@ import { fetchTransactionHistory } from "../api/transaction";
 import "./dashboard.scss";
 import { WithdrawalModal } from "../components/modal/WithdrawalModal";
 import Fiatdeposit from "../components/modal/Fiatdeposit";
+import { DepositModal } from "../components/modal/FiatTransfer";
 
 export default function Dashtest() {
+  const user = useSelector((state) => state.apexMiner.user);
+  const assets = user?.assets || [];
+
   const [isOpen, setIsOpen] = useState(false);
   const [withdrawalOpen, setWithdrawalOpen] = useState(false);
   const [trxHistory, setTrxHistory] = useState([]);
   const [action, setAction] = useState(false);
-  const [fiatDopositOpen, setFiatDopositOpen] = useState(false)
+  const [fiatDopositOpen, setFiatDopositOpen] = useState(false);
+  const [fiatTransferOpen, setFiatTransferOpen] = useState(false);
+  
   const actionToggle = () => {
     setAction(!action);
   };
+
   const actionToggleClose = () => {
     if( action === true){
       setAction(false);
@@ -26,11 +33,16 @@ export default function Dashtest() {
     
   };
 
-  const user = useSelector((state) => state.apexMiner.user);
-  const assets = user?.assets || [];
-
   const openFiatDepositModal = () => {
     setFiatDopositOpen(true);
+  };
+
+  const openFiatTransferModal = () => {
+    setFiatTransferOpen(true);
+  };
+
+  const closeFiatTransferModal = () => {
+    setFiatTransferOpen(false);
   };
 
   const closeFiatDepositModal = () => {
@@ -61,8 +73,6 @@ export default function Dashtest() {
       const data = await fetchTransactionHistory();
       if (data.success) {
         setTrxHistory(data.transactionH);
-        // console.log("data,", data);
-        // console.log("trxHistory,", trxHistory);
       } else {
         console.error("Failed to fetch transaction history:", data.message);
       }
@@ -103,19 +113,16 @@ export default function Dashtest() {
           <div className="funding-wrap">
             <button onClick={() => openDepositModal(assets[0])}>Receive</button>
             <button onClick={openWithdrawalModal}>Send</button>
-            <button>Fiat Transfer</button>
+            <button onClick={openFiatTransferModal}>Fiat Transfer</button>
             <button onClick={openFiatDepositModal}>Fiat Deposit</button>
-            <button className="action-btn" onClick={actionToggle}>
+            <button className="" onClick={actionToggle}>
               Buy/Sell
             </button>
-            <button className="btn-buy">Buy</button>
-            <button className="btn-sell">Sell</button>
             {action && 
             <div className="action-btn-wrap border-transparent">
-             <h3 className="border-transparent" onClick={actionToggle}>Buy</h3>
+             <h3 className="border-transparent" onClick={actionToggle}>Buyuuuu</h3>
              <h3 className="border-transparent" onClick={actionToggle}>Sell</h3>
             </div>}
-
           </div>
         <div className="portfolio-reward-wraper">
           <div className="card-wrap border-transparent">
@@ -228,12 +235,12 @@ export default function Dashtest() {
         onClose={closeDepositModal}
       />
       <WithdrawalModal isOpen={withdrawalOpen} assets={assets} onClose={closeWithdrawalModal}/>
+      <DepositModal isOpen={fiatTransferOpen} onClose={closeFiatTransferModal}/>
       <Fiatdeposit onClose={closeFiatDepositModal } isOpen={fiatDopositOpen} />
       <div className="copy-right-wrap">
        <FaRegCopyright />
        <p>Sojminer,All Rights Reserved </p>
       </div>
       </div>
-    // </div>
   );
 }

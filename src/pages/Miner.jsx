@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { WithdrawalModal } from '../components/modal/WithdrawalModal';
-import { DepositModal } from '../components/modal/DepositModal';
+// import { DepositModal } from '../components/modal/DepositModal';
 import { startMining, transferMinedBalance, getUserMiningRecord } from '../api/mine';
 import { useSelector } from 'react-redux';
 import './miner.css';
@@ -122,10 +122,10 @@ export const Miner = () => {
           onClose={handleCloseWithdrawalModal} 
           onWithdraw={handleWithdraw}
         />
-        <DepositModal 
+        {/* <DepositModal 
           isOpen={isDepositModalOpen} 
           onClose={handleCloseDepositModal} 
-        />
+        /> */}
         </>
     </>
   );
