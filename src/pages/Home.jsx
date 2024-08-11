@@ -14,7 +14,7 @@ export const Home = () => {
   useEffect(() => {
     // AOS.init({duration:1000});
     if(global.apexMiner.user)
-    navigate("/mining")
+    navigate("/dashboard")
   }, [])
   return (
     <div className="home-wrap">
