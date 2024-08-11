@@ -4,6 +4,7 @@ import { IoIosCopy } from "react-icons/io";
 import { FaLessThan } from "react-icons/fa6";
 import { useState } from 'react';
 import { getRandomMerchant, createNairaDepositRequest } from '../../api/ekzat';
+import success_img from "../../assets/succesful-img.png"
 
 function Fiatdeposit({ isOpen, onClose}) {
   const [depositAmout, setDepositAmount] = useState("")
@@ -43,6 +44,14 @@ function Fiatdeposit({ isOpen, onClose}) {
     } catch (error) {
       console.log(error)
     }
+    setStep(3)
+  }
+  const returnDashboard = ()=>{
+    onClose(); 
+    setStep(1);
+    setDepositAmount("")
+    SetNarration("")
+
   }
 
   return (
@@ -90,6 +99,15 @@ function Fiatdeposit({ isOpen, onClose}) {
                   </div>
                 </div>
                 <button onClick={createDeposit} className="done-tranfer-btn">I have made payment</button>
+              </div>
+            )}
+            {step === 3 && (
+              <div className="success-wrap">
+                <img src={success_img} alt="" />
+                <h2>Payment Successful </h2>
+                <p>Your balance will be updated immediately merchant recieve your payment </p>
+                <button  onClick={returnDashboard}>Go Back Home </button>
+
               </div>
             )}
 
