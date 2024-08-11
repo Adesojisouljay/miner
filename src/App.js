@@ -16,9 +16,11 @@ import Spinner from "./pages/Spinner";
 import { getUserProfile } from "./api/profile";
 import { loginSuccess } from "./redux/userReducer";
 import { useDispatch } from "react-redux";
+import ProtectedRoute from "./protected-routes/ProtectedRoutes";
 
 function App() {
   const dispatch = useDispatch()
+  const navigate = useNavigate();
 
   useEffect(() => {
     Aos.init({duration:1000});
@@ -34,6 +36,7 @@ function App() {
       const data = await getUserProfile()
       console.log(data)
       dispatch(loginSuccess(data.data))
+      navigate('/dashboard'); 
     } catch (error) {
       console.log(error)
     }
@@ -44,15 +47,16 @@ function App() {
       <NavBar/>
       <div className='app-container'>
         <Routes>
-        <Route path="/" element={<Home/>}/>
-          <Route path="/mining" element={<Miner/>}/>
-          <Route path="/dashboard" element={<Dashtest/>}/>
+          <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
-          <Route path="/controller" element={<Admin/>}/>
-          <Route path="/test" element={<Pagetest />} />
-          <Route path="spinner" element={<Spinner />} />
-          
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<Dashtest/>}/>
+            <Route path="/mining" element={<Miner/>}/>
+            <Route path="/controller" element={<Admin/>}/>
+            <Route path="/test" element={<Pagetest />} />
+            <Route path="spinner" element={<Spinner />} />
+          </Route>
         </Routes>
       </div>
     </div>
