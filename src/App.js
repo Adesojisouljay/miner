@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import ProtectedRoute from "./protected-routes/ProtectedRoutes";
 import { Kyc } from "./components/submit-kyc/Kyc";
 import NotFound from "./components/not-found/NotFound";
+import { KYCManagement } from "./components/manage-kyc/KycManagement";
 
 function App() {
   const dispatch = useDispatch()
@@ -59,6 +60,7 @@ function App() {
             <Route path="/test" element={<Pagetest />} />
             <Route path="spinner" element={<Spinner />} />
             <Route path="/kyc" element={<Kyc />} />
+            <Route path="/manage-kyc" element={<KYCManagement />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
