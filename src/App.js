@@ -19,6 +19,8 @@ import ProtectedRoute from "./protected-routes/ProtectedRoutes";
 import { Kyc } from "./components/submit-kyc/Kyc";
 import NotFound from "./components/not-found/NotFound";
 import { KYCManagement } from "./components/manage-kyc/KycManagement";
+import { MerchantAction } from "./components/merchant-action/Merchant";
+import { CreateMerchantForm } from "./components/create-merchant/CreateMerchant";
 
 function App() {
   const dispatch = useDispatch()
@@ -61,6 +63,8 @@ function App() {
             <Route path="spinner" element={<Spinner />} />
             <Route path="/kyc" element={<Kyc />} />
             <Route path="/manage-kyc" element={<KYCManagement />} />
+            <Route path="/merchant-action" element={<MerchantAction />} />
+            <Route path="/create-merchant" element={<CreateMerchantForm />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
