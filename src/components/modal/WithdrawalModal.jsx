@@ -31,7 +31,7 @@ export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
     try {
       const data = await requestWithdrawalToken();
       console.log(data.success)
-      if(data.success === true){
+      if(data?.success === true){
         setStep(2)
       }
     } catch (error) {
