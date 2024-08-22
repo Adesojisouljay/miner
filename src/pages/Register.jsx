@@ -7,6 +7,8 @@ import './register.css';
 
 const Register = () => {
   const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastname] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [username, setUsername] = useState('');
@@ -23,7 +25,7 @@ const Register = () => {
     }
 
     try {
-      const userData = { email, password, username };
+      const userData = { email, password, username, firstName, lastName };
       const resp = await registerUser(userData);
       console.log(resp);
 
@@ -46,6 +48,26 @@ const Register = () => {
         <h2>Register</h2>
         <form onSubmit={handleSubmit}>
           <div className="reg-form-group">
+            <label>First Name</label>
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="Enter your first name"
+              required
+            />
+          </div>
+          <div className="reg-form-group">
+            <label>Last Name</label>
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastname(e.target.value)}
+              placeholder="Enter your last name"
+              required
+            />
+          </div>
+          <div className="reg-form-group">
             <label>Email</label>
             <input
               type="email"
@@ -56,7 +78,7 @@ const Register = () => {
             />
           </div>
           <div className="reg-form-group">
-            <label>Wallet Address</label>
+            <label>Username</label>
             <input
               className="yep"
               type="text"

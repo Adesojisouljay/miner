@@ -12,7 +12,7 @@ import './login.css';
 
 const Login = () => {
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [error, setError] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Login = () => {
     try {
       const userData = {
         password,
-        email
+        identifier
       };
       
       dispatch(loginStart());
@@ -64,8 +64,8 @@ const Login = () => {
           <label>Email</label>
           <input
             type={"email" | "text"}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={identifier}
+            onChange={(e) => setIdentifier(e.target.value)}
             placeholder="Enter your email"
             required
           />
