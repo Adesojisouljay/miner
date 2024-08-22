@@ -134,10 +134,10 @@ export default function Dashtest() {
             </div>
 
             <div className="card-bal">
-              <h2>${user.totalUsdValue.toFixed(3)}</h2>
+              <h2>${user?.totalUsdValue?.toFixed(3)}</h2>
               <h2>
                 <span className="strike-naira">N</span>
-                {user.totalNairaValue.toFixed(3)}
+                {user?.totalNairaValue?.toFixed(3)}
               </h2>
             </div>
           
@@ -229,14 +229,14 @@ export default function Dashtest() {
           <p> Sojminer,All Rights Reserved </p>
         </div>
       </div>
-      <DepositHiveModal
+      {isOpen && <DepositHiveModal
         isOpen={isOpen}
         assets={assets}
         onClose={closeDepositModal}
-      />
-      <WithdrawalModal isOpen={withdrawalOpen} assets={assets} onClose={closeWithdrawalModal}/>
-      <DepositModal isOpen={fiatTransferOpen} onClose={closeFiatTransferModal}/>
-      <Fiatdeposit onClose={closeFiatDepositModal } isOpen={fiatDopositOpen} />
+      />}
+      {withdrawalOpen && <WithdrawalModal isOpen={withdrawalOpen} assets={assets} onClose={closeWithdrawalModal}/>}
+      {fiatTransferOpen && <DepositModal isOpen={fiatTransferOpen} onClose={closeFiatTransferModal}/>}
+      {fiatDopositOpen && <Fiatdeposit onClose={closeFiatDepositModal } isOpen={fiatDopositOpen} />}
       <div className="copy-right-wrap">
        <FaRegCopyright />
        <p>Sojminer,All Rights Reserved </p>

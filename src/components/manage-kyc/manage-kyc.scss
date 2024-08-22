@@ -1,0 +1,105 @@
+.kyc-management {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .kyc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .kyc-item {
+    border: 1px solid #2e2727;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .kyc-details {
+    flex: 1;
+  }
+  
+  .kyc-documents {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .document {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .kyc-image {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .encoded-text {
+    color: #999;
+    font-style: italic;
+  }
+  
+  .status-text {
+    font-weight: bold;
+  }
+  
+  .status-pending {
+    color: #f39c12;
+  }
+  
+  .status-verified {
+    color: #27ae60;
+  }
+  
+  .status-rejected {
+    color: #e74c3c;
+  }
+  
+  .kyc-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .btn {
+    padding: 10px 15px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .approve {
+    background-color: #27ae60;
+  }
+  
+  .reject {
+    background-color: #e74c3c;
+  }
+  
+  .approve:hover {
+    background-color: #2ecc71;
+  }
+  
+  .reject:hover {
+    background-color: #c0392b;
+  }
+  

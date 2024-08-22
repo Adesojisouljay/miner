@@ -1,38 +1,54 @@
 import React, { useState } from 'react';
-import { processHiveWithdrawal } from '../../api/ekzat';
+import { processHiveWithdrawal, requestWithdrawalToken } from '../../api/ekzat';
 import './withdraw-modal.scss';
 
 export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
   const [memo, setMemo] = useState('');
   const [to, setTo] = useState('');
   const [amount, setAmount] = useState('');
+  const [withdrawalToken, setWithdrawalToken] = useState('');
   const [currency, setCurrency] = useState(assets[0]?.currency || '');
   const [message, setMessage] = useState('');
+  const [step, setStep] = useState(1)
 
   const handleWithdrawal = async (e) => {
     e.preventDefault();
 
     try {
-      const withdrawalData = { to, amount, currency, memo };
+      const withdrawalData = { to, amount, currency, memo, withdrawalToken };
+      console.log(withdrawalData)
       const result = await processHiveWithdrawal(withdrawalData);
       console.log(result);
       setMessage(result.message);
+      setStep(3)
     } catch (error) {
       console.log(error);
       setMessage(error.message);
     }
   };
 
+  const requestToken = async () => {
+    try {
+      const data = await requestWithdrawalToken();
+      console.log(data.success)
+      if(data.success === true){
+        setStep(2)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
-    <div className={`modal-overlay  ${isOpen ? 'open' : ''}`}  onClick={onClose}> </div>
+    {/* <div className={`modal-overlay  ${isOpen ? 'open' : ''}`}  onClick={onClose}> </div> */}
     <div className={`modal-overlay ${isOpen ? 'open' : ''}`}>
       <div className="modal">
         <span className="close-btn" onClick={onClose}>X</span>
         <h2>Withdrawal</h2>
         {message && <p className='warning'>{message}</p>}
-        <div className="input-group">
-        <label htmlFor="currency">Currency:</label>
+        {step === 1 && <div className="input-group">
+          <label htmlFor="currency">Currency:</label>
           <select
             id="currency"
             value={currency}
@@ -68,8 +84,22 @@ export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
             onChange={(e) => setMemo(e.target.value)}
             placeholder="Enter memo"
           />
-        </div>
-        <button className="withdraw-btn" onClick={handleWithdrawal}>Withdraw</button>
+          <button className="withdraw-btn" onClick={requestToken}>Withdraw</button>
+        </div>}
+        {step === 2 && <div className="input-group">
+          <label htmlFor="withdrawalToken">Memo:</label>
+          <input
+            type="text"
+            id="withdrawalToken"
+            value={withdrawalToken}
+            onChange={(e) => setWithdrawalToken(e.target.value)}
+            placeholder="Enter withdrawal token"
+          />
+          <button className="withdraw-btn" onClick={handleWithdrawal}>Withdraw</button>
+        </div>}
+        {step === 3 && <div className="">
+         <h4>Withdrawal processed successfully</h4>
+        </div>}
       </div>
     </div>
     </div>

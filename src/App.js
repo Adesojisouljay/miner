@@ -1,5 +1,4 @@
 import {Route, Routes, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { Home } from './pages/Home';
 import { NavBar } from './components/nav-bar/NavBar';
 import { Miner } from './pages/Miner';
@@ -17,6 +16,11 @@ import { getUserProfile } from "./api/profile";
 import { loginSuccess } from "./redux/userReducer";
 import { useDispatch } from "react-redux";
 import ProtectedRoute from "./protected-routes/ProtectedRoutes";
+import { Kyc } from "./components/submit-kyc/Kyc";
+import NotFound from "./components/not-found/NotFound";
+import { KYCManagement } from "./components/manage-kyc/KycManagement";
+import { MerchantAction } from "./components/merchant-action/Merchant";
+import { CreateMerchantForm } from "./components/create-merchant/CreateMerchant";
 
 function App() {
   const dispatch = useDispatch()
@@ -36,7 +40,8 @@ function App() {
       const data = await getUserProfile()
       console.log(data)
       dispatch(loginSuccess(data.data))
-      navigate('/dashboard'); 
+      //probably needs to check the rout before redirect, login, register or landing
+      // navigate('/dashboard'); 
     } catch (error) {
       console.log(error)
     }
@@ -56,7 +61,12 @@ function App() {
             <Route path="/controller" element={<Admin/>}/>
             <Route path="/test" element={<Pagetest />} />
             <Route path="spinner" element={<Spinner />} />
+            <Route path="/kyc" element={<Kyc />} />
+            <Route path="/manage-kyc" element={<KYCManagement />} />
+            <Route path="/merchant-action" element={<MerchantAction />} />
+            <Route path="/create-merchant" element={<CreateMerchantForm />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </div>
