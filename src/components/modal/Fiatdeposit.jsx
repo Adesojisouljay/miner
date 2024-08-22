@@ -48,7 +48,7 @@ function Fiatdeposit({ isOpen, onClose}) {
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
      {/* <div className={`modal-overlay  ${isOpen ? 'open' : ''}`} onClick={onClose} > </div> */}
-        <div className={`modal-overlay ${isOpen ? 'open' : ''}`}>
+        {/* <div className={`modal-overlay ${isOpen ? 'open' : ''}`}> */}
          <div className="modal-fiat animate-slide-in  animate-slide-in-mobile">
             {step === 1 && (<div className="fait-deposit-wrap">
                 <h3>Fiat Deposit</h3> 
@@ -66,7 +66,8 @@ function Fiatdeposit({ isOpen, onClose}) {
                   />
                 </div>
                 <button onClick={getMerchant}>Proceed</button>
-            </div>)}
+            </div>
+          )}
             {step === 2 && (
               <div className="bank-peer-wrap">
                 <span className="close-btn" onClick={() =>{onClose(); setDepositAmount(""); setStep(1) } } >X</span>
@@ -93,7 +94,7 @@ function Fiatdeposit({ isOpen, onClose}) {
               </div>
             )}
 
-         </div>
+         {/* </div> */}
         </div>
     </div>
   )
