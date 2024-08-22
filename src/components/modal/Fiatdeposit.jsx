@@ -47,7 +47,7 @@ function Fiatdeposit({ isOpen, onClose}) {
 
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
-     <div className={`modal-overlay  ${isOpen ? 'open' : ''}`} onClick={onClose} > </div>
+     {/* <div className={`modal-overlay  ${isOpen ? 'open' : ''}`} onClick={onClose} > </div> */}
         <div className={`modal-overlay ${isOpen ? 'open' : ''}`}>
          <div className="modal-fiat animate-slide-in  animate-slide-in-mobile">
             {step === 1 && (<div className="fait-deposit-wrap">

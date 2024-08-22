@@ -229,14 +229,14 @@ export default function Dashtest() {
           <p> Sojminer,All Rights Reserved </p>
         </div>
       </div>
-      <DepositHiveModal
+      {isOpen && <DepositHiveModal
         isOpen={isOpen}
         assets={assets}
         onClose={closeDepositModal}
-      />
-      <WithdrawalModal isOpen={withdrawalOpen} assets={assets} onClose={closeWithdrawalModal}/>
-      <DepositModal isOpen={fiatTransferOpen} onClose={closeFiatTransferModal}/>
-      <Fiatdeposit onClose={closeFiatDepositModal } isOpen={fiatDopositOpen} />
+      />}
+      {withdrawalOpen && <WithdrawalModal isOpen={withdrawalOpen} assets={assets} onClose={closeWithdrawalModal}/>}
+      {fiatTransferOpen && <DepositModal isOpen={fiatTransferOpen} onClose={closeFiatTransferModal}/>}
+      {fiatDopositOpen && <Fiatdeposit onClose={closeFiatDepositModal } isOpen={fiatDopositOpen} />}
       <div className="copy-right-wrap">
        <FaRegCopyright />
        <p>Sojminer,All Rights Reserved </p>
