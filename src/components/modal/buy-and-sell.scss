@@ -48,14 +48,11 @@
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
-  
-    &:hover {
-      background-color: #003f7f;
-    }
-  }
-  
-  .active {
-    background: #b53939;
+}
+
+.active {
+    background: #030303;
+    color: whitesmoke;
   }
   
   .modal h4 {

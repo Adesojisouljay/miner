@@ -23,14 +23,14 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
     setSelectedAssetBalance(selectedAsset ? selectedAsset.balance : 0);
   }, [currency, user.assets]);
 
+  useEffect(() => {
+    handleCalculate(amount)
+  }, [currency]);
+
   const handleCalculate = async (a) => {
     setIsLoading(true)
     setMessage('');
     setConversionResult(null);
-    console.log( amount,
-        currency,
-        amountType,
-        transactionType,)
 
     try {
       const conversionData = await calculateTransaction({
@@ -60,7 +60,6 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
         currency, 
         amountType 
       };
-      console.log(transactionData)
 
       if (transactionType === 'buy') {
         await buyAsset(transactionData); 
@@ -82,7 +81,6 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
     setAmount(newAmount);
     handleCalculate(newAmount);
   };
-  
 
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`}>
@@ -128,7 +126,7 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
                     value={amount}
                     onChange={handleAmountChange}
                     placeholder={`Enter ${amountType === 'fiat' ? 'Naira' : currency.toUpperCase()} amount`}
-                    readOnly={(!conversionResult && amount)}
+                    // readOnly={(!conversionResult && amount)}
                     />
                 </div>
                 <div className="est-wrap">
@@ -139,9 +137,14 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
                     <hr />
                     {(conversionResult || amount) && <div className="step-2">
                         <h4>Transaction Summary</h4>
-                        <p>Amount: {formatNumbers(conversionResult?.convertedAmount)} {amountType === 'fiat' ? currency?.toUpperCase() : 'Naira'}</p>
-                        <p>Fee: {formatNumbers(conversionResult?.fee)}</p>
-                        <p>You will get: {formatNumbers(conversionResult?.amountAfterFee)} {amountType === 'fiat' ? currency?.toUpperCase() : 'Naira'}</p>
+                        <p>Amount: {formatNumbers(conversionResult?.convertedAmount)} 
+                        {amountType === 'fiat' ? currency?.toUpperCase() : 'Naira'}</p>
+                        <p>Fee: {formatNumbers(conversionResult?.fiatFee)}({conversionResult?.cryptoFee})</p>
+                        <p>
+                            You will get: {formatNumbers(conversionResult?.fiatAmountAfterFee)} 
+                            {amountType === 'fiat' ? currency?.toUpperCase() : 'Naira'}
+                            ({conversionResult?.cryptoAmountAfterFee})
+                        </p>
                         <button 
                         className="transaction-btn" 
                         onClick={handleTransaction}
