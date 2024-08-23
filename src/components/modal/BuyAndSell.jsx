@@ -24,6 +24,7 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
   }, [currency, user.assets]);
 
   useEffect(() => {
+    if(amount)
     handleCalculate(amount)
   }, [currency]);
 
