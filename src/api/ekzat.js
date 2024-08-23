@@ -68,6 +68,7 @@ export const updateMerchant = async (id, updateData) => {
     throw error.response.data;
   }
 };
+////////
 
 export const deleteMerchant = async (id) => {
   try {
@@ -149,3 +150,50 @@ export const createNairaDepositRequest = async (depositData) => {
   }
 };
 
+//////BUYING AND SELLING
+
+export const buyAsset = async (assetData) => {
+  try {
+    const response = await api.post(`/transactions/buy`, assetData, {
+      headers: {
+        Authorization: authToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error buying asset:', error);
+    throw error.response?.data || { message: 'Error buying asset' };
+  }
+};
+
+// Function to sell an asset
+export const sellAsset = async (assetData) => {
+  try {
+    const response = await api.post(`/transactions/sell`, assetData, {
+      headers: {
+        Authorization: authToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error selling asset:', error);
+    throw error.response?.data || { message: 'Error selling asset' };
+  }
+};
+
+///// calcultae transaction fee
+export const calculateTransaction = async (conversionData) => {
+  try {
+    
+    const response = await api.get('/transactions/fee', {
+      headers: {
+        Authorization: authToken,
+      },
+      params: conversionData,
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'An error occurred during the transaction calculation');
+  }
+};

@@ -1,0 +1,1 @@
+export const formatNumbers = (n)=> n?.toFixed(3);

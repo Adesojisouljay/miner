@@ -10,7 +10,6 @@ const api = axios.create({
 const authToken = localStorage.getItem('token');
 
 export const getUserProfile = async (userData) => {
-  console.log(authToken)
   try {
     const config = {
         headers: {
@@ -19,9 +18,7 @@ export const getUserProfile = async (userData) => {
       };
 
     const response = await api.get('/auth/profile', config);
-    console.log(response)
     if (response.data.success) {
-      console.log('Profile fetched successfully');
 
       return response; 
     } else {
