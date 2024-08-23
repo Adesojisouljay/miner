@@ -1,4 +1,6 @@
-export const formatNumbers = (n)=> n?.toFixed(3);
+export const formatNumbers = (n)=> {
+    if(n) return n?.toFixed(3)
+    };
 
 export const debounce = (func, delay) => {
     let timeout;

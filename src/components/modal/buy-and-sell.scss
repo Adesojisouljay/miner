@@ -140,3 +140,23 @@
     width: 150%;
     align-self: center;
   }
+
+  .amount-type-toggle {
+    margin-bottom: 10px;
+  }
+  
+  .amount-type-toggle .btn {
+    width: 100px;
+    padding: 10px;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .amount-type-toggle .active {
+    background: #221d1d;
+  }
+  
