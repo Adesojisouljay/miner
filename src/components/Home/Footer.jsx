@@ -49,7 +49,7 @@ export default function Footer() {
             </div>
             <div className="footer-box">
               <h3>SUBSCRIBE NEWSLETTER</h3>
-              <p>Get all latest new when you subscribe to our new <br /> letter with your to keep you updated about SojMiner</p>
+              <p>Get all latest new when you subscribe to our new <br /> letter with your to keep you updated about Ekzatrade</p>
               <div className="newletter-wrap">
               <input type="text" placeholder="Email" />
               <div className="send-icon">

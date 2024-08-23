@@ -10,6 +10,7 @@ import "./dashboard.scss";
 import { WithdrawalModal } from "../components/modal/WithdrawalModal";
 import Fiatdeposit from "../components/modal/Fiatdeposit";
 import { DepositModal } from "../components/modal/FiatTransfer";
+import { BuySellModal } from "../components/modal/BuyAndSell";
 
 export default function Dashtest() {
   const user = useSelector((state) => state.apexMiner.user);
@@ -21,6 +22,8 @@ export default function Dashtest() {
   const [action, setAction] = useState(false);
   const [fiatDopositOpen, setFiatDopositOpen] = useState(false);
   const [fiatTransferOpen, setFiatTransferOpen] = useState(false);
+  const [buySellOpen, setBuySellOpen] = useState(false);
+  const [transactionType, setTransactionType] = useState('buy');
   
   const actionToggle = () => {
     setAction(!action);
@@ -81,6 +84,15 @@ export default function Dashtest() {
     }
   };
 
+  const openBuySellModal = (type) => {
+    setTransactionType(type);
+    setBuySellOpen(true);
+  };
+
+  const closeBuySellModal = () => {
+    setBuySellOpen(false);
+  };
+
   return (
     <div className="dashboard-container" onClick={actionToggleClose}>
       <div className="dashboard-wrap">
@@ -98,7 +110,7 @@ export default function Dashtest() {
                 <h3>Total balance:</h3>
                 <h2>
                   <span className="strike-naira">N</span>
-                  {user?.totalNairaValue?.toFixed(3)}
+                  {user?.nairaBalance?.toFixed(3)}
                 </h2>
               </div>
             </div>
@@ -115,7 +127,7 @@ export default function Dashtest() {
             <button onClick={openWithdrawalModal}>Send</button>
             <button onClick={openFiatTransferModal}>Fiat Transfer</button>
             <button onClick={openFiatDepositModal}>Fiat Deposit</button>
-            <button className="" onClick={actionToggle}>
+            <button className="" onClick={() => openBuySellModal('buy')}>
               Buy/Sell
             </button>
             {action && 
@@ -153,8 +165,8 @@ export default function Dashtest() {
                   </div>
                   <div className="btn-deposit-withdrwal">
                     <button onClick={() => openDepositModal(u)}>Deposit</button>
-                    <button>Withdraw</button>
-                    <button>Buy/Sell</button>
+                    <button onClick={openWithdrawalModal}>Withdraw</button>
+                    <button onClick={() => openBuySellModal('buy')}>Buy/Sell</button>
                   </div>
                 </div>
               ))}
@@ -226,7 +238,7 @@ export default function Dashtest() {
         </div>
         <div className="copy-right-wrap">
           <FaRegCopyright />
-          <p> Sojminer,All Rights Reserved </p>
+          <p> Adesojisouljay,All Rights Reserved </p>
         </div>
       </div>
       {isOpen && <DepositHiveModal
@@ -234,12 +246,20 @@ export default function Dashtest() {
         assets={assets}
         onClose={closeDepositModal}
       />}
+      {buySellOpen && (
+        <BuySellModal
+          isOpen={buySellOpen}
+          onClose={closeBuySellModal}
+          assets={assets}
+          transactionType={transactionType}
+        />
+      )}
       {withdrawalOpen && <WithdrawalModal isOpen={withdrawalOpen} assets={assets} onClose={closeWithdrawalModal}/>}
       {fiatTransferOpen && <DepositModal isOpen={fiatTransferOpen} onClose={closeFiatTransferModal}/>}
       {fiatDopositOpen && <Fiatdeposit onClose={closeFiatDepositModal } isOpen={fiatDopositOpen} />}
       <div className="copy-right-wrap">
        <FaRegCopyright />
-       <p>Sojminer,All Rights Reserved </p>
+       <p>Adesojisouljay,All Rights Reserved </p>
       </div>
       </div>
   );

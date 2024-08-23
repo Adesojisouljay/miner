@@ -38,7 +38,7 @@ function App() {
   const getProfile = async () => {
     try {
       const data = await getUserProfile()
-      console.log(data)
+      // console.log(data)
       dispatch(loginSuccess(data.data))
       //probably needs to check the rout before redirect, login, register or landing
       // navigate('/dashboard'); 
