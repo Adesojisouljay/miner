@@ -139,7 +139,7 @@ export const requestWithdrawalToken = async () => {
 /////////DEPOSIT
 export const createNairaDepositRequest = async (depositData) => {
   try {
-    const response = await api.post('deposits/naira-deposit', depositData, {
+    const response = await api.post('deposits/fiat/deposit', depositData, {
       headers: {
         Authorization: authToken,
       },
