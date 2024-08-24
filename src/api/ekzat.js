@@ -197,3 +197,18 @@ export const calculateTransaction = async (conversionData) => {
     throw new Error(error.response?.data?.message || 'An error occurred during the transaction calculation');
   }
 };
+
+//////ADD BANK ACCOUNT
+export const addBankAccount = async (accountDetails) => {
+  try {
+    const response = await api.post('/auth/add-account', accountDetails, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': authToken
+      }
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.error('Error adding bank account:', error);
+  }
+};
