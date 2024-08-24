@@ -34,7 +34,7 @@ export const NavBar = () => {
         </div>
         <ul className="nav-links">
           <li><Link to="/">Home</Link></li>
-          <li><Link to="/mining">Stake</Link></li>
+          {/* <li><Link to="/mining">Stake</Link></li> */}
           <li><Link to="/contact">Contact</Link></li>
           <li><Link to="/dashboard">Dashboard</Link></li>
           <li><Link to="/spinner">Spinner</Link></li>

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import './deposit-modal.scss';
 
-export const DepositHiveModal = ({ isOpen, onClose, assets }) => {
+export const FiatWithdrawalModal = ({ isOpen, onClose, assets }) => {
 
   const user = useSelector(state => state.apexMiner.user);
 

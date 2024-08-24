@@ -57,7 +57,7 @@ function App() {
           <Route path="/register" element={<Register/>}/>
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashtest/>}/>
-            <Route path="/mining" element={<Miner/>}/>
+            {/* <Route path="/mining" element={<Miner/>}/> */}
             <Route path="/controller" element={<Admin/>}/>
             <Route path="/test" element={<Pagetest />} />
             <Route path="spinner" element={<Spinner />} />
