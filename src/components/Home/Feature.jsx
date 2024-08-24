@@ -9,27 +9,27 @@ export default function Feature() {
   return (
     <div>
       <div className="feature-text-wrap">
-        <h1>Revolutionary Mining Platform with Exclusive </h1>
-        <h1 className="fea-h1">Rewards Program</h1>
+        <h1>Innovative Crypto Exchange with </h1>
+        <h1 className="fea-h1">Unmatched Security & Ease</h1>
       </div>
       <div className="feature-wrap">
         <div className="box-left">
         <div className="box">
           <div className="box-text">
-            <h2>Mobile Payment Make Easy</h2>
-            <p>Add new, trending and rare artwork to your collection.</p>
+            <h2>Seamless Mobile Trading</h2>
+            <p>Trade cryptocurrencies effortlessly on the go with our user-friendly mobile platform.</p>
           </div>
           <div className="feature-img">
-          <img src={btc} alt="" />
+          <img src={btc} alt="Mobile Trading" />
           </div>
         </div>
         <div className="box">
           <div className="box-text">
-            <h2>Lifetime Free Transaction</h2>
-            <p>Add new, trending and rare artwork to your collection.</p>
+            <h2>Zero Fees on Transactions</h2>
+            <p>Enjoy lifetime free transactions with no hidden costs or fees.</p>
           </div>
           <div className="feature-img">
-          <img src={pig} alt="" />
+          <img src={pig} alt="Zero Fees" />
           </div>
           
         </div>
@@ -37,21 +37,21 @@ export default function Feature() {
         <div className="box-right">
         <div className="box">
           <div className="box-text">
-            <h2>Protect the Identity</h2>
-            <p>Add new, trending and rare artwork to your collection.</p>
+            <h2>Identity Protection</h2>
+            <p>Your privacy is our priority. Trade with confidence knowing your identity is secure.</p>
           </div>
           <div className="feature-img">
-          <img  src={lock} alt="" />
+          <img  src={lock} alt="Identity Protection" />
           </div>
           
         </div>
         <div className="box">
           <div className="box-text">
-            <h2>Security & Control Over Money</h2>
-            <p>Add new, trending and rare artwork to your collection.</p>
+            <h2>Ultimate Security & Control</h2>
+            <p>Maintain full control over your assets with top-notch security features.</p>
           </div>
           <div className="feature-img">
-          <img  src={save} alt="" />
+          <img  src={save} alt="Security & Control" />
           </div>
           
         </div>

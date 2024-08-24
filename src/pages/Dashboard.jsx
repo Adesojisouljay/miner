@@ -11,6 +11,7 @@ import { WithdrawalModal } from "../components/modal/WithdrawalModal";
 import Fiatdeposit from "../components/modal/Fiatdeposit";
 import { DepositModal } from "../components/modal/FiatTransfer";
 import { BuySellModal } from "../components/modal/BuyAndSell";
+import { FiatWithdrawalModal } from "../components/modal/FiatWithdrawal";
 
 export default function Dashtest() {
   const user = useSelector((state) => state.apexMiner.user);
@@ -21,6 +22,7 @@ export default function Dashtest() {
   const [trxHistory, setTrxHistory] = useState([]);
   const [action, setAction] = useState(false);
   const [fiatDopositOpen, setFiatDopositOpen] = useState(false);
+  const [fiatWithdrawalOpen, setFiatWithdrawalOpen] = useState(false);
   const [fiatTransferOpen, setFiatTransferOpen] = useState(false);
   const [buySellOpen, setBuySellOpen] = useState(false);
   const [transactionType, setTransactionType] = useState('buy');
@@ -65,6 +67,13 @@ export default function Dashtest() {
 
   const closeWithdrawalModal = () => {
     setWithdrawalOpen(false);
+  };
+
+  const openFiatWithdrawalModal = () => {
+    setFiatWithdrawalOpen(true);
+  };
+  const closeFiatWithdrawalModal = () => {
+    setFiatWithdrawalOpen(false);
   };
 
   useEffect(() => {
@@ -127,6 +136,8 @@ export default function Dashtest() {
             <button onClick={openWithdrawalModal}>Send</button>
             <button onClick={openFiatTransferModal}>Fiat Transfer</button>
             <button onClick={openFiatDepositModal}>Fiat Deposit</button>
+            <button onClick={openFiatDepositModal}>Fiat Deposit</button>
+            <button onClick={openFiatWithdrawalModal}>Fiat Withdrawal</button>
             <button className="" onClick={() => openBuySellModal('buy')}>
               Buy/Sell
             </button>
@@ -257,6 +268,7 @@ export default function Dashtest() {
       {withdrawalOpen && <WithdrawalModal isOpen={withdrawalOpen} assets={assets} onClose={closeWithdrawalModal}/>}
       {fiatTransferOpen && <DepositModal isOpen={fiatTransferOpen} onClose={closeFiatTransferModal}/>}
       {fiatDopositOpen && <Fiatdeposit onClose={closeFiatDepositModal } isOpen={fiatDopositOpen} />}
+      {fiatWithdrawalOpen && <FiatWithdrawalModal onClose={closeFiatWithdrawalModal } isOpen={fiatWithdrawalOpen} assets={assets} />}
       <div className="copy-right-wrap">
        <FaRegCopyright />
        <p>Adesojisouljay,All Rights Reserved </p>

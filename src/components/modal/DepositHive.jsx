@@ -44,7 +44,11 @@ export const DepositHiveModal = ({ isOpen, onClose, assets }) => {
         <h2>Deposit</h2>
         <div className="deposit-asset">
           <label htmlFor="asset-select">Select Asset:</label>
-          <select id="asset-select" onChange={handleAssetChange} value={selectedAsset?.currency}>
+          <select
+          id="asset-select" 
+          onChange={handleAssetChange} 
+          value={selectedAsset?.currency}
+          >
             {assets.map(asset => (
               <option key={asset?.currency} value={asset?.currency}>{asset?.currency?.toUpperCase()}</option>
             ))}
