@@ -78,7 +78,7 @@ function Fiatdeposit({ isOpen, onClose}) {
                 <p>Transfer to </p>
                 <div className="bank-details-wrap">
                   <div className="acc-num">
-                  <h4>Merchant:</h4> <span className='copy-text-wrap'><span>{merchantInfo?.data.nickname}</span><IoIosCopy /></span>
+                  <h4>Merchant:</h4> <span className='copy-text-wrap'><span>{merchantInfo?.data.username}</span><IoIosCopy /></span>
                   </div>
                   <div className="acc-num">
                   <h4>Account Number:</h4> <span className='copy-text-wrap'><span>{merchantInfo?.data.accountNumber}</span><IoIosCopy /></span>

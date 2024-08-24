@@ -124,7 +124,7 @@ export const MerchantAction = () => {
         {merchants.map((merchant) => (
           <li key={merchant._id} className="merchant-item">
             <div className="merchant-info">
-              <p><strong>Nickname:</strong> {merchant.nickname}</p>
+              <p><strong>Username:</strong> {merchant.username}</p>
               <p><strong>Email:</strong> {merchant?.userId?.email || 'No user associated'}</p>
               <p><strong>Account Number:</strong> {merchant.accountNumber}</p>
               <p><strong>Account Name:</strong> {merchant.accountName}</p>
@@ -142,7 +142,7 @@ export const MerchantAction = () => {
               <div className="merchant-actions">
                 <button className="approve" onClick={() => handleApprove(merchant._id)}>Approve</button>
                 <button className="disapprove" onClick={() => handleDisapprove(merchant._id)}>Disapprove</button>
-                {/* <button className="update" onClick={() => handleUpdate(merchant._id, { nickname: 'Updated Nickname' })}>Update</button> */}
+                {/* <button className="update" onClick={() => handleUpdate(merchant._id, { username: 'Updated username' })}>Update</button> */}
                 <button className="delete" onClick={() => handleDelete(merchant._id)}>Delete</button>
               </div>
             </div>
