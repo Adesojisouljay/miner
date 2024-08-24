@@ -139,7 +139,7 @@ export const requestWithdrawalToken = async () => {
 /////////DEPOSIT
 export const createNairaDepositRequest = async (depositData) => {
   try {
-    const response = await api.post('deposits/naira-deposit', depositData, {
+    const response = await api.post('deposits/fiat/deposit', depositData, {
       headers: {
         Authorization: authToken,
       },
@@ -195,5 +195,84 @@ export const calculateTransaction = async (conversionData) => {
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.message || 'An error occurred during the transaction calculation');
+  }
+};
+
+//////ADD BANK ACCOUNT
+export const addBankAccount = async (accountDetails) => {
+  try {
+    const response = await api.post('/auth/add-account', accountDetails, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': authToken
+      }
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.error('Error adding bank account:', error);
+  }
+};
+
+////////FIAT WITHDRAWAL ACTIONS
+export const requestFiatWithdrawal = async (withdrawalData) => {
+  try {
+    const response = await api.post('/withdrawals/fiat/init', withdrawalData, {
+      headers: {
+        Authorization: authToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error requesting fiat withdrawal:', error);
+    throw error.response.data;
+  }
+};
+
+export const confirmFiatWithdrawal = async (withdrawalId) => {
+  const authToken = localStorage.getItem('token');
+  try {
+    const response = await api.post('/withdrawals/fiat/confirm', {
+      withdrawalId
+    }, {
+      headers: {
+        Authorization: authToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error confirming fiat withdrawal:', error);
+    throw error.response.data;
+  }
+};
+
+export const cancelFiatWithdrawal = async (withdrawalId) => {
+  const authToken = localStorage.getItem('token');
+  try {
+    const response = await api.post('/withdrawals/fiat/cancel', {
+      withdrawalId
+    }, {
+      headers: {
+        Authorization: authToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error canceling fiat withdrawal:', error);
+    throw error.response.data;
+  }
+};
+
+export const getAllFiatWithdrawals = async () => {
+  const authToken = localStorage.getItem('token');
+  try {
+    const response = await api.get('/withdrawals/fiat', {
+      headers: {
+        Authorization: authToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching fiat withdrawals:', error);
+    throw error.response.data;
   }
 };

@@ -6,7 +6,7 @@ import './create-merchant.scss';
 
 export const CreateMerchantForm = () => {
   const [formData, setFormData] = useState({
-    nickname: '',
+    username: '',
     accountNumber: '',
     accountName: '',
     bankName: '',
@@ -109,7 +109,7 @@ export const CreateMerchantForm = () => {
 
   return (
     <div className="create-merchant-form">
-      {!isSubmitted ? (
+      {isSubmitted ? (
         <div className="success-message">
           <h2>Merchant Request Submitted Successfully!</h2>
           <p>Your application as a merchant has been submitted successfully. We will review your details and get back to you shortly.</p>
@@ -122,8 +122,8 @@ export const CreateMerchantForm = () => {
           {error && <p className="error">{error}</p>}
           {/* Form Fields */}
           <div className="form-group">
-            <label htmlFor="nickname">Username</label>
-            <input type="text" id="nickname" name="nickname" value={formData.nickname} onChange={handleChange} required />
+            <label htmlFor="username">Username</label>
+            <input type="text" id="username" name="username" value={formData.username} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label htmlFor="accountNumber">Account Number</label>
