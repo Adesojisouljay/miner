@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import debounce from 'lodash/debounce';
 import './buy-and-sell.scss';
 import { buyAsset, sellAsset, calculateTransaction } from '../../api/ekzat';
 import { formatNumbers } from '../../utils';
@@ -8,13 +9,15 @@ import { Loader } from '../loader/Loader';
 export const BuySellModal = ({ isOpen, onClose, assets }) => {
   const [currency, setCurrency] = useState(assets[0]?.currency || '');
   const [amount, setAmount] = useState('');
-  const [amountType, setAmountType] = useState('crypto'); // 'crypto' or 'fiat'
+  const [amountType, setAmountType] = useState('crypto');
   const [transactionType, setTransactionType] = useState('buy');
   const [message, setMessage] = useState('');
   const [conversionResult, setConversionResult] = useState(null);
   const [step, setStep] = useState(1);
   const [selectedAssetBalance, setSelectedAssetBalance] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  
+  const abortControllerRef = useRef(null);
 
   const user = useSelector(state => state.apexMiner.user);
 
@@ -24,10 +27,35 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
   }, [currency, user.assets]);
 
   useEffect(() => {
-    if (amount) handleCalculate(amount);
+    if (amount) debouncedHandleCalculate(amount);
   }, [currency, amountType]);
 
+  const debouncedHandleCalculate = useCallback(
+    debounce((a) => {
+      handleCalculate(a);
+    }, 1000),
+    [currency, amountType, transactionType]
+  );
+
+  useEffect(() => {
+    if(!amount) setConversionResult(null)
+    setConversionResult(null);
+    debouncedHandleCalculate(amount);
+  }, [amount]);
+
   const handleCalculate = async (a) => {
+    if (!a) {
+      setConversionResult(null);
+      return;
+    }
+
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    abortControllerRef.current = new AbortController();
+    const { signal } = abortControllerRef.current;
+
     setIsLoading(true);
     setMessage('');
     setConversionResult(null);
@@ -38,48 +66,86 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
         currency,
         amountType,
         transactionType,
+        signal,  // Pass signal to fetch request
       });
-      setConversionResult(conversionData);
-      setIsLoading(false);
+      console.log(a)
+      console.log(conversionData)
+      if (conversionData.success === true) {
+        setConversionResult(conversionData);
+        setIsLoading(false);
+      } else {
+        setConversionResult(null);
+        setIsLoading(false);
+      }
     } catch (error) {
-      setMessage(error.message || 'An error occurred during calculation');
+      if (error.name === 'AbortError') {
+        console.log('Fetch aborted');
+      } else {
+        setMessage(error.message || 'An error occurred during calculation');
+      }
       setIsLoading(false);
     }
   };
 
   const handleTransaction = async (e) => {
-    setIsLoading(true);
     e.preventDefault();
+  
+    if (!amount || isNaN(amount)) {
+      setMessage('Please enter a valid amount');
+      return;
+    }
+  
+    const amountNumber = Number(amount);
+  
+    if (amountType === 'fiat') {
+      if (amountNumber < 500) {
+        setMessage('Amount must not be less than 500 Naira');
+        return;
+      }
+    } else if (amountType === 'crypto') {
+      if (!conversionResult || conversionResult.convertedAmount < 500) {
+        setMessage('The equivalent amount in Naira must be at least 500');
+        return;
+      }
+    }
+  
+    setIsLoading(true);
     setMessage('');
-
+  
     try {
-      const transactionData = { 
-        amount: transactionType === 'buy' ? 
-          (amountType === 'fiat' ? amount : conversionResult?.convertedAmount) : 
-          (amountType === 'fiat' ? conversionResult?.convertedAmount : amount), 
-        currency, 
-        amountType 
+      const transactionData = {
+        amount: transactionType === 'buy'
+          ? (amountType === 'fiat' ? amountNumber : conversionResult?.convertedAmount)
+          : (amountType === 'fiat' ? conversionResult?.convertedAmount : amountNumber),
+        currency,
+        amountType
       };
-
+  
       if (transactionType === 'buy') {
-        await buyAsset(transactionData); 
+        await buyAsset(transactionData);
       } else if (transactionType === 'sell') {
         await sellAsset(transactionData);
       }
-      
+  
       setStep(2);
-      setIsLoading(false);
     } catch (error) {
       setMessage(error.message || 'An error occurred during the transaction');
-      setStep(1);
+    } finally {
       setIsLoading(false);
     }
-  };
+  };    
 
   const handleAmountChange = (e) => {
     const newAmount = e.target.value;
+
+    if (newAmount === '') {
+      setConversionResult(null);
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    }
+
     setAmount(newAmount);
-    handleCalculate(newAmount);
   };
 
   const toggleAmountType = () => {
@@ -93,14 +159,15 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
         {(isLoading) && <Loader />}
         <>
           <h2>{transactionType === 'buy' ? 'Buy' : 'Sell'} Assets</h2>
+          <button onClick={()=> console.log(amount)}>test...</button>
           <div className="toggle-buttons">
-            <button 
+            <button
               className={`${transactionType === 'buy' ? 'active btn' : ''} btn buy-sell-btn`}
               onClick={() => setTransactionType('buy')}
             >
               Buy
             </button>
-            <button 
+            <button
               className={`${transactionType === 'sell' ? 'active btn' : ''} btn buy-sell-btn`}
               onClick={() => setTransactionType('sell')}
             >
@@ -108,31 +175,30 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
             </button>
           </div>
           <div className="amount-type-toggle">
-            <button 
-              className={`${amountType === 'crypto' ? 'active btn' : ''} btn`}
+            <button
+              className={`active btn`}
               onClick={toggleAmountType}
             >
               {amountType === 'crypto' ? 'Switch to Fiat' : 'Switch to Crypto'}
             </button>
           </div>
           {message && <p className='warning'>{message}</p>}
-          
           {step === 1 && (
             <div className="input-group">
               <h3>Balance: {formatNumbers(selectedAssetBalance)} {currency.toUpperCase()}</h3>
               <div className="currency-wrap">
-                {amountType === "fiat" ? 
+                {amountType === "fiat" ?
                   <h1>NGN</h1> : <select
-                  id="currency"
-                  value={currency}
-                  onChange={(e) => setCurrency(e.target.value)}
-                >
-                  {assets.map((asset) => (
-                    <option key={asset.currency} value={asset.currency}>
-                      {asset.currency.toUpperCase()}
-                    </option>
-                  ))}
-                </select>}
+                    id="currency"
+                    value={currency}
+                    onChange={(e) => setCurrency(e.target.value)}
+                  >
+                    {assets.map((asset) => (
+                      <option key={asset.currency} value={asset.currency}>
+                        {asset.currency.toUpperCase()}
+                      </option>
+                    ))}
+                  </select>}
                 <input
                   type="number"
                   id="amount"
@@ -143,20 +209,20 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
               </div>
               <div className="est-wrap">
                 <div className='est currency-wrap'>
-                  {amountType === "crypto" ? 
-                  <h1>NGN</h1> : <select
-                  id="currency"
-                  value={currency}
-                  onChange={(e) => setCurrency(e.target.value)}
-                >
-                  {assets.map((asset) => (
-                    <option key={asset.currency} value={asset.currency}>
-                      {asset.currency.toUpperCase()}
-                    </option>
-                  ))}
-                </select>
+                  {amountType === "crypto" ?
+                    <h1>NGN</h1> : <select
+                      id="currency"
+                      value={currency}
+                      onChange={(e) => setCurrency(e.target.value)}
+                    >
+                      {assets.map((asset) => (
+                        <option key={asset.currency} value={asset.currency}>
+                          {asset.currency.toUpperCase()}
+                        </option>
+                      ))}
+                    </select>
                   }
-                  <h2>{formatNumbers(conversionResult?.convertedAmount)}</h2>
+                  <h2>{amountType === "crypto" ? conversionResult?.convertedNairaAmount : conversionResult?.convertedCryptoAmount}</h2>
                 </div>
                 <hr />
                 {(conversionResult || amount) && (
@@ -164,37 +230,55 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
                     <h4>Transaction Summary</h4>
                     {transactionType === 'buy' ? (
                       <>
-                        <p>Amount: {formatNumbers(conversionResult?.cryptoAmount)} {currency.toUpperCase()} ({formatNumbers(conversionResult?.convertedAmount)} Naira)</p>
-                        <p>Fee: {conversionResult?.cryptoFee} ({formatNumbers(conversionResult?.fiatFee)} Naira)</p>
-                        <p>You will get: {conversionResult?.cryptoAmountAfterFee} ({formatNumbers(conversionResult?.fiatAmountAfterFee)} Naira)</p>
+                        {!conversionResult ? (
+                          <>
+                            <p>Amount: Calculating...</p>
+                            <p>Fee: Calculating...</p>
+                            <p>You will get: Calculating...</p>
+                          </>
+                        ) : (
+                          <>
+                            <p>Amount: {conversionResult?.cryptoAmount} ({conversionResult?.convertedNairaAmount})</p>
+                            <p>Fee: {conversionResult?.cryptoFee} ({conversionResult?.fiatFee})</p>
+                            <p>You will get: {conversionResult?.cryptoAmountAfterFee} ({conversionResult?.fiatAmountAfterFee})</p>
+                          </>
+                        )}
                       </>
                     ) : (
                       <>
-                        <p>Amount: {formatNumbers(conversionResult?.convertedAmount)} Naira ({formatNumbers(conversionResult?.cryptoAmount)} {currency.toUpperCase()})</p>
-                        <p>Fee: {formatNumbers(conversionResult?.fiatFee)} Naira ({conversionResult?.cryptoFee})</p>
-                        <p>You will get: {formatNumbers(conversionResult?.fiatAmountAfterFee)} Naira ({conversionResult?.cryptoAmountAfterFee})</p>
+                        {!conversionResult ? (
+                          <>
+                            <p>Amount: Calculating...</p>
+                            <p>Fee: Calculating...</p>
+                            <p>You will get: Calculating...</p>
+                          </>
+                        ) : (
+                          <>
+                            <p>Amount: {(conversionResult?.convertedCryptoAmount)} ({conversionResult?.convertedNairaAmount})</p>
+                            <p>Fee: {(conversionResult?.fiatFee)} Naira ({conversionResult?.cryptoFee})</p>
+                            <p>You will get: {(conversionResult?.fiatAmountAfterFee)} ({conversionResult?.cryptoAmountAfterFee})</p>
+                          </>
+                        )}
                       </>
                     )}
-                    <button 
-                      className="transaction-btn" 
+                    <button
+                      className="transaction-btn"
                       onClick={handleTransaction}
-                      disabled={isLoading}
-                      style={{ cursor: isLoading && "not-allowed" }}
+                      disabled={isLoading || !amount || !conversionResult}
+                      style={{ cursor: isLoading || !amount || !conversionResult ? "not-allowed" : "pointer" }}
                     >
                       Confirm {transactionType === 'buy' ? 'Buy' : 'Sell'}
                     </button>
                   </div>
                 )}
+
               </div>
             </div>
           )}
-
           {step === 2 && (
-            <div className="step-3">
-              <h4>Transaction processed successfully</h4>
-              <button className="transaction-btn" onClick={onClose}>
-                Close
-              </button>
+            <div className="succe">
+              <h3>Transaction Successful</h3>
+              <button onClick={onClose} className="btn">Close</button>
             </div>
           )}
         </>
