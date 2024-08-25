@@ -115,11 +115,13 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
     try {
       const transactionData = {
         amount: transactionType === 'buy'
-          ? (amountType === 'fiat' ? amountNumber : conversionResult?.convertedAmount)
-          : (amountType === 'fiat' ? conversionResult?.convertedAmount : amountNumber),
+          ? (amountType === 'fiat' ? Number(amountNumber) : Number(conversionResult?.convertedCryptoAmount?.split(" ")[0]))
+          : (amountType === 'fiat' ? Number(conversionResult?.convertedCryptoAmount?.split(" ")[0]) : Number(amountNumber)),
         currency,
         amountType
       };
+      console.log( Number(conversionResult?.convertedCryptoAmount.split(" ")[0]) + 1)
+      console.log(transactionData)
   
       if (transactionType === 'buy') {
         await buyAsset(transactionData);
@@ -157,7 +159,7 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
       <div className="modal">
         <span className="close-btn" onClick={onClose}>X</span>
         {(isLoading) && <Loader />}
-        <>
+        {step === 1 && (<>
           <h2>{transactionType === 'buy' ? 'Buy' : 'Sell'} Assets</h2>
           <button onClick={()=> console.log(amount)}>test...</button>
           <div className="toggle-buttons">
@@ -183,7 +185,7 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
             </button>
           </div>
           {message && <p className='warning'>{message}</p>}
-          {step === 1 && (
+         
             <div className="input-group">
               <h3>Balance: {formatNumbers(selectedAssetBalance)} {currency.toUpperCase()}</h3>
               <div className="currency-wrap">
@@ -274,14 +276,13 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
 
               </div>
             </div>
-          )}
+        </> )}
           {step === 2 && (
             <div className="succe">
               <h3>Transaction Successful</h3>
               <button onClick={onClose} className="btn">Close</button>
             </div>
           )}
-        </>
       </div>
     </div>
   );
