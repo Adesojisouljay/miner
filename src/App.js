@@ -23,6 +23,7 @@ import { MerchantAction } from "./components/merchant-action/Merchant";
 import { CreateMerchantForm } from "./components/create-merchant/CreateMerchant";
 import { AddBankAccountForm } from "./pages/AddBankAccount";
 import { FiatWithdrawalAction } from "./components/fiat-withdrawal-action/FiatWithdrawalAction";
+import { FiatDepositAction } from "./components/fiat-deposit-action/FiatDepositAction";
 
 function App() {
   const dispatch = useDispatch()
@@ -69,6 +70,7 @@ function App() {
             <Route path="/create-merchant" element={<CreateMerchantForm />} />
             <Route path="/add-account" element={<AddBankAccountForm />} />
             <Route path="/fiat-withdrawal-action" element={<FiatWithdrawalAction />} />
+            <Route path="/fiat-deposit-action" element={<FiatDepositAction />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

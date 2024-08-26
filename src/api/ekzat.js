@@ -276,3 +276,45 @@ export const getAllFiatWithdrawals = async () => {
     throw error.response.data;
   }
 };
+
+///////////////FIAT DEPOSIT ACTIONS
+export const getAllFiatDeposits = async () => {
+  try {
+    const response = await api.get('/deposits/fiat', {
+      headers: { Authorization: authToken },
+    });
+    console.log(response)
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch fiat deposits:', error);
+    throw error;
+  }
+};
+
+export const confirmFiatDeposit = async (depositRequestId, sender, receiver, accountNumber, accountHolderName, bankName) => {
+  try {
+    const response = await api.post(
+      '/deposits/fiat/confirm',
+      { depositRequestId, sender, receiver, accountNumber, accountHolderName, bankName },
+      { headers: { Authorization: authToken } }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Failed to confirm fiat deposit:', error);
+    throw error;
+  }
+};
+
+export const cancelFiatDeposit = async (depositRequestId) => {
+  try {
+    const response = await api.post(
+      '/deposits/fiat/cancel',
+      { depositRequestId },
+      { headers: { Authorization: authToken } }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Failed to cancel fiat deposit:', error);
+    throw error;
+  }
+};
