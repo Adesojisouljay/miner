@@ -1,5 +1,6 @@
 // import { api } from './axiosInstance';
 import axios from "axios";
+import { updateUser } from "../redux/userReducer";
 
 const api = axios.create({
   // baseURL: 'https://miner-server-hzkn.onrender.com/api',
@@ -9,7 +10,7 @@ const api = axios.create({
 
 const authToken = localStorage.getItem('token');
 
-export const getUserProfile = async (userData) => {
+export const getUserProfile = async (dispatch) => {
   try {
     const config = {
         headers: {
@@ -18,8 +19,9 @@ export const getUserProfile = async (userData) => {
       };
 
     const response = await api.get('/auth/profile', config);
+    console.log(response)
     if (response.data.success) {
-
+      dispatch(updateUser({ user: response.data.user }));
       return response; 
     } else {
       console.error('Failed to fetch profile:', response.data.message);
