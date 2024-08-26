@@ -68,7 +68,7 @@ function App() {
             <Route path="/manage-kyc" element={<KYCManagement />} />
             <Route path="/merchant-action" element={<MerchantAction />} />
             <Route path="/create-merchant" element={<CreateMerchantForm />} />
-            <Route path="/add-account" element={<AddBankAccountForm />} />
+            <Route path="/accounts" element={<AddBankAccountForm />} />
             <Route path="/fiat-withdrawal-action" element={<FiatWithdrawalAction />} />
             <Route path="/fiat-deposit-action" element={<FiatDepositAction />} />
           </Route>
