@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { persistor } from '../../redux/store';
 import miner from "../../assets/miner.png";
 import loggo from "../../assets/loggo1.png";
 import './navbar.scss';
@@ -11,9 +12,9 @@ import { FaGreaterThan } from "react-icons/fa";
 
 export const NavBar = () => {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector(state => state?.apexMiner?.isAuthenticated);
-  const user = useSelector(state => state?.apexMiner?.user);
-  const [nav, setNav] = useState(true)
+  const isAuthenticated = useSelector(state => state?.ekzaUser?.isAuthenticated);
+  const user = useSelector(state => state?.ekzaUser?.user);
+  const [nav, setNav] = useState(true);
 
   const handleNav = ()=>{
     setNav(!nav)
@@ -22,7 +23,10 @@ export const NavBar = () => {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
+    persistor.purge();
+    window.location.reload();
   };
+  
 
   return (
     <nav className="navbar">

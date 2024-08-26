@@ -6,7 +6,7 @@ import { userReducer } from './userReducer';
 
 
 const rootReducer = combineReducers({
-    apexMiner: userReducer,
+    ekzaUser: userReducer,
   });
 
 const persistConfig = {

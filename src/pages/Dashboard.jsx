@@ -14,7 +14,7 @@ import { BuySellModal } from "../components/modal/BuyAndSell";
 import { FiatWithdrawalModal } from "../components/modal/FiatWithdrawal";
 
 export default function Dashtest() {
-  const user = useSelector((state) => state.apexMiner.user);
+  const user = useSelector((state) => state.ekzaUser.user);
   const assets = user?.assets || [];
 
   const [isOpen, setIsOpen] = useState(false);

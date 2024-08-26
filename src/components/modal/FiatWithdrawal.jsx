@@ -5,7 +5,7 @@ import { requestWithdrawalToken, requestFiatWithdrawal } from '../../api/ekzat';
 import './fiat-withdrawal.scss';
 
 export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
-  const user = useSelector(state => state.apexMiner.user);
+  const user = useSelector(state => state.ekzaUser.user);
 
   const [selectedAccount, setSelectedAccount] = useState(user.accounts[0] || {});
   const [withdrawalAmount, setWithdrawalAmount] = useState('');

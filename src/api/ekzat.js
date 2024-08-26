@@ -153,6 +153,7 @@ export const createNairaDepositRequest = async (depositData) => {
 //////BUYING AND SELLING
 
 export const buyAsset = async (assetData) => {
+  console.log(authToken)
   try {
     const response = await api.post(`/transactions/buy`, assetData, {
       headers: {

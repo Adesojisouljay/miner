@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 //Needs proper checking
 
 const ProtectedRoute = ({ path, element }) => {
-  const isAuthenticated = useSelector(state => state.apexMiner.isAuthenticated);
+  const isAuthenticated = useSelector(state => state.ekzaUser.isAuthenticated);
   // const isAuthenticated = false;
 
   // return (
@@ -27,7 +27,7 @@ export default ProtectedRoute;
 // //Needs proper checking
 
 // const ProtectedRoute = ({ path, element }) => {
-//   const isAuthenticated = useSelector(state => state.apexMiner.isAuthenticated);
+//   const isAuthenticated = useSelector(state => state.ekzaUser.isAuthenticated);
 //   // const isAuthenticated = false;
 
 //   // return (

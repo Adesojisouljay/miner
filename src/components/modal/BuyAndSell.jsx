@@ -19,7 +19,7 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
   
   const abortControllerRef = useRef(null);
 
-  const user = useSelector(state => state.apexMiner.user);
+  const user = useSelector(state => state.ekzaUser.user);
 
   useEffect(() => {
     const selectedAsset = user.assets.find(asset => asset.currency === currency);
