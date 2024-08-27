@@ -214,6 +214,23 @@ export const addBankAccount = async (accountDetails) => {
   }
 };
 
+//////DeLETE BANK ACCOUNT
+export const deleteBankAccount = async (accountId) => {
+  try {
+    const response = await api.delete('/auth/delete-account', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': authToken
+      },
+      data: { accountId }
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.error('Error deleting bank account:', error);
+  }
+};
+
+
 ////////FIAT WITHDRAWAL ACTIONS
 export const requestFiatWithdrawal = async (withdrawalData) => {
   try {

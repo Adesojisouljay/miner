@@ -1,13 +1,6 @@
-// import { api } from './axiosInstance';
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: 'https://api.testingbreak.com/api',
-  // baseURL: 'http://localhost:2000/api',
-});
+import { api } from './axiosInstance';
 
 export const initiateDeposit = async (depositData) => {
-  console.log("authToken")
   try {
     const authToken = localStorage.getItem('token');
 

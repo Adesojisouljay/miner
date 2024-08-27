@@ -1,16 +1,8 @@
-// import { api } from './axiosInstance';
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: 'https://api.testingbreak.com/api',
-  // baseURL: 'https://miner-server-hzkn.onrender.com/api',
-  // baseURL: 'http://localhost:2000/api',
-});
+import { api } from './axiosInstance';
 
 export const initiateWithdrawal = async (amount) => {
   try {
     const authToken = localStorage.getItem('token');
-    console.log(authToken)
     const config = {
       headers: {
         Authorization: `${authToken}`,
