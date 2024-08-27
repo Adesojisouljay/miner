@@ -8,7 +8,7 @@ import './add-bank-account.scss';
 export const BankAccount = ({ authToken }) => {
   const user = useSelector(state => state.ekzaUser.user);
   const dispatch = useDispatch();
-  console.log(user)
+  console.log(user.account)
 
   const [accountNumber, setAccountNumber] = useState('');
   const [accountName, setAccountName] = useState('');
@@ -20,6 +20,8 @@ export const BankAccount = ({ authToken }) => {
   const validateForm = () => {
     const accountNumberRegex = /^\d{10,12}$/;
     const nameRegex = /^[a-zA-Z\s]+$/;
+
+
     
 
     if (!accountNumberRegex.test(accountNumber)) {
@@ -79,11 +81,11 @@ export const BankAccount = ({ authToken }) => {
   return (
     <div className="bank-account">
       <div className="accounts">
-        {user.accounts.length === 0 ?<div className='no-account'>
+        {user?.accounts?.length === 0 ?<div className='no-account'>
           <h2 className='no-account-text'>You have not added any bank account yet</h2>
         </div> :
         <>
-          {user.accounts.map((account, index) => (
+          {user?.accounts?.map((account, index) => (
               <div key={index} className="bank-account-item">
                 <p><strong>Bank Name:</strong> {account.bankName}</p>
                 <p><strong>Account Name:</strong> {account.accountName}</p>

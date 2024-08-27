@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegCircleQuestion } from "react-icons/fa6";
 import { FaGift } from "react-icons/fa6";
@@ -12,9 +12,12 @@ import Fiatdeposit from "../components/modal/Fiatdeposit";
 import { DepositModal } from "../components/modal/FiatTransfer";
 import { BuySellModal } from "../components/modal/BuyAndSell";
 import { FiatWithdrawalModal } from "../components/modal/FiatWithdrawal";
+import { setCurrency } from "../redux/currencySlice";
 
 export default function Dashtest() {
   const user = useSelector((state) => state.ekzaUser.user);
+  const selectedCurrency = useSelector((state) => state.currency.selectedCurrency);
+  const dispatch = useDispatch();
   const assets = user?.assets || [];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +29,16 @@ export default function Dashtest() {
   const [fiatTransferOpen, setFiatTransferOpen] = useState(false);
   const [buySellOpen, setBuySellOpen] = useState(false);
   const [transactionType, setTransactionType] = useState('buy');
+
+  useEffect(() => {
+    getTrx();
+  }, [trxHistory]);
+
+  useEffect(() => {
+    if (selectedCurrency) {
+      document.getElementById('currencySelect').value = selectedCurrency;
+    }
+  }, [selectedCurrency]);
   
   const actionToggle = () => {
     setAction(!action);
@@ -76,9 +89,9 @@ export default function Dashtest() {
     setFiatWithdrawalOpen(false);
   };
 
-  useEffect(() => {
-    getTrx();
-  }, [trxHistory]);
+  const handleCurrencyChange = (currency) => {
+    dispatch(setCurrency(currency));
+  };
 
   const getTrx = async () => {
     try {
@@ -110,9 +123,13 @@ export default function Dashtest() {
             <div className="kingsley-to decide-and-style">
               <div className="currency">
                 <span>Currency</span>
-                <select name="" id="">
-                  <option value="Ngn">NGN</option>
-                  <option value="Ngn">USD</option>
+                <select 
+                name="" 
+                id="currencySelect"
+                onChange={(e) => handleCurrencyChange(e.target.value)}
+                >
+                  <option value="NGN">NGN</option>
+                  <option value="USD">USD</option>
                 </select>
               </div>
               <div className="total-left-wrap">
@@ -166,7 +183,7 @@ export default function Dashtest() {
           
             <div className="card-component-wrap">
               {user?.assets?.map((u) => (
-                <div className="card-component-1 border-line">
+                <div key={u.coinId} className="card-component-1 border-line">
                   <div className="card-reward-wrap liquid-asset-wrap">
                     <img src={u.image} alt="" />
                     <div className="reward-value">
