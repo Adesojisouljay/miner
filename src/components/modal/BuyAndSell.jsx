@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { usdPrice } from '../../utils';
 import debounce from 'lodash/debounce';
 import { useDispatch } from 'react-redux';
 import './buy-and-sell.scss';
@@ -23,7 +24,10 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
   
   const abortControllerRef = useRef(null);
 
-  const user = useSelector(state => state.ekzaUser.user);
+  const global = useSelector(state => state.ekzaUser);
+  const cur = useSelector(state => state.currency);
+  const { user } = global;
+  const isUsd = cur.selectedCurrency === "USD"
 
   useEffect(() => {
     const selectedAsset = user.assets.find(asset => asset.currency === currency);
@@ -165,7 +169,6 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
         {(isLoading) && <Loader />}
         {step === 1 && (<>
           <h2>{transactionType === 'buy' ? 'Buy' : 'Sell'} Assets</h2>
-          <button onClick={()=> console.log(amount)}>test...</button>
           <div className="toggle-buttons">
             <button
               className={`${transactionType === 'buy' ? 'active btn' : ''} btn buy-sell-btn`}
@@ -187,6 +190,12 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
             >
               {amountType === 'crypto' ? 'Switch to Fiat' : 'Switch to Crypto'}
             </button>
+          </div>
+          <div>
+          <h2>
+            <span className="strike-naira">{isUsd ? "$" : "N"}</span>
+            {isUsd ? (user?.nairaBalance / usdPrice)?.toFixed(3) : user?.nairaBalance.toFixed(3)}
+          </h2>
           </div>
           {message && <p className='warning'>{message}</p>}
          

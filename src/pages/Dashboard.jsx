@@ -13,12 +13,15 @@ import { DepositModal } from "../components/modal/FiatTransfer";
 import { BuySellModal } from "../components/modal/BuyAndSell";
 import { FiatWithdrawalModal } from "../components/modal/FiatWithdrawal";
 import { setCurrency } from "../redux/currencySlice";
+import { usdPrice } from "../utils";
 
 export default function Dashtest() {
   const user = useSelector((state) => state.ekzaUser.user);
   const selectedCurrency = useSelector((state) => state.currency.selectedCurrency);
   const dispatch = useDispatch();
   const assets = user?.assets || [];
+  const isUsd = selectedCurrency === "USD"
+  // console.log(user)
 
   const [isOpen, setIsOpen] = useState(false);
   const [withdrawalOpen, setWithdrawalOpen] = useState(false);
@@ -135,8 +138,8 @@ export default function Dashtest() {
               <div className="total-left-wrap">
                 <h3>Total balance:</h3>
                 <h2>
-                  <span className="strike-naira">N</span>
-                  {user?.nairaBalance?.toFixed(3)}
+                  <span className="strike-naira">{isUsd ? "$" : "N"}</span>
+                  {isUsd ? (user?.nairaBalance / usdPrice)?.toFixed(3) : user?.nairaBalance.toFixed(3)}
                 </h2>
               </div>
             </div>
@@ -174,10 +177,9 @@ export default function Dashtest() {
             </div>
 
             <div className="card-bal">
-              <h2>${user?.totalUsdValue?.toFixed(3)}</h2>
               <h2>
-                <span className="strike-naira">N</span>
-                {user?.totalNairaValue?.toFixed(3)}
+                <span className="strike-naira">{isUsd ? "$" : "N"}</span>
+                {isUsd ? user?.totalUsdValue?.toFixed(3) : user?.totalNairaValue?.toFixed(3)}
               </h2>
             </div>
           
@@ -240,7 +242,7 @@ export default function Dashtest() {
                             : ""
                         }
                       >
-                        ${t.amount}
+                        {t.amount}
                       </td>
                       <td>
                         {t.trxId.slice(0, 5)}...{t.trxId.slice(-5)}

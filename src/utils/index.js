@@ -1,3 +1,5 @@
+export const usdPrice = 1700; //should serve as placeholder
+
 export const formatNumbers = (n)=> {
     if(n) return n?.toFixed(3)
     };
