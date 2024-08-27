@@ -1,4 +1,16 @@
+.bank-account{
+  display: flex;
+  width: 100%;
+  padding: 50px;
+}
+
+.bank-account-item{
+  display: flex;
+  flex-direction: column;
+}
+
 .form-container {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,5 +68,68 @@
     color: #155724;
     border: 1px solid #c3e6cb;
     border-radius: 5px;
+  }
+
+  .accounts{
+    display: flex;
+    flex: 2;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .no-account{
+    width: 100%; 
+    text-align: center;
+    display: flex; 
+    justify-content: center;
+  }
+
+  .no-account-text{
+    align-self: center; 
+    justify-self: center;
+  }
+  
+  .bank-account-item {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background-color: #f3eded;
+    width: max-content;
+    height: max-content;
+    padding: 20px;
+    background: linear-gradient(
+    127deg,
+    hsla(0, 62%, 81%, 0.16) 17.35%,
+    hsla(0, 0%, 85%, 0.04) 76.2%
+    
+  );
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .bank-account-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .bank-account-item p {
+    margin: 5px 0;
+    font-size: 16px;
+    // color: #333;
+  }
+  
+  .bank-account-item strong {
+    font-weight: 600;
+  }
+
+  .delete-btn{
+    background-color: red;
+    width: max-content;
+    padding: 10px;
+    align-self: center;
+    cursor: pointer;
   }
   

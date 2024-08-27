@@ -153,6 +153,7 @@ export const createNairaDepositRequest = async (depositData) => {
 //////BUYING AND SELLING
 
 export const buyAsset = async (assetData) => {
+  console.log(authToken)
   try {
     const response = await api.post(`/transactions/buy`, assetData, {
       headers: {
@@ -212,6 +213,23 @@ export const addBankAccount = async (accountDetails) => {
     console.error('Error adding bank account:', error);
   }
 };
+
+//////DeLETE BANK ACCOUNT
+export const deleteBankAccount = async (accountId) => {
+  try {
+    const response = await api.delete('/auth/delete-account', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': authToken
+      },
+      data: { accountId }
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.error('Error deleting bank account:', error);
+  }
+};
+
 
 ////////FIAT WITHDRAWAL ACTIONS
 export const requestFiatWithdrawal = async (withdrawalData) => {
@@ -274,5 +292,47 @@ export const getAllFiatWithdrawals = async () => {
   } catch (error) {
     console.error('Error fetching fiat withdrawals:', error);
     throw error.response.data;
+  }
+};
+
+///////////////FIAT DEPOSIT ACTIONS
+export const getAllFiatDeposits = async () => {
+  try {
+    const response = await api.get('/deposits/fiat', {
+      headers: { Authorization: authToken },
+    });
+    console.log(response)
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch fiat deposits:', error);
+    throw error;
+  }
+};
+
+export const confirmFiatDeposit = async (depositRequestId, sender, receiver, accountNumber, accountHolderName, bankName) => {
+  try {
+    const response = await api.post(
+      '/deposits/fiat/confirm',
+      { depositRequestId, sender, receiver, accountNumber, accountHolderName, bankName },
+      { headers: { Authorization: authToken } }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Failed to confirm fiat deposit:', error);
+    throw error;
+  }
+};
+
+export const cancelFiatDeposit = async (depositRequestId) => {
+  try {
+    const response = await api.post(
+      '/deposits/fiat/cancel',
+      { depositRequestId },
+      { headers: { Authorization: authToken } }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Failed to cancel fiat deposit:', error);
+    throw error;
   }
 };

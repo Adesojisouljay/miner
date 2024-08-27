@@ -5,7 +5,7 @@ import './deposit-modal.scss';
 
 export const DepositHiveModal = ({ isOpen, onClose, assets }) => {
 
-  const user = useSelector(state => state.apexMiner.user);
+  const user = useSelector(state => state.ekzaUser.user);
 
   const [selectedAsset, setSelectedAsset] = useState(assets[0]);
 

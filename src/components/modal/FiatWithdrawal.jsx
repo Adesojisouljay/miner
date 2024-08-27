@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { requestWithdrawalToken, requestFiatWithdrawal } from '../../api/ekzat';
+import { getUserProfile } from '../../api/profile';
 import './fiat-withdrawal.scss';
 
 export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
-  const user = useSelector(state => state.apexMiner.user);
+  const user = useSelector(state => state.ekzaUser.user);
+  const dispatch = useDispatch();
 
   const [selectedAccount, setSelectedAccount] = useState(user.accounts[0] || {});
   const [withdrawalAmount, setWithdrawalAmount] = useState('');
@@ -77,6 +79,7 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
       const response = await requestFiatWithdrawal(withdrawalData);
 
       if (response.success) {
+        getUserProfile(dispatch)
         toast.success('Withdrawal request placed successfully');
         onClose();
       } else {

@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import debounce from 'lodash/debounce';
+import { useDispatch } from 'react-redux';
 import './buy-and-sell.scss';
 import { buyAsset, sellAsset, calculateTransaction } from '../../api/ekzat';
 import { formatNumbers } from '../../utils';
 import { useSelector } from 'react-redux';
 import { Loader } from '../loader/Loader';
+import { getUserProfile } from '../../api/profile';
 
 export const BuySellModal = ({ isOpen, onClose, assets }) => {
   const [currency, setCurrency] = useState(assets[0]?.currency || '');
@@ -16,10 +18,12 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
   const [step, setStep] = useState(1);
   const [selectedAssetBalance, setSelectedAssetBalance] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch()
   
   const abortControllerRef = useRef(null);
 
-  const user = useSelector(state => state.apexMiner.user);
+  const user = useSelector(state => state.ekzaUser.user);
 
   useEffect(() => {
     const selectedAsset = user.assets.find(asset => asset.currency === currency);
@@ -128,7 +132,7 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
       } else if (transactionType === 'sell') {
         await sellAsset(transactionData);
       }
-  
+      getUserProfile(dispatch)
       setStep(2);
     } catch (error) {
       setMessage(error.message || 'An error occurred during the transaction');

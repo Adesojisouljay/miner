@@ -13,7 +13,7 @@ export const Home = () => {
 
   useEffect(() => {
     // AOS.init({duration:1000});
-    if(global.apexMiner.user)
+    if(global.ekzaUser.user)
     navigate("/dashboard")
   }, [])
   return (

@@ -21,8 +21,9 @@ import NotFound from "./components/not-found/NotFound";
 import { KYCManagement } from "./components/manage-kyc/KycManagement";
 import { MerchantAction } from "./components/merchant-action/Merchant";
 import { CreateMerchantForm } from "./components/create-merchant/CreateMerchant";
-import { AddBankAccountForm } from "./pages/AddBankAccount";
+import { BankAccount } from "./pages/BankAccount";
 import { FiatWithdrawalAction } from "./components/fiat-withdrawal-action/FiatWithdrawalAction";
+import { FiatDepositAction } from "./components/fiat-deposit-action/FiatDepositAction";
 
 function App() {
   const dispatch = useDispatch()
@@ -31,23 +32,6 @@ function App() {
   useEffect(() => {
     Aos.init({duration:1000});
   }, [])
-
-  useEffect(() => {
-    //should work on a more effectife way to do this, but we can keep this as a temporal solution
-    getProfile()
-  }, [dispatch])
-
-  const getProfile = async () => {
-    try {
-      const data = await getUserProfile()
-      // console.log(data)
-      dispatch(loginSuccess(data.data))
-      //probably needs to check the rout before redirect, login, register or landing
-      // navigate('/dashboard'); 
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   return (
     <div className="app">
@@ -67,8 +51,9 @@ function App() {
             <Route path="/manage-kyc" element={<KYCManagement />} />
             <Route path="/merchant-action" element={<MerchantAction />} />
             <Route path="/create-merchant" element={<CreateMerchantForm />} />
-            <Route path="/add-account" element={<AddBankAccountForm />} />
+            <Route path="/accounts" element={<BankAccount />} />
             <Route path="/fiat-withdrawal-action" element={<FiatWithdrawalAction />} />
+            <Route path="/fiat-deposit-action" element={<FiatDepositAction />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

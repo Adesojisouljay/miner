@@ -16,9 +16,9 @@ export const Miner = () => {
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
 
   useEffect(() => {
-    if(global.apexMiner?.isAuthenticated) {
+    if(global.ekzaUser?.isAuthenticated) {
       getMiningRecord()
-      // console.log(global.apexMiner.user?.balance > 0)
+      // console.log(global.ekzaUser.user?.balance > 0)
     } else {
       navigate("/login")
     }
@@ -26,7 +26,7 @@ export const Miner = () => {
 
   const getMiningRecord = async () => {
     try {
-      const userId = global.apexMiner.user?._id;
+      const userId = global.ekzaUser.user?._id;
   
       const response = await getUserMiningRecord(userId);
       if (!response) return;
@@ -90,7 +90,7 @@ export const Miner = () => {
     <>
       <div className="miner-container">
         <div className="user">
-          <h3>Deposit balance: {global.apexMiner.user?.balance} USDT</h3>
+          <h3>Deposit balance: {global.ekzaUser.user?.balance} USDT</h3>
         </div>
         <div className="button-mine">
           <button className="btn" onClick={handleOpenDepositModal}>Deposit</button>
@@ -108,11 +108,11 @@ export const Miner = () => {
               <p>Mining Rate: {miningData?.miningRate.toFixed(10)}</p>
               <p>Total Mined: {miningData?.totalMined.toFixed(10)}</p>
             </>)}
-            {(global.apexMiner.user?.balance > 0 && !miningData?.isMining) &&
+            {(global.ekzaUser.user?.balance > 0 && !miningData?.isMining) &&
               <button onClick={handleStartMining}>Start mining</button> }
-              {global.apexMiner.user?.balance < 0 && <h2>You must deposit to start mining</h2>}
+              {global.ekzaUser.user?.balance < 0 && <h2>You must deposit to start mining</h2>}
         </div>
-          {global.apexMiner?.isLoading && 
+          {global.ekzaUser?.isLoading && 
         <Loader/>
         }
       </div>

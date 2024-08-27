@@ -19,7 +19,7 @@ const Login = () => {
   const global = useSelector(state => state)
 
   useEffect(() => {
-    if(global.apexMiner.user)
+    if(global.ekzaUser.user)
     navigate("/dashboard")
   }, [])
 
@@ -40,6 +40,10 @@ const Login = () => {
         console.log('User logged in:', response);
 
         navigate('/dashboard');
+        ///this is not the proper way, but access token doenst work until page is refreshed, this is a temporary solution
+        setTimeout(()=>{
+          window.location.reload();
+        }, 1000)
       } else {
         setError('Invalid email or password');
         dispatch(loginFailure('Invalid email or password'));
@@ -81,12 +85,12 @@ const Login = () => {
           />
         </div>
         {error && <p className="error-message">{error}</p>}
-        <button className="btn-login"  disabled={global.apexMiner?.isLoading} type="submit">Login</button>
+        <button className="btn-login"  disabled={global.ekzaUser?.isLoading} type="submit">Login</button>
       </form>
       <div className='reg-link'>
         <span>Dont't have an account? <Link className="reg-link-reg" to="/register">Register</Link></span>
       </div>
-      {global.apexMiner.isLoading && 
+      {global.ekzaUser.isLoading && 
       <Loader/>
       }
     </div>
