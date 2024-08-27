@@ -21,7 +21,6 @@ export default function Dashtest() {
   const dispatch = useDispatch();
   const assets = user?.assets || [];
   const isUsd = selectedCurrency === "USD"
-  // console.log(user)
 
   const [isOpen, setIsOpen] = useState(false);
   const [withdrawalOpen, setWithdrawalOpen] = useState(false);
@@ -32,6 +31,7 @@ export default function Dashtest() {
   const [fiatTransferOpen, setFiatTransferOpen] = useState(false);
   const [buySellOpen, setBuySellOpen] = useState(false);
   const [transactionType, setTransactionType] = useState('buy');
+  const [showBalance, setShowBalance] = useState(false);
 
   useEffect(() => {
     getTrx();
@@ -53,6 +53,10 @@ export default function Dashtest() {
     }
     
   };
+
+  const toggleBalanceView = () => {
+    setShowBalance(!showBalance)
+  }
 
   const openFiatDepositModal = () => {
     setFiatDopositOpen(true);
@@ -125,7 +129,6 @@ export default function Dashtest() {
           <div className="total-left border-transparent">
             <div className="kingsley-to decide-and-style">
               <div className="currency">
-                <span>Currency</span>
                 <select 
                 name="" 
                 id="currencySelect"
@@ -137,13 +140,13 @@ export default function Dashtest() {
               </div>
               <div className="total-left-wrap">
                 <h3>Total balance:</h3>
-                <h2>
+                {showBalance ? <h3>********</h3> : <h2>
                   <span className="strike-naira">{isUsd ? "$" : "N"}</span>
                   {isUsd ? (user?.nairaBalance / usdPrice)?.toFixed(3) : user?.nairaBalance.toFixed(3)}
-                </h2>
+                </h2>}
               </div>
             </div>
-            <FaRegEye />
+            <FaRegEye onClick={toggleBalanceView} />
           </div>
           <div className="total-right border-transparent">
             <h4>Bronze Merbership</h4>
