@@ -72,33 +72,6 @@
     }
   }
 
-  .bank-details-wrap {
-    margin-top: 20px;
-
-    .detail-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-
-      h4 {
-        margin: 0;
-        font-weight: bold;
-        width: 150px;
-      }
-
-      .copy-text-wrap {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-
-        svg {
-          cursor: pointer;
-        }
-      }
-    }
-  }
-
   .done-transfer-btn {
     display: block;
     margin: 20px auto 0;
@@ -116,5 +89,34 @@
     color: rgb(210, 132, 132);
     font-size: 16px;
     margin-top: 10px;
+  }
+  
+  .bank-details-wrap {
+    margin-top: 20px;
+  
+    .detail-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+  
+      h4 {
+        margin: 0;
+        font-weight: bold;
+        width: 150px;
+      }
+  
+      .copy-text-wrap {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+  
+        svg {
+          cursor: pointer;
+        }
+      }
+    }
   }
   

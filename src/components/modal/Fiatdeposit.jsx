@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { IoIosCopy } from 'react-icons/io';
-import { useEffect } from 'react';
 import { getRandomMerchant, createNairaDepositRequest } from '../../api/ekzat';
 import { Loader } from '../loader/Loader';
 import { copyToClipboard } from '../../utils';
