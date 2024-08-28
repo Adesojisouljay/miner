@@ -1,48 +1,46 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { IoIosCopy } from "react-icons/io";
-import { FaLessThan } from "react-icons/fa6";
-import { useState } from 'react';
+import { IoIosCopy } from 'react-icons/io';
+import { useEffect } from 'react';
 import { getRandomMerchant, createNairaDepositRequest } from '../../api/ekzat';
 import { Loader } from '../loader/Loader';
-import "./fiat-deposit.scss"
+import { copyToClipboard } from '../../utils';
+import './fiat-deposit.scss';
 
-function Fiatdeposit({ isOpen, onClose}) {
-  const [depositAmout, setDepositAmount] = useState("")
+function Fiatdeposit({ isOpen, onClose }) {
+  const [depositAmount, setDepositAmount] = useState("");
   const [step, setStep] = useState(1);
-  const [narration, SetNarration] = useState("");
   const [merchantInfo, setMerchantInfo] = useState({});
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
-  const notAllowed = !depositAmout || !narration
+  const notAllowed = !depositAmount;
 
-  const getMerchant = async () =>{
-    setLoading(true)
-    const merchantData = await getRandomMerchant()
-    try {     
-      if(!depositAmout || Number(depositAmout) < 1000){
-        setLoading(false)
+  const getMerchant = async () => {
+    setLoading(true);
+    try {
+      const merchantData = await getRandomMerchant();
+      if (!depositAmount || Number(depositAmount) < 1000) {
+        setLoading(false);
         return;
-      } else {
-        setMerchantInfo(merchantData)
-        setStep(2)
-        setLoading(false)
       }
+      setMerchantInfo(merchantData);
+      setStep(2);
+      setLoading(false);
     } catch (error) {
       console.log(error);
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
-  const createDeposit = async ()=> {
-    setLoading(true)
+  const createDeposit = async () => {
+    setLoading(true);
     const depositData = {
-      amount: depositAmout,
-      narration,
-      merchantId: merchantInfo.data._id
-    }
+      amount: depositAmount,
+      narration: merchantInfo.narration,
+      merchantId: merchantInfo.data._id,
+    };
     try {
-      const result = await createNairaDepositRequest(depositData);
+      await createNairaDepositRequest(depositData);
       onClose();
       toast.success("Deposit request made successfully", {
         style: {
@@ -51,80 +49,108 @@ function Fiatdeposit({ isOpen, onClose}) {
           fontSize: '16px',
         },
       });
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
-      console.log(error)
-      setLoading(false)
+      console.log(error);
+      setLoading(false);
     }
-  }
+  };
 
   return (
-    <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
-     {/* <div className={`modal-overlay  ${isOpen ? 'open' : ''}`} onClick={onClose} > </div> */}
-        {/* <div className={`modal-overlay ${isOpen ? 'open' : ''}`}> */}
-         <div className="modal-fiat animate-slide-in  animate-slide-in-mobile">
-            {step === 1 && ( 
-              <>
-                {loading && <Loader/>}
-                <div className="fait-deposit-wrap">
-                    <h3>Fiat Deposit</h3> 
-                    <span className="close-btn" onClick={onClose} >X</span>
-                    <div className="fiat-deposit-amount">
-                      <label className="">Enter amount to Deposit</label>
-                      <input type="number"  placeholder='Eneter Amount' 
-                      value={depositAmout} 
-                      onChange={(e) => setDepositAmount(e.target.value)} 
-                      />
-                      <label className="">Enter narration</label>
-                      <input type="text"  placeholder='Eneter narration' 
-                      value={narration} 
-                      onChange={(e) => SetNarration(e.target.value)} 
-                      />
-                    </div>
-                    <button 
-                      style={{cursor: notAllowed ? "not-allowed" : "pointer"}}
-                      disabled={notAllowed}
-                      onClick={getMerchant}
-                    >Proceed</button>
+    <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`}>
+      <div className="modal-fiat animate-slide-in animate-slide-in-mobile">
+        {loading && <Loader />}
+        <div className="fiat-d-modal-content">
+          {step === 1 && (
+            <>
+              <div className="fiat-deposit-wrap">
+                <h3>Fiat Deposit</h3>
+                <span className="close-btn" onClick={onClose}>X</span>
+                <div className="fiat-deposit-amount">
+                  <label>Enter amount to Deposit</label>
+                  <input
+                    type="number"
+                    placeholder="Enter Amount"
+                    value={depositAmount}
+                    onChange={(e) => setDepositAmount(e.target.value)}
+                  />
                 </div>
-              </>
-            )}
-            {step === 2 && (
-              <>
-                {loading && <Loader/>}
-                <div className="bank-peer-wrap">
-                  <span className="close-btn" onClick={() =>{onClose(); setDepositAmount(""); setStep(1) } } >X</span>
-                  <div className="deposit-head-text-wrap">
-                  <span><FaLessThan size={15} onClick={()=>{setStep(1)}} /></span><h3>Deposit Amount</h3>
-                  </div>
-                  <h3>₦<span>{depositAmout}</span></h3>
-                  <p>Transfer to </p>
-                  <div className="bank-details-wrap">
-                    <div className="acc-num">
-                    <h4>Merchant:</h4> <span className='copy-text-wrap'><span>{merchantInfo?.data.username}</span><IoIosCopy /></span>
-                    </div>
-                    <div className="acc-num">
-                    <h4>Account Number:</h4> <span className='copy-text-wrap'><span>{merchantInfo?.data.accountNumber}</span><IoIosCopy /></span>
-                    </div>
-                    <div className="bank-name">
-                    <h4>Bank:</h4> <span className='copy-text-wrap'><span>{merchantInfo?.data.bankName}</span><IoIosCopy /></span>
-                    </div>
-                    <div className="acc-name">
-                    <h4>Account Name:</h4> <span className='copy-text-wrap'><span>{merchantInfo?.data.accountName}</span><IoIosCopy /></span>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={createDeposit} 
-                    className="done-tranfer-btn"
-                  >I have made payment</button>
+                <button
+                  style={{ cursor: notAllowed ? "not-allowed" : "pointer", width: "100%" }}
+                  disabled={notAllowed}
+                  onClick={getMerchant}
+                  className='btn'
+                >
+                  Proceed
+                </button>
+              </div>
+            </>
+          )}
+          {step === 2 && (
+            <>
+              <div className="bank-peer-wrap">
+                <span className="close-btn" onClick={() => { onClose(); setDepositAmount(""); setStep(1); }}>X</span>
+                <div className="deposit-head-text-wrap">
+                  <h2>Deposit Details</h2>
+                  <p className="warning-text">Note: Narration is very necessary for us to identify your deposit.</p>
                 </div>
-              </>
-            )}
-
-         {/* </div> */}
+                <div className="bank-details-wrap">
+                  <div className="detail-item">
+                    <h4>Amount:</h4>
+                    <span className='copy-text-wrap'>
+                      ₦{depositAmount}
+                      <IoIosCopy onClick={() => copyToClipboard(`${depositAmount}`)} />
+                    </span>
+                  </div>
+                  <div className="detail-item">
+                    <h4>Narration:</h4>
+                    <span className='copy-text-wrap'>
+                      {merchantInfo.narration}
+                      <IoIosCopy onClick={() => copyToClipboard(merchantInfo.narration)} />
+                    </span>
+                  </div>
+                  <div className="detail-item">
+                    <h4>Merchant:</h4>
+                    <span className='copy-text-wrap'>
+                      {merchantInfo?.data.username}
+                      <IoIosCopy onClick={() => copyToClipboard(merchantInfo?.data.username || '')} />
+                    </span>
+                  </div>
+                  <div className="detail-item">
+                    <h4>Account Number:</h4>
+                    <span className='copy-text-wrap'>
+                      {merchantInfo?.data.accountNumber}
+                      <IoIosCopy onClick={() => copyToClipboard(merchantInfo?.data.accountNumber || '')} />
+                    </span>
+                  </div>
+                  <div className="detail-item">
+                    <h4>Bank:</h4>
+                    <span className='copy-text-wrap'>
+                      {merchantInfo?.data.bankName}
+                      <IoIosCopy onClick={() => copyToClipboard(merchantInfo?.data.bankName || '')} />
+                    </span>
+                  </div>
+                  <div className="detail-item">
+                    <h4>Account Name:</h4>
+                    <span className='copy-text-wrap'>
+                      {merchantInfo?.data.accountName}
+                      <IoIosCopy onClick={() => copyToClipboard(merchantInfo?.data.accountName || '')} />
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick={createDeposit}
+                  className="done-transfer-btn"
+                >
+                  I have made payment
+                </button>
+              </div>
+            </>
+          )}
         </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default Fiatdeposit
+export default Fiatdeposit;
