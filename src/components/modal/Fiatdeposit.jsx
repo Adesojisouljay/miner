@@ -4,6 +4,7 @@ import { IoIosCopy } from "react-icons/io";
 import { FaLessThan } from "react-icons/fa6";
 import { useState } from 'react';
 import { getRandomMerchant, createNairaDepositRequest } from '../../api/ekzat';
+import { toast } from 'react-toastify';
 
 function Fiatdeposit({ isOpen, onClose}) {
   const [depositAmout, setDepositAmount] = useState("")
@@ -40,6 +41,14 @@ function Fiatdeposit({ isOpen, onClose}) {
     try {
       const result = await createNairaDepositRequest(depositData);
       console.log(result);
+      onClose();
+      toast.success("Deposit request made successfully", {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+        },
+      });
     } catch (error) {
       console.log(error)
     }

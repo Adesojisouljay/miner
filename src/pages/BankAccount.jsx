@@ -16,6 +16,7 @@ export const BankAccount = ({ authToken }) => {
   const [message, setMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const validateForm = () => {
     const accountNumberRegex = /^\d{10,12}$/;
@@ -69,12 +70,15 @@ export const BankAccount = ({ authToken }) => {
   };
 
   const deleteAccount = async (id)=> {
+    setDeleting(true)
     try {
       const data = await deleteBankAccount(id);
       console.log(data)
       getUserProfile(dispatch)
+      setDeleting(false)
     } catch (error) {
       console.log(error)
+      setDeleting(false)
     }
   }
 
@@ -85,15 +89,19 @@ export const BankAccount = ({ authToken }) => {
           <h2 className='no-account-text'>You have not added any bank account yet</h2>
         </div> :
         <>
-          {user?.accounts?.map((account, index) => (
+          { <div>
+            {user?.accounts?.map((account, index) => (
               <div key={index} className="bank-account-item">
-                <p><strong>Bank Name:</strong> {account.bankName}</p>
-                <p><strong>Account Name:</strong> {account.accountName}</p>
-                <p><strong>Account Number:</strong> {account.accountNumber}</p>
-                <button className='delete-btn' onClick={()=> deleteAccount(account.id)}>Delete Account</button>
-              </div>
-            ))}
-        </>}
+                  {deleting && <Loader/>}
+                  <p><strong>Bank Name:</strong> {account.bankName}</p>
+                  <p><strong>Account Name:</strong> {account.accountName}</p>
+                  <p><strong>Account Number:</strong> {account.accountNumber}</p>
+                  <button className='delete-btn' onClick={()=> deleteAccount(account.id)}>Delete Account</button>
+                </div>
+              ))}
+          </div>}
+        </>
+        }
       </div>
       <div className="form-container">
         {isSuccess ? (
