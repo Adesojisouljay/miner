@@ -16,6 +16,7 @@ export const DepositHiveModal = ({ isOpen, onClose, assets }) => {
       backgroundColor: 'rgba(229, 229, 229, 0.1)',
       color: '#fff',
       fontSize: '16px',
+      marginTop: "60px"
     },
   });
   };
@@ -27,6 +28,7 @@ export const DepositHiveModal = ({ isOpen, onClose, assets }) => {
         backgroundColor: 'rgba(229, 229, 229, 0.1)',
         color: '#fff',
         fontSize: '16px',
+        marginTop: "60px"
       },
     });
   };

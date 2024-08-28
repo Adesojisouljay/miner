@@ -28,7 +28,21 @@ export const formatString = (str) => {
 
 export const copyToClipboard = (text) => {
   navigator.clipboard.writeText(text)
-    .then(() => toast.success("Copied to clipboard!"))
-    .catch((error) => toast.error("Failed to copy text"));
+    .then(() => toast.success("Copied to clipboard!", {
+      style: {
+        backgroundColor: 'rgba(229, 229, 229, 0.1)',
+        color: '#fff',
+        fontSize: '16px',
+        marginTop: "60px"
+      },
+    }))
+    .catch((error) => toast.error("Failed to copy text", {
+      style: {
+        backgroundColor: 'rgba(229, 229, 229, 0.1)',
+        color: '#fff',
+        fontSize: '16px',
+        marginTop: "60px"
+      },
+    }));
 };
     

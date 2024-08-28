@@ -41,7 +41,14 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
 
   const handleRequestToken = async () => {
     if (!withdrawalAmount) {
-      toast.error("Please enter a withdrawal amount.");
+      toast.error("Please enter a withdrawal amount.", {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
       return;
     }
 
@@ -49,16 +56,37 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
       setIsLoading(true);
       const response = await requestWithdrawalToken();
       if (response.success) {
-        toast.success('Withdrawal token sent to your email');
+        toast.success('Withdrawal token sent to your email', {
+          style: {
+            backgroundColor: 'rgba(229, 229, 229, 0.1)',
+            color: '#fff',
+            fontSize: '16px',
+            marginTop: "60px"
+          },
+        });
         setRequestedToken(true);
         const expiryTime = Date.now() + 15 * 60 * 1000;
         setTokenExpiry(expiryTime);
         setTimeRemaining(15 * 60);
       } else {
-        toast.error(response.message || 'Failed to request withdrawal token');
+        toast.error(response.message || 'Failed to request withdrawal token', {
+          style: {
+            backgroundColor: 'rgba(229, 229, 229, 0.1)',
+            color: '#fff',
+            fontSize: '16px',
+            marginTop: "60px"
+          },
+        });
       }
     } catch (error) {
-      toast.error('Failed to request withdrawal token');
+      toast.error('Failed to request withdrawal token', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
     } finally {
       setIsLoading(false);
     }
@@ -66,7 +94,14 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async () => {
     if (!withdrawalAmount || !selectedAccount.accountNumber || !withdrawalToken) {
-      toast.error("Please enter an amount, select an account, and enter the withdrawal token.");
+      toast.error("Please enter an amount, select an account, and enter the withdrawal token.", {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
       return;
     }
 
@@ -81,13 +116,34 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
 
       if (response.success) {
         getUserProfile(dispatch)
-        toast.success('Withdrawal request placed successfully');
+        toast.success('Withdrawal request placed successfully', {
+          style: {
+            backgroundColor: 'rgba(229, 229, 229, 0.1)',
+            color: '#fff',
+            fontSize: '16px',
+            marginTop: "60px"
+          },
+        });
         onClose();
       } else {
-        toast.error(response.message || 'Withdrawal request failed');
+        toast.error(response.message || 'Withdrawal request failed', {
+          style: {
+            backgroundColor: 'rgba(229, 229, 229, 0.1)',
+            color: '#fff',
+            fontSize: '16px',
+            marginTop: "60px"
+          },
+        });
       }
     } catch (error) {
-      toast.error('Error processing withdrawal');
+      toast.error('Error processing withdrawal', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
     } finally {
       setIsLoading(false);
     }

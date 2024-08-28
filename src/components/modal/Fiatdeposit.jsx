@@ -18,8 +18,16 @@ function Fiatdeposit({ isOpen, onClose }) {
     setLoading(true);
     try {
       const merchantData = await getRandomMerchant();
-      if (!depositAmount || Number(depositAmount) < 1000) {
+      if (!depositAmount || Number(depositAmount) < 1000 ) {
         setLoading(false);
+        toast.warning("Invalid amount, amount must be at least 1000", {
+          style: {
+            backgroundColor: 'rgba(229, 229, 229, 0.1)',
+            color: '#fff',
+            fontSize: '16px',
+            marginTop: "60px"
+          },
+        });
         return;
       }
       setMerchantInfo(merchantData);
@@ -46,6 +54,7 @@ function Fiatdeposit({ isOpen, onClose }) {
           backgroundColor: 'rgba(229, 229, 229, 0.1)',
           color: '#fff',
           fontSize: '16px',
+          marginTop: "60px"
         },
       });
       setLoading(false);

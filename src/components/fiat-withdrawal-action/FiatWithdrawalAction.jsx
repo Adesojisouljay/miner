@@ -24,7 +24,14 @@ export const FiatWithdrawalAction = () => {
       console.log(response);
       setWithdrawals(response.withdrawals);
     } catch (error) {
-      toast.error('Failed to fetch fiat withdrawals');
+      toast.error('Failed to fetch fiat withdrawals', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
     } finally {
       setIsLoading(false);
     }
@@ -33,20 +40,48 @@ export const FiatWithdrawalAction = () => {
   const handleConfirmWithdrawal = async (withdrawalId) => {
     try {
       await confirmFiatWithdrawal(withdrawalId);
-      toast.success('Withdrawal confirmed successfully');
+      toast.success('Withdrawal confirmed successfully', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
       fetchWithdrawals();
     } catch (error) {
-      toast.error('Failed to confirm withdrawal');
+      toast.error('Failed to confirm withdrawal', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
     }
   };
 
   const handleCancelWithdrawal = async (withdrawalId) => {
     try {
       await cancelFiatWithdrawal(withdrawalId);
-      toast.success('Withdrawal canceled successfully');
+      toast.success('Withdrawal canceled successfully', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
       fetchWithdrawals();
     } catch (error) {
-      toast.error('Failed to cancel withdrawal');
+      toast.error('Failed to cancel withdrawal', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
     }
   };
 
