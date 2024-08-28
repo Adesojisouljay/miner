@@ -12,14 +12,18 @@ export const DepositModal = ({ isOpen, onClose }) => {
   const [amount, setAmount] = useState("");
   const [receiver, setReceiver] = useState("");
   const [loading, setLoading] = useState(false);
-  const [receiverInfo, setReceiverInfo] = useState({})
+  const [receiverInfo, setReceiverInfo] = useState(null)
 
   const notAllowed = loading || !receiver || !amount;
 
   useEffect(() => {
-    setTimeout(() => {
+    if(receiver) {
+     setTimeout(() => {
       getReceiver()
-    },3000)
+    },3000);
+    } else {
+      setReceiverInfo(null)
+    }
   }, [receiver])
 
   const handleFiatTransfer = async () => {
@@ -90,7 +94,7 @@ export const DepositModal = ({ isOpen, onClose }) => {
             placeholder="Enter recipient" 
           />
           <div>
-            {receiverInfo &&<div><h4>Transfering to {receiverInfo?.firstName} {receiverInfo?.lastName}</h4></div>}
+            {receiverInfo && <div><h4>Transfering to {receiverInfo?.firstName} {receiverInfo?.lastName}</h4></div>}
           </div>
           <label htmlFor="transfer-amount">Amount</label>
           <input 
