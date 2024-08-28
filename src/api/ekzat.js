@@ -336,3 +336,21 @@ export const cancelFiatDeposit = async (depositRequestId) => {
     throw error;
   }
 };
+
+export const fiatTransfer = async ({ receiverIdentifier, amount }) => {
+  try {
+    const response = await api.post('/transactions/fiat-transfer', {
+      receiverIdentifier,
+      amount,
+    }, {
+      headers: {
+        Authorization: authToken,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error transferring Naira:', error);
+    throw error.response?.data || { message: 'Error transferring Naira' };
+  }
+};
