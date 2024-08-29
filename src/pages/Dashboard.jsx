@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegCircleQuestion } from "react-icons/fa6";
 import { FaGift } from "react-icons/fa6";
@@ -12,10 +12,15 @@ import Fiatdeposit from "../components/modal/Fiatdeposit";
 import { DepositModal } from "../components/modal/FiatTransfer";
 import { BuySellModal } from "../components/modal/BuyAndSell";
 import { FiatWithdrawalModal } from "../components/modal/FiatWithdrawal";
+import { setCurrency } from "../redux/currencySlice";
+import { usdPrice } from "../utils";
 
 export default function Dashtest() {
   const user = useSelector((state) => state.ekzaUser.user);
+  const selectedCurrency = useSelector((state) => state.currency.selectedCurrency);
+  const dispatch = useDispatch();
   const assets = user?.assets || [];
+  const isUsd = selectedCurrency === "USD"
 
   const [isOpen, setIsOpen] = useState(false);
   const [withdrawalOpen, setWithdrawalOpen] = useState(false);
@@ -26,6 +31,17 @@ export default function Dashtest() {
   const [fiatTransferOpen, setFiatTransferOpen] = useState(false);
   const [buySellOpen, setBuySellOpen] = useState(false);
   const [transactionType, setTransactionType] = useState('buy');
+  const [showBalance, setShowBalance] = useState(false);
+
+  useEffect(() => {
+    getTrx();
+  }, [trxHistory]);
+
+  useEffect(() => {
+    if (selectedCurrency) {
+      document.getElementById('currencySelect').value = selectedCurrency;
+    }
+  }, [selectedCurrency]);
   
   const actionToggle = () => {
     setAction(!action);
@@ -37,6 +53,10 @@ export default function Dashtest() {
     }
     
   };
+
+  const toggleBalanceView = () => {
+    setShowBalance(!showBalance)
+  }
 
   const openFiatDepositModal = () => {
     setFiatDopositOpen(true);
@@ -76,9 +96,9 @@ export default function Dashtest() {
     setFiatWithdrawalOpen(false);
   };
 
-  useEffect(() => {
-    getTrx();
-  }, [trxHistory]);
+  const handleCurrencyChange = (currency) => {
+    dispatch(setCurrency(currency));
+  };
 
   const getTrx = async () => {
     try {
@@ -109,21 +129,24 @@ export default function Dashtest() {
           <div className="total-left border-transparent">
             <div className="kingsley-to decide-and-style">
               <div className="currency">
-                <span>Currency</span>
-                <select name="" id="">
-                  <option value="Ngn">NGN</option>
-                  <option value="Ngn">USD</option>
+                <select 
+                name="" 
+                id="currencySelect"
+                onChange={(e) => handleCurrencyChange(e.target.value)}
+                >
+                  <option value="NGN">NGN</option>
+                  <option value="USD">USD</option>
                 </select>
               </div>
               <div className="total-left-wrap">
                 <h3>Total balance:</h3>
-                <h2>
-                  <span className="strike-naira">N</span>
-                  {user?.nairaBalance?.toFixed(3)}
-                </h2>
+                {showBalance ? <h3>********</h3> : <h2>
+                  <span className="strike-naira">{isUsd ? "$" : "N"}</span>
+                  {isUsd ? (user?.nairaBalance / usdPrice)?.toFixed(3) : user?.nairaBalance.toFixed(3)}
+                </h2>}
               </div>
             </div>
-            <FaRegEye />
+            <FaRegEye onClick={toggleBalanceView} />
           </div>
           <div className="total-right border-transparent">
             <h4>Bronze Merbership</h4>
@@ -157,16 +180,15 @@ export default function Dashtest() {
             </div>
 
             <div className="card-bal">
-              <h2>${user?.totalUsdValue?.toFixed(3)}</h2>
               <h2>
-                <span className="strike-naira">N</span>
-                {user?.totalNairaValue?.toFixed(3)}
+                <span className="strike-naira">{isUsd ? "$" : "N"}</span>
+                {isUsd ? user?.totalUsdValue?.toFixed(3) : user?.totalNairaValue?.toFixed(3)}
               </h2>
             </div>
           
             <div className="card-component-wrap">
               {user?.assets?.map((u) => (
-                <div className="card-component-1 border-line">
+                <div key={u.coinId} className="card-component-1 border-line">
                   <div className="card-reward-wrap liquid-asset-wrap">
                     <img src={u.image} alt="" />
                     <div className="reward-value">
@@ -223,7 +245,7 @@ export default function Dashtest() {
                             : ""
                         }
                       >
-                        ${t.amount}
+                        {t.amount}
                       </td>
                       <td>
                         {t.trxId.slice(0, 5)}...{t.trxId.slice(-5)}

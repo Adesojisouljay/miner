@@ -27,3 +27,17 @@ export const getUserProfile = async (dispatch) => {
     return null;
   }
 };
+
+export const getReceiverProfile = async (receiver) => {
+  try {
+    const response = await api.get(`/auth/receiver-profile/${receiver}`);
+    
+    if (response.data.success) {
+      return response.data.user;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    throw error.response?.data || { message: 'Error fetching receiver' };
+  }
+};

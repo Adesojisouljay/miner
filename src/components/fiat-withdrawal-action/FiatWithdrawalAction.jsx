@@ -24,29 +24,64 @@ export const FiatWithdrawalAction = () => {
       console.log(response);
       setWithdrawals(response.withdrawals);
     } catch (error) {
-      toast.error('Failed to fetch fiat withdrawals');
+      toast.error('Failed to fetch fiat withdrawals', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleConfirmWithdrawal = async (withdrawalId) => {
+  const handleConfirmWithdrawal = async (withdrawalId, amount) => {
     try {
-      await confirmFiatWithdrawal(withdrawalId);
-      toast.success('Withdrawal confirmed successfully');
+      await confirmFiatWithdrawal(withdrawalId, amount);
+      toast.success('Withdrawal confirmed successfully', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
       fetchWithdrawals();
     } catch (error) {
-      toast.error('Failed to confirm withdrawal');
+      toast.error('Failed to confirm withdrawal', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
     }
   };
 
-  const handleCancelWithdrawal = async (withdrawalId) => {
+  const handleCancelWithdrawal = async (withdrawalId, amount) => {
     try {
-      await cancelFiatWithdrawal(withdrawalId);
-      toast.success('Withdrawal canceled successfully');
+      await cancelFiatWithdrawal(withdrawalId, amount);
+      toast.success('Withdrawal canceled successfully', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
       fetchWithdrawals();
     } catch (error) {
-      toast.error('Failed to cancel withdrawal');
+      toast.error('Failed to cancel withdrawal', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
     }
   };
 
@@ -135,13 +170,13 @@ export const FiatWithdrawalAction = () => {
                       <>
                         <button
                           className="confirm-btn"
-                          onClick={() => handleConfirmWithdrawal(withdrawal._id)}
+                          onClick={() => handleConfirmWithdrawal(withdrawal._id, withdrawal.amount)}
                         >
                           Confirm
                         </button>
                         <button
                           className="cancel-btn"
-                          onClick={() => handleCancelWithdrawal(withdrawal._id)}
+                          onClick={() => handleCancelWithdrawal(withdrawal._id, withdrawal.amount)}
                         >
                           Cancel
                         </button>

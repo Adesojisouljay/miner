@@ -246,11 +246,12 @@ export const requestFiatWithdrawal = async (withdrawalData) => {
   }
 };
 
-export const confirmFiatWithdrawal = async (withdrawalId) => {
+export const confirmFiatWithdrawal = async (withdrawalId, amount) => {
   const authToken = localStorage.getItem('token');
   try {
     const response = await api.post('/withdrawals/fiat/confirm', {
-      withdrawalId
+      withdrawalId,
+      amount
     }, {
       headers: {
         Authorization: authToken,
@@ -263,11 +264,12 @@ export const confirmFiatWithdrawal = async (withdrawalId) => {
   }
 };
 
-export const cancelFiatWithdrawal = async (withdrawalId) => {
+export const cancelFiatWithdrawal = async (withdrawalId, amount) => {
   const authToken = localStorage.getItem('token');
   try {
     const response = await api.post('/withdrawals/fiat/cancel', {
-      withdrawalId
+      withdrawalId,
+      amount,
     }, {
       headers: {
         Authorization: authToken,
@@ -334,5 +336,23 @@ export const cancelFiatDeposit = async (depositRequestId) => {
   } catch (error) {
     console.error('Failed to cancel fiat deposit:', error);
     throw error;
+  }
+};
+
+export const fiatTransfer = async ({ receiverIdentifier, amount }) => {
+  try {
+    const response = await api.post('/transactions/fiat-transfer', {
+      receiverIdentifier,
+      amount,
+    }, {
+      headers: {
+        Authorization: authToken,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error transferring Naira:', error);
+    throw error.response?.data || { message: 'Error transferring Naira' };
   }
 };

@@ -24,7 +24,14 @@ export const FiatDepositAction = () => {
       console.log(response);
       setDeposits(response.data);
     } catch (error) {
-      toast.error('Failed to fetch fiat deposits');
+      toast.error('Failed to fetch fiat deposits', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
     } finally {
       setIsLoading(false);
     }
@@ -33,20 +40,48 @@ export const FiatDepositAction = () => {
   const handleConfirmDeposit = async (depositId) => {
     try {
       await confirmFiatDeposit(depositId);
-      toast.success('Deposit confirmed successfully');
+      toast.success('Deposit confirmed successfully', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
       fetchDeposits();
     } catch (error) {
-      toast.error('Failed to confirm deposit');
+      toast.error('Failed to confirm deposit', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
     }
   };
 
   const handleCancelDeposit = async (depositId) => {
     try {
       await cancelFiatDeposit(depositId);
-      toast.success('Deposit canceled successfully');
+      toast.success('Deposit canceled successfully', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
       fetchDeposits();
     } catch (error) {
-      toast.error('Failed to cancel deposit');
+      toast.error('Failed to cancel deposit', {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
     }
   };
 

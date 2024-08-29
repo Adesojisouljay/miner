@@ -1,22 +1,92 @@
 import React, { useState, useEffect } from 'react';
-
-////CREATE A CSS FILE FOR THIS
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { fiatTransfer } from '../../api/ekzat';
+import { getUserProfile, getReceiverProfile } from '../../api/profile';
+import { Loader } from '../loader/Loader';
 import './deposit-modal.scss';
 
+
 export const DepositModal = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch();
   const [amount, setAmount] = useState("");
   const [receiver, setReceiver] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [receiverInfo, setReceiverInfo] = useState(null)
+
+  const notAllowed = loading || !receiver || !amount;
+
+  useEffect(() => {
+    if(receiver) {
+     setTimeout(() => {
+      getReceiver()
+    },3000);
+    } else {
+      setReceiverInfo(null)
+    }
+  }, [receiver])
 
   const handleFiatTransfer = async () => {
-    console.log("fiat transfer......")
-  }
+    setLoading(true)
+    try {
+      const result = await fiatTransfer({ receiverIdentifier: receiver, amount });
+      setLoading(false)
+      toast.success(`Fiat transfer to ${receiver} successful`, {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
+      onClose();
+      getUserProfile(dispatch)
+    } catch (error) {
+      console.error("Error during fiat transfer:", error);
+      setLoading(false);
+      toast.error(error.message, {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
+    }
+  };
   
+  const getReceiver = async () => {
+    setLoading(true);
+    if(!receiver) return;
+    try {
+
+      const data = await getReceiverProfile(receiver);
+      console.log(data)
+      setReceiverInfo(data)
+      setLoading(false);
+
+    } catch (error) {
+
+      setLoading(false);
+      setReceiverInfo(null)
+
+      toast.error(error.message, {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
+    }
+  }
+
   return (
-    ///////ADJUST THE CLASS NAMES
     <div className={`modal-overlay ${isOpen ? 'open' : ''}`}>
       <div className="modal">
         <span className="close-btn" onClick={onClose}>X</span>
         <h2>Transfer Fiat</h2> 
+        {loading && <Loader />}
         <div className="input-group">
           <label htmlFor="receiver">Receiver</label>
           <input 
@@ -24,8 +94,11 @@ export const DepositModal = ({ isOpen, onClose }) => {
             id="receiver" 
             value={receiver} 
             onChange={(e) => setReceiver(e.target.value)} 
-            placeholder="Enter reciepient" 
+            placeholder="Enter recipient" 
           />
+          <div>
+            {receiverInfo && <div><h4>Transfering to {receiverInfo?.firstName} {receiverInfo?.lastName}</h4></div>}
+          </div>
           <label htmlFor="transfer-amount">Amount</label>
           <input 
             type="number" 
@@ -35,7 +108,12 @@ export const DepositModal = ({ isOpen, onClose }) => {
             placeholder="Enter amount" 
           />
         </div>
-        <button className="deposit-btn" onClick={handleFiatTransfer}>Proceed</button>
+        <button 
+          style={{cursor: notAllowed ? "not-allowed" : "pointer"}} 
+          disabled={notAllowed} 
+          className="deposit-btn" 
+          onClick={handleFiatTransfer}
+        >Proceed</button>
       </div>
     </div>
   );
