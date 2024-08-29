@@ -37,9 +37,9 @@ export const FiatWithdrawalAction = () => {
     }
   };
 
-  const handleConfirmWithdrawal = async (withdrawalId) => {
+  const handleConfirmWithdrawal = async (withdrawalId, amount) => {
     try {
-      await confirmFiatWithdrawal(withdrawalId);
+      await confirmFiatWithdrawal(withdrawalId, amount);
       toast.success('Withdrawal confirmed successfully', {
         style: {
           backgroundColor: 'rgba(229, 229, 229, 0.1)',
@@ -61,9 +61,9 @@ export const FiatWithdrawalAction = () => {
     }
   };
 
-  const handleCancelWithdrawal = async (withdrawalId) => {
+  const handleCancelWithdrawal = async (withdrawalId, amount) => {
     try {
-      await cancelFiatWithdrawal(withdrawalId);
+      await cancelFiatWithdrawal(withdrawalId, amount);
       toast.success('Withdrawal canceled successfully', {
         style: {
           backgroundColor: 'rgba(229, 229, 229, 0.1)',
@@ -170,13 +170,13 @@ export const FiatWithdrawalAction = () => {
                       <>
                         <button
                           className="confirm-btn"
-                          onClick={() => handleConfirmWithdrawal(withdrawal._id)}
+                          onClick={() => handleConfirmWithdrawal(withdrawal._id, withdrawal.amount)}
                         >
                           Confirm
                         </button>
                         <button
                           className="cancel-btn"
-                          onClick={() => handleCancelWithdrawal(withdrawal._id)}
+                          onClick={() => handleCancelWithdrawal(withdrawal._id, withdrawal.amount)}
                         >
                           Cancel
                         </button>

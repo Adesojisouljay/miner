@@ -246,11 +246,12 @@ export const requestFiatWithdrawal = async (withdrawalData) => {
   }
 };
 
-export const confirmFiatWithdrawal = async (withdrawalId) => {
+export const confirmFiatWithdrawal = async (withdrawalId, amount) => {
   const authToken = localStorage.getItem('token');
   try {
     const response = await api.post('/withdrawals/fiat/confirm', {
-      withdrawalId
+      withdrawalId,
+      amount
     }, {
       headers: {
         Authorization: authToken,
@@ -263,11 +264,12 @@ export const confirmFiatWithdrawal = async (withdrawalId) => {
   }
 };
 
-export const cancelFiatWithdrawal = async (withdrawalId) => {
+export const cancelFiatWithdrawal = async (withdrawalId, amount) => {
   const authToken = localStorage.getItem('token');
   try {
     const response = await api.post('/withdrawals/fiat/cancel', {
-      withdrawalId
+      withdrawalId,
+      amount,
     }, {
       headers: {
         Authorization: authToken,
