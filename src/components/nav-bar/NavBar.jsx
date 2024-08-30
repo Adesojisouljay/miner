@@ -37,8 +37,7 @@ export const NavBar = () => {
     e.preventDefault();
     dispatch(logout());
      localStorage.removeItem("token")
-    // persistor.purge();
-    window.location.reload();
+    //  window.location.href = '/';
   };
 
   const toggleDropdown = () => {
