@@ -34,7 +34,7 @@ export default function Dashtest() {
   const [showBalance, setShowBalance] = useState(false);
 
   useEffect(() => {
-    getTrx();
+      getTrx();
   }, [trxHistory]);
 
   useEffect(() => {

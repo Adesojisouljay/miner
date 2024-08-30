@@ -1,4 +1,5 @@
-import {Route, Routes, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {Route, Routes, useNavigate, useParams, useLocation } from "react-router-dom";
 import { Home } from './pages/Home';
 import { NavBar } from './components/nav-bar/NavBar';
 import { Miner } from './pages/Miner';
@@ -9,11 +10,9 @@ import './App.scss';
 import Pagetest from "./pages/Pagetest";
 import Aos from 'aos'
 import "aos/dist/aos.css"
-import { useEffect } from "react";
 import Dashtest from "./pages/Dashboard";
 import Spinner from "./pages/Spinner";
 import { getUserProfile } from "./api/profile";
-import { loginSuccess } from "./redux/userReducer";
 import { useDispatch } from "react-redux";
 import ProtectedRoute from "./protected-routes/ProtectedRoutes";
 import { Kyc } from "./components/submit-kyc/Kyc";
@@ -24,10 +23,24 @@ import { CreateMerchantForm } from "./components/create-merchant/CreateMerchant"
 import { BankAccount } from "./pages/BankAccount";
 import { FiatWithdrawalAction } from "./components/fiat-withdrawal-action/FiatWithdrawalAction";
 import { FiatDepositAction } from "./components/fiat-deposit-action/FiatDepositAction";
+import { InvalidTokenModal } from "./components/modal/InvalidateTokenModal";
+import { isTokenValid } from "./utils";
+import { protectedRoutesArray } from "./vairables/protectedRoutes";
 
 function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate();
+  const { pathname }  = useLocation();
+  const isProtectedRoute = protectedRoutesArray.includes(pathname);
+
+  const [tokenValid, setTokenValid] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!isTokenValid(token)) {
+      setTokenValid(false);
+    }
+  }, [tokenValid]);
 
   useEffect(() => {
     Aos.init({duration:1000});
@@ -37,8 +50,9 @@ function App() {
     <div className="app">
       <NavBar/>
       <div className='app-container'>
+      {!tokenValid && isProtectedRoute && <InvalidTokenModal /> }
         <Routes>
-          <Route path="/" element={<Home/>}/>
+          <Route exact path="/" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route element={<ProtectedRoute />}>

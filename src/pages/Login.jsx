@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { loginUser } from '../api/auth';
 import { loginStart, loginSuccess, loginFailure } from '../redux/userReducer';
+import { isTokenValid } from '../utils';
 import { Loader } from '../components/loader/Loader';
 import cat from "../assets/document_shape.webp"
 import eth from "../assets/eth-icon.webp"
@@ -19,9 +20,11 @@ const Login = () => {
   const global = useSelector(state => state)
 
   useEffect(() => {
-    if(global.ekzaUser.user)
-    navigate("/dashboard")
-  }, [])
+    const token = localStorage.getItem('token');
+    if (isTokenValid(token) && global.ekzaUser.user) {
+      navigate("/dashboard")
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,24 +37,20 @@ const Login = () => {
       dispatch(loginStart());
 
       const response = await loginUser(userData);
+      console.log(response)
       if (response && response?.data?.success) {
-
         dispatch(loginSuccess(response.data));
-        console.log('User logged in:', response);
 
-        navigate('/dashboard');
-        ///this is not the proper way, but access token doenst work until page is refreshed, this is a temporary solution
-        setTimeout(()=>{
-          window.location.reload();
-        }, 1000)
+        window.location.href = '/dashboard';
+
       } else {
-        setError('Invalid email or password');
+        setError(response?.data?.error);
         dispatch(loginFailure('Invalid email or password'));
       }
     } catch (error) {
       console.error('Error logging in:', error);
 
-      setError('An error occurred. Please try again later.');
+      setError(error.message || error.error);
       dispatch(loginFailure('An error occurred. Please try again later.'));
     }
   };
@@ -85,7 +84,7 @@ const Login = () => {
           />
         </div>
         {error && <p className="error-message">{error}</p>}
-        <button className="btn-login"  disabled={global.ekzaUser?.isLoading} type="submit">Login</button>
+        <button style={{cursor: global.ekzaUser?.isLoading && "not-allowed"}} className="btn-login" disabled={global.ekzaUser?.isLoading} type="submit">Login</button>
       </form>
       <div className='reg-link'>
         <span>Dont't have an account? <Link className="reg-link-reg" to="/register">Register</Link></span>

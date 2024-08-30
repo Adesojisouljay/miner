@@ -8,12 +8,12 @@ export const registerUser = async (userData) => {
 
     if (response?.data?.success) {
       console.log('User registered successfully');
-      return response.data;
+      return response?.data;
     } else {
-      console.error('Failed to register user:', response.data.message);
+      console.error('Failed to register user:', response?.data.message);
       return {
         success: false,
-        message: response.data.message,
+        message: response?.data.message,
       };
     }
   } catch (error) {
@@ -29,19 +29,18 @@ export const loginUser = async (userData) => {
   try {
     const response = await api.post('/auth/login', userData);
     console.log(response)
-    if (response.data.success) {
+    if (response?.data.success) {
       console.log('User logged in successfully');
 
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('token', response?.data.token);
       return response; 
     } else {
-      console.error('Failed to login:', response.data.message);
+      console.error('Failed to login:', response?.data.message);
 
       return null;
     }
   } catch (error) {
     console.error('Error logging in:', error);
-
-    return null;
+    throw error?.response?.data;
   }
 };
