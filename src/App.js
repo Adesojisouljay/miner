@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {Route, Routes, useNavigate, useParams } from "react-router-dom";
+import {Route, Routes, useNavigate, useParams, useLocation } from "react-router-dom";
 import { Home } from './pages/Home';
 import { NavBar } from './components/nav-bar/NavBar';
 import { Miner } from './pages/Miner';
@@ -13,7 +13,6 @@ import "aos/dist/aos.css"
 import Dashtest from "./pages/Dashboard";
 import Spinner from "./pages/Spinner";
 import { getUserProfile } from "./api/profile";
-import { loginSuccess } from "./redux/userReducer";
 import { useDispatch } from "react-redux";
 import ProtectedRoute from "./protected-routes/ProtectedRoutes";
 import { Kyc } from "./components/submit-kyc/Kyc";
@@ -26,16 +25,17 @@ import { FiatWithdrawalAction } from "./components/fiat-withdrawal-action/FiatWi
 import { FiatDepositAction } from "./components/fiat-deposit-action/FiatDepositAction";
 import { InvalidTokenModal } from "./components/modal/InvalidateTokenModal";
 import { isTokenValid } from "./utils";
+import { protectedRoutesArray } from "./vairables/protectedRoutes";
 
 function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate();
-  const { params } = useParams()
+  const { pathname }  = useLocation();
+  const isProtectedRoute = protectedRoutesArray.includes(pathname);
 
   const [tokenValid, setTokenValid] = useState(true);
 
   useEffect(() => {
-    console.log(params)
     const token = localStorage.getItem('token');
     if (!isTokenValid(token)) {
       setTokenValid(false);
@@ -50,9 +50,9 @@ function App() {
     <div className="app">
       <NavBar/>
       <div className='app-container'>
-      {!tokenValid && <InvalidTokenModal /> }
+      {!tokenValid && isProtectedRoute && <InvalidTokenModal /> }
         <Routes>
-          <Route path="/" element={<Home/>}/>
+          <Route exact path="/" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route element={<ProtectedRoute />}>

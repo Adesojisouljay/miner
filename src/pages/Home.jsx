@@ -13,15 +13,17 @@ export const Home = () => {
   const global = useSelector(state => state)
 
   // useEffect(() => {
-  //   // AOS.init({duration:1000});
+  //   AOS.init({duration:1000});
   //   if(global.ekzaUser.user)
-    // }, [])
+  //   }, [])
   useEffect(() => {
     const token = localStorage.getItem('token');
+    console.log(isTokenValid(token))
     if (isTokenValid(token)) {
         navigate("/dashboard")
     }
   }, []);
+  
   return (
     <div className="home-wrap">
     <Hero />

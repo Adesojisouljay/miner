@@ -7,10 +7,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/userReducer';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { formatDate, formatString } from '../../utils';
-import { FaHome, FaEnvelope, FaTachometerAlt, FaSpinner, FaUsers, FaUser, FaCogs, FaWallet, FaIdCard, FaSignOutAlt  } from "react-icons/fa";
+import { 
+  FaHome, 
+  FaEnvelope, 
+  FaTachometerAlt, 
+  FaSpinner, 
+  FaUsers, 
+  FaUser, 
+  FaCogs, 
+  FaWallet, 
+  FaIdCard, 
+  FaSignOutAlt  
 
-
-
+} from "react-icons/fa";
 
 export const NavBar = () => {
   const dispatch = useDispatch();
@@ -27,7 +36,8 @@ export const NavBar = () => {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
-    persistor.purge();
+     localStorage.removeItem("token")
+    // persistor.purge();
     window.location.reload();
   };
 
