@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import './home.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { isTokenValid } from '../utils';
 import Hero from '../components/Home/Hero';
 import Feature from '../components/Home/Feature';
 import Faq from '../components/Home/Faq';
@@ -11,11 +12,16 @@ export const Home = () => {
   const navigate = useNavigate()
   const global = useSelector(state => state)
 
+  // useEffect(() => {
+  //   // AOS.init({duration:1000});
+  //   if(global.ekzaUser.user)
+    // }, [])
   useEffect(() => {
-    // AOS.init({duration:1000});
-    if(global.ekzaUser.user)
-    navigate("/dashboard")
-  }, [])
+    const token = localStorage.getItem('token');
+    if (isTokenValid(token)) {
+        navigate("/dashboard")
+    }
+  }, []);
   return (
     <div className="home-wrap">
     <Hero />

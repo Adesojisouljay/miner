@@ -1,4 +1,5 @@
-import {Route, Routes, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { Home } from './pages/Home';
 import { NavBar } from './components/nav-bar/NavBar';
 import { Miner } from './pages/Miner';
@@ -9,7 +10,6 @@ import './App.scss';
 import Pagetest from "./pages/Pagetest";
 import Aos from 'aos'
 import "aos/dist/aos.css"
-import { useEffect } from "react";
 import Dashtest from "./pages/Dashboard";
 import Spinner from "./pages/Spinner";
 import { getUserProfile } from "./api/profile";
@@ -24,10 +24,23 @@ import { CreateMerchantForm } from "./components/create-merchant/CreateMerchant"
 import { BankAccount } from "./pages/BankAccount";
 import { FiatWithdrawalAction } from "./components/fiat-withdrawal-action/FiatWithdrawalAction";
 import { FiatDepositAction } from "./components/fiat-deposit-action/FiatDepositAction";
+import { InvalidTokenModal } from "./components/modal/InvalidateTokenModal";
+import { isTokenValid } from "./utils";
 
 function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate();
+  const { params } = useParams()
+
+  const [tokenValid, setTokenValid] = useState(true);
+
+  useEffect(() => {
+    console.log(params)
+    const token = localStorage.getItem('token');
+    if (!isTokenValid(token)) {
+      setTokenValid(false);
+    }
+  }, [tokenValid]);
 
   useEffect(() => {
     Aos.init({duration:1000});
@@ -37,6 +50,7 @@ function App() {
     <div className="app">
       <NavBar/>
       <div className='app-container'>
+      {!tokenValid && <InvalidTokenModal /> }
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>

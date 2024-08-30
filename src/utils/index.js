@@ -1,4 +1,6 @@
 import { toast } from "react-toastify";
+import { jwtDecode } from 'jwt-decode';
+
 export const usdPrice = 1700; //should serve as placeholder
 
 export const formatNumbers = (n)=> {
@@ -13,7 +15,6 @@ export const formatDate = (isoDate) => {
     day: 'numeric',
   });
 }
-
 
 export const formatString = (str) => {
   if (str.length <= 8) {
@@ -45,4 +46,19 @@ export const copyToClipboard = (text) => {
       },
     }));
 };
+
+export const isTokenValid = (token) => {
+  if (!token) return false;
+
+  try {
+    const { exp } = jwtDecode(token);
+    if (Date.now() >= exp * 1000) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
     

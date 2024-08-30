@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { loginUser } from '../api/auth';
 import { loginStart, loginSuccess, loginFailure } from '../redux/userReducer';
+import { isTokenValid } from '../utils';
 import { Loader } from '../components/loader/Loader';
 import cat from "../assets/document_shape.webp"
 import eth from "../assets/eth-icon.webp"
@@ -18,10 +19,17 @@ const Login = () => {
   const navigate = useNavigate();
   const global = useSelector(state => state)
 
+  // useEffect(() => {
+  //   if(global.ekzaUser.user)
+  //   navigate("/dashboard")
+  // }, [])
+
   useEffect(() => {
-    if(global.ekzaUser.user)
-    navigate("/dashboard")
-  }, [])
+    const token = localStorage.getItem('token');
+    if (isTokenValid(token)) {
+        navigate("/dashboard")
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
