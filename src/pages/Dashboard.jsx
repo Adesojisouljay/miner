@@ -14,6 +14,7 @@ import { BuySellModal } from "../components/modal/BuyAndSell";
 import { FiatWithdrawalModal } from "../components/modal/FiatWithdrawal";
 import { setCurrency } from "../redux/currencySlice";
 import { usdPrice } from "../utils";
+import { ListedTokens } from "../components/listed-tokens/ListedTokens";
 
 export default function Dashtest() {
   const user = useSelector((state) => state.ekzaUser.user);
@@ -205,6 +206,10 @@ export default function Dashtest() {
               ))}
             </div>
           </div>
+        </div>
+        
+        <div>
+          <ListedTokens/>
         </div>
 
         <div className="big-card-wrap">

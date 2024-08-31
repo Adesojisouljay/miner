@@ -94,42 +94,47 @@ export const NavBar = () => {
                     <hr />
                     <ul>
                       <li 
-                      // onClick={closeDropdown}
+                      onClick={closeDropdown}
                       ><Link to="/">
                         <FaHome className="menu-icon" />Home
                         </Link></li>
                       <li 
-                      // onClick={closeDropdown}
+                      onClick={closeDropdown}
                       ><Link to="/dashboard">
                         <FaTachometerAlt className="menu-icon" /> Dashboard
                         </Link></li>
                       <li 
-                      // onClick={closeDropdown}
+                      onClick={closeDropdown}
+                      ><Link to="/wallet">
+                        <FaTachometerAlt className="menu-icon" /> Wallet
+                        </Link></li>
+                      <li 
+                      onClick={closeDropdown}
                       ><Link to="/spinner">
                         <FaSpinner className="menu-icon" /> Spinner
                         </Link></li>
                       <li 
-                      // onClick={closeDropdown}
+                      onClick={closeDropdown}
                       ><Link to="/contact">
                         <FaEnvelope className="menu-icon" /> Contact
                         </Link></li>
                       <li 
-                      // onClick={closeDropdown}
+                      onClick={closeDropdown}
                       ><Link to="/profile">
                         <FaUser style={{ marginRight: '8px' }} /> Profile
                         </Link></li>
                       <li 
-                      // onClick={closeDropdown}
+                      onClick={closeDropdown}
                       ><Link to="/settings">
                         <FaCogs style={{ marginRight: '8px' }} /> Settings
                         </Link></li>
                       <li 
-                      // onClick={closeDropdown}
+                      onClick={closeDropdown}
                       ><Link to="/accounts">
                         <FaWallet style={{ marginRight: '8px' }} /> Accounts
                         </Link></li>
                       <li 
-                      // onClick={closeDropdown}
+                      onClick={closeDropdown}
                       ><Link to="/kyc">
                         <FaIdCard style={{ marginRight: '8px' }} /> KYC
                         </Link></li>

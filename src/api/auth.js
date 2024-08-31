@@ -35,12 +35,13 @@ export const loginUser = async (userData) => {
       localStorage.setItem('token', response?.data.token);
       return response; 
     } else {
-      console.error('Failed to login:', response?.data.message);
+      console.error('Failed to login:', response?.message);
+      console.log(response)
 
       return null;
     }
   } catch (error) {
     console.error('Error logging in:', error);
-    throw error?.response?.data;
+    throw error.message;
   }
 };
