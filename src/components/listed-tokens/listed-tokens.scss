@@ -1,0 +1,91 @@
+.listed-tokens-container {
+    width: 100%;
+    margin-top: 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .listed-tokens-title {
+    text-align: center;
+    font-size: 2rem;
+    background-color: #343030;
+    padding: 10px;
+  }
+  
+  .listed-tokens-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .listed-tokens-table th,
+  .listed-tokens-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+  }
+  
+  .listed-tokens-table th {
+    background-color: #0e0f11;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .listed-tokens-table tr:hover {
+    background-color: #343030;
+  }
+  
+  .listed-tokens-coin-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+  }
+  
+  .symbol-image-td .td-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  
+  .listed-tokens-loading,
+  .listed-tokens-error {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 20px;
+    color: #ff0000;
+  }
+  
+  .positive-change {
+    color: green;
+  }
+  
+  .negative-change {
+    color: red;
+  }
+  
+.listed-tokens-table tr a {
+    display: block;
+    width: 100%;
+    color: inherit;
+}
+
+.listed-tokens-table tr td a {
+    display: block;
+    padding: 12px 15px;
+}
+
+.listed-tokens-table tr a:hover {
+    background-color: #343030;
+}
+
+.listed-token-search-input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    // margin-bottom: 20px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 40%; 
+}
+

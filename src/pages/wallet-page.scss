@@ -1,0 +1,206 @@
+@import "../mixins.scss";
+
+.wallet-page-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .wallet-page-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .wallet-page-assets-tokens{
+    display: flex;
+    gap: 50px;
+  }
+  
+  .wallet-page-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .wallet-page-table th,
+  .wallet-page-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .wallet-page-table th {
+    background-color: #0e0f11;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  .wallet-page-coin-name {
+    font-weight: bold;
+  }
+  
+  .wallet-page-loading,
+  .wallet-page-error {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 20px;
+    color: #fff;
+  }
+  
+  .wallet-page-portfolio-wrap {
+    flex: 3;
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+    height: max-content;
+    @include respond(phone) {
+      flex-direction: column;
+      margin-top: 20px;
+    }
+  }
+  
+  .wallet-page-card-wrap {
+    width: 100%;
+    border-radius: 15px;
+    padding: 2rem;
+    background: linear-gradient(
+      127deg,
+      hsla(0, 0%, 100%, 0.16) 17.35%,
+      hsla(0, 0%, 85%, 0.04) 76.2%
+    );
+    @include respond(phone) {
+      padding: 15px;
+    }
+  }
+  
+  .wallet-page-card-title {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  
+  .wallet-page-card-icon {
+    padding: 9px;
+    border-radius: 5px;
+    background: linear-gradient(
+      127deg,
+      hsla(0, 62%, 81%, 0.16) 17.35%,
+      hsla(0, 0%, 85%, 0.04) 76.2%
+    );
+  }
+  
+  .wallet-page-card-balance {
+    padding: 10px 0px;
+  }
+  
+  .wallet-page-strike-currency {
+    font-size: 1.5rem;
+  }
+  
+  .wallet-page-card-component-wrap {
+    padding-top: 7px;
+    border-top: 1px solid rgba(229, 229, 229, 0.1);
+    width: 100%;
+  }
+  
+  .wallet-page-card-component {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid rgba(229, 229, 229, 0.1);
+    padding: 10px 0;
+  }
+  
+  .wallet-page-card-reward {
+    padding-top: 7px;
+    padding-bottom: 3px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    @include respond(phone) {
+      gap: 5px;
+    }
+  }
+  
+  .wallet-page-card-reward img {
+    width: 50px;
+    @include respond(phone) {
+      width: 30px;
+    }
+  }
+  
+  .wallet-page-reward-value h5 {
+    color: grey;
+    font-weight: 300;
+  }
+  
+  .wallet-page-reward-value p {
+    font-size: 18px;
+    color: #fff;
+    @include respond(phone) {
+      font-size: 13px;
+    }
+  }
+  
+  .wallet-page-btn-group {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .wallet-page-add-token {
+    flex: 1;
+    margin-top: 20px;
+  }
+  
+  .wallet-page-btn {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+
+
+
+  .wallet-page-add-token {
+    margin-top: 20px;
+  }
+  
+  .wallet-page-token-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .wallet-page-token-item-coin-info{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .wallet-page-token-image {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .wallet-page-search-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  

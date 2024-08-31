@@ -15,6 +15,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [identifier, setIdentifier] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const global = useSelector(state => state)
@@ -28,6 +29,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     try {
       const userData = {
         password,
@@ -42,15 +44,18 @@ const Login = () => {
         dispatch(loginSuccess(response.data));
 
         window.location.href = '/dashboard';
+        setLoading(false)
 
       } else {
         setError(response?.data?.error);
         dispatch(loginFailure('Invalid email or password'));
+        setLoading(false)
       }
     } catch (error) {
       console.error('Error logging in:', error);
 
-      setError(error.message || error.error);
+      setError(error || error.error);
+      setLoading(false)
       dispatch(loginFailure('An error occurred. Please try again later.'));
     }
   };
@@ -84,12 +89,12 @@ const Login = () => {
           />
         </div>
         {error && <p className="error-message">{error}</p>}
-        <button style={{cursor: global.ekzaUser?.isLoading && "not-allowed"}} className="btn-login" disabled={global.ekzaUser?.isLoading} type="submit">Login</button>
+        <button style={{cursor: loading && "not-allowed"}} className="btn-login" disabled={loading} type="submit">Login</button>
       </form>
       <div className='reg-link'>
         <span>Dont't have an account? <Link className="reg-link-reg" to="/register">Register</Link></span>
       </div>
-      {global.ekzaUser.isLoading && 
+      {loading && 
       <Loader/>
       }
     </div>

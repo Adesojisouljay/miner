@@ -25,6 +25,7 @@ import { FiatWithdrawalAction } from "./components/fiat-withdrawal-action/FiatWi
 import { FiatDepositAction } from "./components/fiat-deposit-action/FiatDepositAction";
 import { InvalidTokenModal } from "./components/modal/InvalidateTokenModal";
 import { isTokenValid } from "./utils";
+import { WalletPage } from "./pages/WalletPage";
 import { protectedRoutesArray } from "./vairables/protectedRoutes";
 
 function App() {
@@ -68,6 +69,7 @@ function App() {
             <Route path="/accounts" element={<BankAccount />} />
             <Route path="/fiat-withdrawal-action" element={<FiatWithdrawalAction />} />
             <Route path="/fiat-deposit-action" element={<FiatDepositAction />} />
+            <Route path="/wallet" element={<WalletPage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
