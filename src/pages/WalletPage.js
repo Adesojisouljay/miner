@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchCryptoData } from '../api/ekzat';
 import { useSelector } from 'react-redux';
 import './wallet-page.scss';
-import { FaGift } from 'react-icons/fa';
+import { FaGift, FaArrowUp, FaArrowDown, FaExchangeAlt } from 'react-icons/fa';
 import { Loader } from '../components/loader/Loader';
 
 export const WalletPage = () => {
@@ -13,6 +13,7 @@ export const WalletPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const user = useSelector((state) => state.ekzaUser.user);
+  const selectedCurrency = useSelector((state) => state.currency.selectedCurrency);
 
   useEffect(() => {
     getCryptoData();
@@ -30,9 +31,9 @@ export const WalletPage = () => {
     try {
       const response = await fetchCryptoData();
       if (response?.data?.success) {
-        const { usdData } = response.data.cryptoData;
-        setCryptoData(usdData);
-        setFilteredCryptoData(usdData);
+        const { usdData, ngnData } = response.data.cryptoData;
+        setCryptoData(selectedCurrency === 'USD' ? usdData : ngnData);
+        setFilteredCryptoData(selectedCurrency === 'USD' ? usdData : ngnData);
       } else {
         setError(response?.data?.message || 'Failed to fetch data.');
       }
@@ -49,7 +50,19 @@ export const WalletPage = () => {
 
   return (
     <div className="wallet-page-container">
-      <h2 className="wallet-page-title">{user.username}'s Crypto Porfolio</h2>
+      <h2 className="wallet-page-title">{user.username}'s Crypto Portfolio</h2>
+
+      <div className="wallet-top-actions-wrapper">
+        <div className="wallet-actions">
+          Send<FaArrowUp title="Send" />
+        </div>
+        <div className="wallet-page-reward-value wallet-actions">
+          Receive<FaArrowDown title="Receive" />
+        </div>
+        <div className="wallet-page-reward-value wallet-actions">
+          Buy/Sell<FaExchangeAlt title="Sell" />
+        </div>
+      </div>
 
       <div className="wallet-page-assets-tokens">
         <div className="wallet-page-portfolio-wrap">
@@ -63,18 +76,66 @@ export const WalletPage = () => {
 
             <div className="wallet-page-card-balance">
               <h2>
-                <span className="wallet-page-strike-currency">$</span>
-                {user?.totalUsdValue?.toFixed(3)}
+                <span className="wallet-page-strike-currency">
+                  {selectedCurrency === 'USD' ? '$' : '₦'}
+                </span>
+                {selectedCurrency === 'USD' 
+                  ? user?.totalUsdValue?.toFixed(3)
+                  : user?.totalNairaValue?.toFixed(2)}
               </h2>
             </div>
 
             <div className="wallet-page-card-component-wrap">
+              <div className="wallet-page-card-headings">
+                <h5>Coin</h5>
+                <h5>Balances</h5>
+                <h5>Last 24hr</h5>
+                <h5>Send</h5>
+                <h5>Receive</h5>
+                <h5>Buy/Sell</h5>
+              </div>
+
               {user?.assets?.map((u) => (
                 <div key={u.coinId} className="wallet-page-card-component">
                   <div className="wallet-page-card-reward">
-                    <img src={u.image} alt={u.currency} />
+                    <div className="wallet-page-reward-value wallet-page-token-item-coin-info">
+                      <img src={u.image} alt={u.currency} />
+                      <div>
+                        <h5>{u.currency.toUpperCase()}</h5>
+                        <p>{u.balance?.toFixed(3)}</p>
+                      </div>
+                    </div>
                     <div className="wallet-page-reward-value">
-                      <h5>{u.currency.toUpperCase()}</h5>
+                      <p>
+                        {selectedCurrency === 'USD' 
+                          ? `$${u.asseUsdtWorth?.toFixed(2)}`
+                          : `₦${u.assetNairaWorth?.toFixed(2)}`}
+                      </p>
+                      <p style={{ color: u.percentageChange < 0 ? 'red' : 'green' }}>
+                        {u.percentageChange.toFixed(3)}% 
+                        <span>
+                          ({u.percentageChange < 0 ? '↓' : '↑'})
+                        </span>
+                      </p>
+                    </div>
+                    <div className="wallet-page-reward-value">
+                      <p style={{ color: u.percentageChange < 0 ? 'red' : 'green' }}>
+                        {selectedCurrency === 'USD' 
+                          ? (u.balance * u.priceChangeUsd).toFixed(3)
+                          : (u.balance * u.priceChangeNgn).toFixed(3)}
+                        <span>
+                          ({u.percentageChange < 0 ? '↓' : '↑'})
+                        </span>
+                      </p>
+                    </div>
+                    <div className="wallet-page-reward-value wallet-actions">
+                      Send<FaArrowUp title="Send" />
+                    </div>
+                    <div className="wallet-page-reward-value wallet-actions">
+                      Receive<FaArrowDown title="Receive" />
+                    </div>
+                    <div className="wallet-page-reward-value wallet-actions">
+                      Buy/Sell<FaExchangeAlt title="Sell" />
                     </div>
                   </div>
                 </div>
@@ -93,8 +154,8 @@ export const WalletPage = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="wallet-page-search-input"
           />
-            {loading && <p className="wallet-page-loading">Loading...</p>}
-            {error && <p className="wallet-page-error">{error}</p>}
+          {loading && <p className="wallet-page-loading">Loading...</p>}
+          {error && <p className="wallet-page-error">{error}</p>}
           {filteredCryptoData?.map((coin) => (
             <div key={coin.id} className="wallet-page-token-item">
               <div className="wallet-page-token-item-coin-info">

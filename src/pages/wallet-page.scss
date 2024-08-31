@@ -1,6 +1,9 @@
 @import "../mixins.scss";
 
 .wallet-page-container {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
     width: 90%;
     margin: 0 auto;
     padding: 20px;
@@ -12,6 +15,12 @@
     text-align: center;
     font-size: 2rem;
     margin-bottom: 20px;
+  }
+
+  .wallet-top-actions-wrapper{
+    display: flex;
+    gap: 15px;
+    align-self: center;
   }
 
   .wallet-page-assets-tokens{
@@ -51,11 +60,13 @@
   }
   
   .wallet-page-portfolio-wrap {
-    flex: 3;
+    flex: 2;
     display: flex;
     gap: 20px;
     margin-top: 30px;
     height: max-content;
+    // max-height: 80vh;
+    overflow-y: auto;
     @include respond(phone) {
       flex-direction: column;
       margin-top: 20px;
@@ -120,6 +131,7 @@
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 12px;
     @include respond(phone) {
       gap: 5px;
@@ -154,6 +166,8 @@
   .wallet-page-add-token {
     flex: 1;
     margin-top: 20px;
+    max-height:80vh;
+    overflow-y: auto;
   }
   
   .wallet-page-btn {
@@ -202,5 +216,54 @@
     font-size: 16px;
     border: 1px solid #ddd;
     border-radius: 4px;
+  }
+  
+  .wallet-page-card-headings {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(229, 229, 229, 0.1);
+    margin-bottom: 10px;
+  
+    h5 {
+      color: grey;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+  }
+  
+  .wallet-page-card-component {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid rgba(229, 229, 229, 0.1);
+    padding: 10px 0;
+    justify-content: space-between;
+  }
+  
+  .wallet-page-card-actions {
+    display: flex;
+    gap: 10px;
+    font-size: 20px;
+    color: #fff;
+  }
+  
+  .wallet-page-card-actions svg:hover {
+    color: #007bff;
+    cursor: pointer;
+  }
+
+  .wallet-actions{
+    display: flex;
+    align-items: center;
+    background: #958b8b;
+    padding: 10px;
+    border-radius: 50px;
+    cursor: pointer;
+    gap: 5px;
+
+    &:hover{
+      background: #5a5353;
+    }
   }
   
