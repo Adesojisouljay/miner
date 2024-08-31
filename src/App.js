@@ -27,6 +27,7 @@ import { InvalidTokenModal } from "./components/modal/InvalidateTokenModal";
 import { isTokenValid } from "./utils";
 import { WalletPage } from "./pages/WalletPage";
 import { protectedRoutesArray } from "./vairables/protectedRoutes";
+import { Trade } from "./pages/Trade";
 
 function App() {
   const dispatch = useDispatch()
@@ -70,6 +71,7 @@ function App() {
             <Route path="/fiat-withdrawal-action" element={<FiatWithdrawalAction />} />
             <Route path="/fiat-deposit-action" element={<FiatDepositAction />} />
             <Route path="/wallet" element={<WalletPage />} />
+            <Route path="/trade" element={<Trade />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

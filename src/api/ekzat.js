@@ -373,6 +373,7 @@ export const fetchCryptoData = async () => {
 };
 
 export const addAsset = async (coinId) => {
+  console.log(coinId)
   try {
     const response = await api.post(
       '/auth/add-asset',
@@ -399,7 +400,7 @@ export const generateAddress = async (coinId) => {
     const response = await api.put(
       '/api/auth/generate-address',
       {
-        currency: coinId
+        coinId
       },
       {
         headers: {
