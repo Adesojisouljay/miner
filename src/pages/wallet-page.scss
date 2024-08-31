@@ -173,6 +173,9 @@
   .wallet-page-btn {
     padding: 0.5rem 1rem;
     background-color: #007bff;
+    display: flex;
+    align-items: center;
+    gap: 3px;
     color: white;
     border: none;
     border-radius: 5px;

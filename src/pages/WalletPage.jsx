@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { fetchCryptoData } from '../api/ekzat';
-import { useSelector } from 'react-redux';
+import { fetchCryptoData, addAsset } from '../api/ekzat';
+import { useSelector, useDispatch } from 'react-redux';
 import './wallet-page.scss';
-import { FaGift, FaArrowUp, FaArrowDown, FaExchangeAlt } from 'react-icons/fa';
+import { FaGift, FaArrowUp, FaArrowDown, FaExchangeAlt, FaPlus, FaMinus } from 'react-icons/fa';
+import { getUserProfile } from '../api/profile';
+import { toast } from 'react-toastify';
 import { Loader } from '../components/loader/Loader';
 
 export const WalletPage = () => {
@@ -14,6 +16,7 @@ export const WalletPage = () => {
 
   const user = useSelector((state) => state.ekzaUser.user);
   const selectedCurrency = useSelector((state) => state.currency.selectedCurrency);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     getCryptoData();
@@ -44,10 +47,83 @@ export const WalletPage = () => {
     }
   };
 
-  const addTokenToWallet = (token) => {
-    console.log('Adding token:', token);
+  const addTokenToWallet = async (coinId) => {
+    try {
+      const response = await addAsset(coinId)
+      console.log(response)
+      if(response.success){
+        toast.success(response.message,{
+          style: {
+            backgroundColor: 'rgba(229, 229, 229, 0.1)',
+            color: '#fff',
+            fontSize: '16px',
+            marginTop: "60px"
+          },
+        });
+        getUserProfile(dispatch)
+      } else {
+        toast.error(response.message + "try again",{
+          style: {
+            backgroundColor: 'rgba(229, 229, 229, 0.1)',
+            color: '#fff',
+            fontSize: '16px',
+            marginTop: "60px"
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message || "Error adding asset",{
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
+    }
+  };
+  const removeTokenFromWallet = async (coinId) => {
+    try {
+      const response = "Asset removed successfully"
+      console.log(response)
+        toast.success(response,{
+          style: {
+            backgroundColor: 'rgba(229, 229, 229, 0.1)',
+            color: '#fff',
+            fontSize: '16px',
+            marginTop: "60px"
+          },
+        });
+        // getUserProfile(dispatch)
+      // } else {
+      //   toast.error(response.message + "try again",{
+      //     style: {
+      //       backgroundColor: 'rgba(229, 229, 229, 0.1)',
+      //       color: '#fff',
+      //       fontSize: '16px',
+      //       marginTop: "60px"
+      //     },
+        // });
+      // }
+    } catch (error) {
+      // console.log(error)
+      toast.error( "Error adding asset",{
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
+    }
   };
 
+  const isAssetAdded = (coinId) => {
+    return user?.assets?.some(asset => asset.coinId === coinId);
+  };
+
+  console.log(isAssetAdded("bitcoin"))
   return (
     <div className="wallet-page-container">
       <h2 className="wallet-page-title">{user.username}'s Crypto Portfolio</h2>
@@ -81,7 +157,7 @@ export const WalletPage = () => {
                 </span>
                 {selectedCurrency === 'USD' 
                   ? user?.totalUsdValue?.toFixed(3)
-                  : user?.totalNairaValue?.toFixed(2)}
+                  : user?.totalNairaValue?.toFixed(3)}
               </h2>
             </div>
 
@@ -108,8 +184,8 @@ export const WalletPage = () => {
                     <div className="wallet-page-reward-value">
                       <p>
                         {selectedCurrency === 'USD' 
-                          ? `$${u.asseUsdtWorth?.toFixed(2)}`
-                          : `₦${u.assetNairaWorth?.toFixed(2)}`}
+                          ? `$${u.asseUsdtWorth?.toFixed(3)}`
+                          : `₦${u.assetNairaWorth?.toFixed(3)}`}
                       </p>
                       <p style={{ color: u.percentageChange < 0 ? 'red' : 'green' }}>
                         {u.percentageChange.toFixed(3)}% 
@@ -162,12 +238,18 @@ export const WalletPage = () => {
                 <img src={coin.image} alt={coin.name} className="wallet-page-token-image" />
                 <span>{coin.name}</span>
               </div>
+              {isAssetAdded(coin.id) ? <button
+                className="wallet-page-btn"
+                onClick={() => removeTokenFromWallet(coin.id)}
+              >
+                Remove Coin<FaMinus />
+              </button> :
               <button
                 className="wallet-page-btn"
-                onClick={() => addTokenToWallet(coin)}
+                onClick={() => addTokenToWallet(coin.id)}
               >
-                Add Token
-              </button>
+                Add Coin<FaPlus />
+              </button>}
             </div>
           ))}
         </div>
