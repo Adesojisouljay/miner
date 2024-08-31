@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import axios from 'axios';
-import './trade.scss'; // Assuming you have a CSS file for styling
+import './single-coin-info.scss';
 
-export const Trade = () => {
+export const SingleCoinInfo = () => {
   const [coinData, setCoinData] = useState({});
   const [selectedCoin, setSelectedCoin] = useState('bitcoin');
   const [priceHistory, setPriceHistory] = useState([]);
-  const [timeRange, setTimeRange] = useState('1'); // Default to 1 day
+  const [timeRange, setTimeRange] = useState('1'); 
 
-  // Declare the coin IDs to be fetched
+ 
   const coinIds = "ids=bitcoin,hive,hive_dollar,tether,dogecoin,tron,toncoin,gala,solana,ethereum";
 
-  // Mapping of coin IDs to user-friendly names
   const coins = {
     bitcoin: 'Bitcoin',
     hive: 'Hive',
@@ -27,7 +26,6 @@ export const Trade = () => {
   };
 
   useEffect(() => {
-    // Fetch market data for all coins
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -43,7 +41,6 @@ export const Trade = () => {
   }, []);
 
   useEffect(() => {
-    // Fetch historical price data based on the selected time range
     const fetchPriceHistory = async () => {
       try {
         const response = await axios.get(
@@ -60,8 +57,8 @@ export const Trade = () => {
 
   const formatDataForChart = (priceHistory) => {
     return priceHistory.map((entry) => ({
-      name: new Date(entry[0]).toLocaleDateString(), // Format date as desired
-      uv: entry[1], // Price value
+      name: new Date(entry[0]).toLocaleDateString(),
+      uv: entry[1],
     }));
   };
 
