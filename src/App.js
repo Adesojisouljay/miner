@@ -29,6 +29,7 @@ import { WalletPage } from "./pages/WalletPage";
 import { protectedRoutesArray } from "./vairables/protectedRoutes";
 import { SingleCoinInfo } from "./pages/SingleCoinInfo";
 import { TransactionHistory } from "./components/transaction-history/TransactionHistory";
+import { Trade } from "./pages/Trade";
 
 function App() {
   const dispatch = useDispatch()
@@ -74,6 +75,7 @@ function App() {
             <Route path="/wallet" element={<WalletPage />} />
             <Route path="/coin/:id" element={<SingleCoinInfo />} />
             <Route path="/transactions" element={<TransactionHistory />} />
+            <Route path="/trade" element={<Trade />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
