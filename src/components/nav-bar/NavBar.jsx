@@ -57,14 +57,6 @@ export const NavBar = () => {
           <img src={loggo} alt="" />
           <h3 className='fff'>M</h3>
         </div>
-        {/* <ul className="nav-links">
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/contact">Contact</Link></li>
-          <li><Link to="/dashboard">Dashboard</Link></li>
-          <li><Link to="/spinner">Spinner</Link></li>
-          {user?.role === "admin" && <li><Link to="/controller">Controllers</Link></li>}
-          <li><Link to="/test">Test Page</Link></li>
-        </ul> */}
 
         <div className="login-toggle-wrap">
           {isAuthenticated ? (
@@ -110,6 +102,11 @@ export const NavBar = () => {
                         </Link></li>
                       <li 
                       onClick={closeDropdown}
+                      ><Link to="/transactions">
+                        <FaTachometerAlt className="menu-icon" /> Transactions
+                        </Link></li>
+                      <li 
+                      onClick={closeDropdown}
                       ><Link to="/spinner">
                         <FaSpinner className="menu-icon" /> Spinner
                         </Link></li>
@@ -117,6 +114,11 @@ export const NavBar = () => {
                       onClick={closeDropdown}
                       ><Link to="/contact">
                         <FaEnvelope className="menu-icon" /> Contact
+                        </Link></li>
+                      <li 
+                      onClick={closeDropdown}
+                      ><Link to="/trade">
+                        <FaEnvelope className="menu-icon" /> Buy/Sell
                         </Link></li>
                       <li 
                       onClick={closeDropdown}
@@ -143,6 +145,7 @@ export const NavBar = () => {
                       <li><Link to="/fiat-deposit-action">Deposit Action</Link></li>
                       <li><Link to="/fiat-withdrawal-action">Withdrawal Action</Link></li>
                       <li><Link to="/manage-kyc">Kyc Action</Link></li>
+                      <li><Link to="/merchant-action">Merchant Action</Link></li>
                       </>}
                       <li onClick={(e) => { handleLogout(e); closeDropdown(); }}>
                         <Link to="/">

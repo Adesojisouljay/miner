@@ -1,0 +1,178 @@
+.trade-main-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .trade-container {
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+    transform: translateY(-30px);
+  }
+
+  h1{
+    color: white;
+  }
+  
+  .trade-container.open {
+    transform: translateY(0);
+  }
+  
+  .trade-step-1, .trade-step-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .trade-header {
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  
+  .trade-toggle-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .trade-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    width: 200px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .trade-btn.active {
+    background: #2a2c2e;
+  }
+  
+  .trade-btn:hover {
+    background: #0056b3;
+  }
+  
+  .trade-amount-type-toggle {
+    margin-top: 10px;
+  }
+  
+  .trade-balance-info {
+    margin-top: 10px;
+  }
+  
+  .trade-input-group {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .trade-input-group select, .trade-input-group input {
+    width: 50%;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+
+  select{
+    background: transparent;
+    color: #ccc;
+  }
+  
+  .trade-estimation-wrap {
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  .trade-estimation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .trade-summary {
+    margin-top: 20px;
+  }
+  
+  .trade-submit-btn {
+    background: #1e201e;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .trade-submit-btn:hover {
+    background: #0e0922;
+  }
+  
+  .trade-close-btn, .trade-back-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s ease;
+  }
+  
+  .trade-close-btn:hover, .trade-back-btn:hover {
+    background: #c82333;
+  }
+  
+  .trade-warning {
+    color: red;
+    margin: 10px 0;
+  }
+  
+  .trade-step-2 {
+    text-align: center;
+  }
+  
+
+  .trade-summary {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .trade-summary h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .trade-summary p {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+  
+  .trade-summary .amount-details {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .trade-summary .fee-details {
+    color: #ff5722;
+  }
+  
+  .trade-summary .result-details {
+    color: #2e7d32;
+  }
+  

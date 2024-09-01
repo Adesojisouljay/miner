@@ -10,7 +10,7 @@ import './App.scss';
 import Pagetest from "./pages/Pagetest";
 import Aos from 'aos'
 import "aos/dist/aos.css"
-import Dashtest from "./pages/Dashboard";
+import { Dashboard } from "./pages/Dashboard";
 import Spinner from "./pages/Spinner";
 import { getUserProfile } from "./api/profile";
 import { useDispatch } from "react-redux";
@@ -27,6 +27,11 @@ import { InvalidTokenModal } from "./components/modal/InvalidateTokenModal";
 import { isTokenValid } from "./utils";
 import { WalletPage } from "./pages/WalletPage";
 import { protectedRoutesArray } from "./vairables/protectedRoutes";
+import { SingleCoinInfo } from "./pages/SingleCoinInfo";
+import { TransactionHistory } from "./components/transaction-history/TransactionHistory";
+import { Trade } from "./pages/Trade";
+import { DepositPage } from "./pages/DepositPagee";
+import Fiatdeposit from "./components/modal/Fiatdeposit";
 
 function App() {
   const dispatch = useDispatch()
@@ -57,7 +62,7 @@ function App() {
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<Dashtest/>}/>
+            <Route path="/dashboard" element={<Dashboard/>}/>
             {/* <Route path="/mining" element={<Miner/>}/> */}
             <Route path="/controller" element={<Admin/>}/>
             <Route path="/test" element={<Pagetest />} />
@@ -70,6 +75,11 @@ function App() {
             <Route path="/fiat-withdrawal-action" element={<FiatWithdrawalAction />} />
             <Route path="/fiat-deposit-action" element={<FiatDepositAction />} />
             <Route path="/wallet" element={<WalletPage />} />
+            <Route path="/coin/:id" element={<SingleCoinInfo />} />
+            <Route path="/transactions" element={<TransactionHistory />} />
+            <Route path="/deposit" element={<DepositPage />} />
+            <Route path="/fiat-deposit" element={<Fiatdeposit />} />
+            <Route path="/trade" element={<Trade />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
