@@ -30,6 +30,8 @@ import { protectedRoutesArray } from "./vairables/protectedRoutes";
 import { SingleCoinInfo } from "./pages/SingleCoinInfo";
 import { TransactionHistory } from "./components/transaction-history/TransactionHistory";
 import { Trade } from "./pages/Trade";
+import { DepositPage } from "./pages/DepositPagee";
+import Fiatdeposit from "./components/modal/Fiatdeposit";
 
 function App() {
   const dispatch = useDispatch()
@@ -75,6 +77,8 @@ function App() {
             <Route path="/wallet" element={<WalletPage />} />
             <Route path="/coin/:id" element={<SingleCoinInfo />} />
             <Route path="/transactions" element={<TransactionHistory />} />
+            <Route path="/deposit" element={<DepositPage />} />
+            <Route path="/fiat-deposit" element={<Fiatdeposit />} />
             <Route path="/trade" element={<Trade />} />
           </Route>
           <Route path="*" element={<NotFound />} />

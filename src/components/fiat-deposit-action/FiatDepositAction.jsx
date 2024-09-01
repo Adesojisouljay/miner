@@ -120,6 +120,7 @@ export const FiatDepositAction = () => {
       deposit.user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
       deposit.user.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    console.log(filtered)
     setFilteredDeposits(filtered);
   };
 
@@ -162,7 +163,7 @@ export const FiatDepositAction = () => {
                   </td>
                   <td>{deposit.user.username}</td>
                   <td>{deposit.user.email}</td>
-                  <td>{deposit.merchantUsername.username}</td>
+                  <td>{deposit?.merchantUsername?.username}</td>
                   <td>
                     {deposit.status === 'pending' && (
                       <>

@@ -117,6 +117,11 @@ export const NavBar = () => {
                         </Link></li>
                       <li 
                       onClick={closeDropdown}
+                      ><Link to="/trade">
+                        <FaEnvelope className="menu-icon" /> Buy/Sell
+                        </Link></li>
+                      <li 
+                      onClick={closeDropdown}
                       ><Link to="/profile">
                         <FaUser style={{ marginRight: '8px' }} /> Profile
                         </Link></li>
@@ -140,6 +145,7 @@ export const NavBar = () => {
                       <li><Link to="/fiat-deposit-action">Deposit Action</Link></li>
                       <li><Link to="/fiat-withdrawal-action">Withdrawal Action</Link></li>
                       <li><Link to="/manage-kyc">Kyc Action</Link></li>
+                      <li><Link to="/merchant-action">Merchant Action</Link></li>
                       </>}
                       <li onClick={(e) => { handleLogout(e); closeDropdown(); }}>
                         <Link to="/">
