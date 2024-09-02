@@ -44,15 +44,15 @@ export const NavBar = () => {
         </ul>
 
         <div className="login-toggle-wrap">
-        {isAuthenticated ? (
+         {isAuthenticated ? (
             <Link to="/"><li onClick={handleLogout}>Logout</li></Link>
           ) : (
             <Link to="/login"><li className="login-btn">Login</li></Link>
           )}
-        <div className="toggle" onClick={handleNav}>
+         <div className="toggle" onClick={handleNav}>
             {!nav ? <AiOutlineClose className="close-icon" /> : <AiOutlineMenu  size={20} /> }
             
-        </div>
+         </div>
         </div>
         
         <div className={!nav ? "side-nav transition-all " : "side-nav-else transition-all"} onClick={handleNav}>

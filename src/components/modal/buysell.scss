@@ -1,0 +1,141 @@
+@import "../../mixins.scss";
+
+.modal-buy-sell {
+    width: 40%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    // justify-content: center;
+    background-color: var(--modal-background-color);
+    padding: 20px;
+    border-radius: 12px;
+    position: relative;
+   
+    @include respond(phone) {
+      width: 100%;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+    }
+  }
+  .buy-sell-top-box-wrap{
+    position: relative;
+    // width: 100%;
+  }
+.buy-sell-top-box{
+    padding: 17px 15px;
+    --tw-bg-opacity: 1;
+    background-color: rgba(29, 35, 43, var(--tw-bg-opacity));
+    --tw-border-opacity: 1;
+    border-color: rgb(42 51 62 / var(--tw-border-opacity));
+    border-width: 1px;
+    border-radius: 12px;
+
+}
+.buy-sell-top-wrap{
+    padding-bottom: 4px;
+}
+.buy-sell-input-wrap{
+    display: flex;
+    justify-content: space-between;
+    input{
+        background-color: inherit;
+        color: #fff;
+        font-weight: 500;
+        font-size: 24px;
+        // input:focus-visible{
+        //  outline-style: solid;
+        //  outline-color: #0360ff;
+        // }
+        
+    }
+
+}
+
+.select-coin-wrap{
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 5px 5px;
+    border-radius: 8px;
+    border: solid 1px;
+    border-color:  rgb(42 51 62 );
+    
+    img{
+        width: 25px;
+    }
+    h3{
+       font-size: 16px; 
+    }
+}
+.available-balance-wrap{
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: rgb(212 212 212);
+    gap: 2px;
+}
+
+.mt{
+    margin-top: 20px;
+}
+.select-coin-list-wrap{
+    display: none;
+    padding: 20px;
+    position: absolute;
+    z-index: 3;
+    left: -1px;
+    // top: 7.2rem;
+    // display: flex;
+    flex-direction: column;
+    background-color: rgb(26 39 54 );
+    width: 100%;
+     border-radius: 12px 12px 0px 0px;
+}
+
+.display-coin-list-wrap{
+    padding: 20px;
+}
+.search-coin-wrap{
+    display: flex;
+    align-items: center;
+    padding: 5px 12px;
+    border: solid 1px rgb(42 51 62 );
+    border-radius: 7px;
+    width: 100%;
+    input{
+        background-color: inherit;
+        color: #fff;
+        width: 100%;
+        padding: 5px 0px;
+
+    }
+}
+.coin-list{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+    span{
+        font-size:14px;
+    }
+    
+}
+.coin-img-name{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    img{
+        width: 25px;
+    }
+}
+.open{
+    display: flex;
+}
+
+.top-1{
+    top: 7.9rem;
+}
+.top-2{
+    top: 16.2rem;
+}

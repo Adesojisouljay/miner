@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 const ProtectedRoute = ({ path, element }) => {
   const isAuthenticated = useSelector(state => state.apexMiner.isAuthenticated);
-  // const isAuthenticated = false;
+  // const isAuthenticated = true;
 
   // return (
   //   <Route

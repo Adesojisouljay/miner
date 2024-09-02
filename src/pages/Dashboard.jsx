@@ -10,6 +10,7 @@ import "./dashboard.scss";
 import { WithdrawalModal } from "../components/modal/WithdrawalModal";
 import Fiatdeposit from "../components/modal/Fiatdeposit";
 import { DepositModal } from "../components/modal/FiatTransfer";
+import Buysell from "../components/modal/Buysell";
 
 export default function Dashtest() {
   const user = useSelector((state) => state.apexMiner.user);
@@ -21,6 +22,7 @@ export default function Dashtest() {
   const [action, setAction] = useState(false);
   const [fiatDopositOpen, setFiatDopositOpen] = useState(false);
   const [fiatTransferOpen, setFiatTransferOpen] = useState(false);
+  const [buysell, setBuySell] = useState(false)
   
   const actionToggle = () => {
     setAction(!action);
@@ -63,6 +65,13 @@ export default function Dashtest() {
   const closeWithdrawalModal = () => {
     setWithdrawalOpen(false);
   };
+  const openBuySell = () => {
+    setBuySell(true);
+  };
+  const closeBuySell = () => {
+    setBuySell(false);
+  };
+  
 
   useEffect(() => {
     getTrx();
@@ -115,12 +124,12 @@ export default function Dashtest() {
             <button onClick={openWithdrawalModal}>Send</button>
             <button onClick={openFiatTransferModal}>Fiat Transfer</button>
             <button onClick={openFiatDepositModal}>Fiat Deposit</button>
-            <button className="" onClick={actionToggle}>
+            <button className="" onClick={()=>{actionToggle();openBuySell()}}>
               Buy/Sell
             </button>
             {action && 
             <div className="action-btn-wrap border-transparent">
-             <h3 className="border-transparent" onClick={actionToggle}>Buyuuuu</h3>
+             <h3 className="border-transparent" onClick={actionToggle}>Buy</h3>
              <h3 className="border-transparent" onClick={actionToggle}>Sell</h3>
             </div>}
           </div>
@@ -233,10 +242,11 @@ export default function Dashtest() {
         isOpen={isOpen}
         assets={assets}
         onClose={closeDepositModal}
-      />
+      />openBuySell
       <WithdrawalModal isOpen={withdrawalOpen} assets={assets} onClose={closeWithdrawalModal}/>
       <DepositModal isOpen={fiatTransferOpen} onClose={closeFiatTransferModal}/>
       <Fiatdeposit onClose={closeFiatDepositModal } isOpen={fiatDopositOpen} />
+      <Buysell onClose={closeBuySell } isOpen={buysell} />
       <div className="copy-right-wrap">
        <FaRegCopyright />
        <p>Sojminer,All Rights Reserved </p>
