@@ -17,8 +17,8 @@ export const P2pChat = () => {
 
 
             ///WE SHOULD UNCOMMENT THIS BEFORE DEPLOYMENT
-            // const newSocket = io(`${process.env.REACT_APP_EKZA_URL}/chat` || 'http://localhost:2000/api/chat', {
-            const newSocket = io('http://localhost:2000/api/chat', {
+            const newSocket = io(`${process.env.REACT_APP_EKZA_URL}/chat` || 'http://localhost:2000/api/chat', {
+            // const newSocket = io('http://localhost:2000/api/chat', {
                 query: { merchantId, userId },
                 transports: ['websocket'],
             });
