@@ -1,11 +1,37 @@
+.p2p-page{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 50px;
+}
+
+.p2p-page-wrapper{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.merchant-info-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+}
 .chat-container {
     display: flex;
     flex-direction: column;
     width: 50%;
-    height: 100vh;
+    height: 70vh;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin: 20px auto;
+}
+
+.chat-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background-color: #888;
 }
 
 .messages-container {

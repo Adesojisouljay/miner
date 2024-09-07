@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import ScrollToBottom from 'react-scroll-to-bottom';
+import { getMerchantById } from '../../api/ekzat';
 import './p2p-chat.scss';
 
 export const P2pChat = () => {
@@ -14,6 +15,10 @@ export const P2pChat = () => {
     const [socket, setSocket] = useState(null);
     const messagesEndRef = useRef(null);
     const [isAtBottom, setIsAtBottom] = useState(true);
+    const [merchantInfo, setMerchantInfo] = useState(null);
+    
+    const queryParams = new URLSearchParams(window.location.search);
+    const amount = queryParams.get('amount'); 
 
     useEffect(() => {
         if (chatId) {
@@ -57,17 +62,26 @@ export const P2pChat = () => {
         }
     }, [chatId]);
 
+    useEffect(() => {
+        const fetchMerchantInfo = async () => {
+            try {
+                const merchantId = chatId.split('-')[0];
+                const merchantData = await getMerchantById(merchantId);
+                console.log(merchantData)
+                setMerchantInfo(merchantData.data);
+            } catch (error) {
+                console.error('Error fetching merchant info:', error);
+            }
+        };
+
+        fetchMerchantInfo();
+    }, [chatId]);
+
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
         setNewMessagesCount(0);
         setIsAtBottom(true);
     };
-
-    // const handleScroll = (e) => {
-    //     const container = e.target;
-    //     const atBottom = container.scrollHeight - container.scrollTop === container.clientHeight;
-    //     setIsAtBottom(atBottom);
-    // };
 
     const sendMessage = (e) => {
         e.preventDefault();
@@ -82,44 +96,61 @@ export const P2pChat = () => {
     };
 
     return (
-        <div className="chat-container">
-            <h2>Chat</h2>
-            
-            {newMessagesCount > 0 && (
-                <div className="new-messages-banner" onClick={scrollToBottom}>
-                    {newMessagesCount} new message{newMessagesCount > 1 ? 's' : ''} – Click to view
+        <div className='p2p-page'>
+            <div className='p2p-page-wrapper'>
+                <div className="merchant-info-container">
+                    {merchantInfo ? (
+                        <>
+                            <h3>Merchant Information</h3>
+                            <p><strong>Username:</strong> {merchantInfo.username}</p>
+                            <p><strong>Account Name:</strong> {merchantInfo.accountName}</p>
+                            <p><strong>Account Number:</strong> {merchantInfo.accountNumber}</p>
+                            <p><strong>Bank:</strong> {merchantInfo.bankName}</p>
+                            <p><strong>Amount:</strong> ₦{amount}</p>
+                        </>
+                    ) : (
+                        <p>Loading merchant info...</p>
+                    )}
                 </div>
-            )}
-
-            <ScrollToBottom 
-                className="messages-container" 
-            // onScroll={handleScroll}
-            >
-                <div style={{display: "flex", flexDirection: "column"}}>
-                    {messages.map((msg, index) => (
-                        <div
-                            key={index}
-                            className={`message ${msg.sender === user._id ? 'sent' : 'received'}`}
-                        >
-                            {msg.message}
+                <div className="chat-container">
+                    <div className='chat-header'>
+                        <h2>Chat with {merchantInfo?.username}</h2>
+                        <span>{merchantInfo?.online ? "Online" : "offline" }</span>
+                    </div>
+                    {newMessagesCount > 0 && (
+                        <div className="new-messages-banner" onClick={scrollToBottom}>
+                            {newMessagesCount} new message{newMessagesCount > 1 ? 's' : ''} – Click to view
                         </div>
-                    ))}
-                    <div ref={messagesEndRef} />
+                    )}
+
+                    <ScrollToBottom className="messages-container">
+                        <div style={{ display: "flex", flexDirection: "column" }}>
+                            {messages.map((msg, index) => (
+                                <div
+                                    key={index}
+                                    className={`message ${msg.sender === user._id ? 'sent' : 'received'}`}
+                                >
+                                    {msg.message}
+                                </div>
+                            ))}
+                            <div ref={messagesEndRef} />
+                        </div>
+                    </ScrollToBottom>
+                    
+                    <form onSubmit={sendMessage} className="chat-form">
+                        <input
+                            type="text"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            placeholder="Type a message..."
+                            className="chat-input"
+                        />
+                        <button type="submit" className="chat-submit">
+                            Send
+                        </button>
+                    </form>
                 </div>
-            </ScrollToBottom>
-            
-            <form onSubmit={sendMessage} className="chat-form">
-                <input
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Type a message..."
-                    className="chat-input"
-                />
-                <button type="submit" className="chat-submit">
-                    Send
-                </button>
-            </form>
+            </div>
         </div>
     );
 };

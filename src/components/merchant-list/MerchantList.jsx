@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getAllMerchants } from '../../api/ekzat';
 import io from 'socket.io-client';
@@ -11,7 +11,11 @@ export const MerchantList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    const user = useSelector(state => state.ekzaUser.user)
+    const user = useSelector(state => state.ekzaUser.user);
+    const location = useLocation();
+    
+    const queryParams = new URLSearchParams(location.search);
+    const amount = queryParams.get('amount');
 
     useEffect(() => {
         const fetchMerchants = async () => {
@@ -55,6 +59,7 @@ export const MerchantList = () => {
     return (
         <div className="merchant-list">
             <h2 className="merchant-list__title">Select a Merchant for Withdrawal</h2>
+            {amount && <p className="merchant-list__amount">Deposit Amount: ₦{amount}</p>}
             <ul className="merchant-list__items">
                 {merchants.map((merchant) => (
                     <li
@@ -71,7 +76,7 @@ export const MerchantList = () => {
                             <p className="merchant-item__online-status">
                                 {merchant.online ? 'Online' : 'Offline'}
                             </p>
-                            <Link to={`/merchant-chat/${merchant._id}-${user._id}`} className="merchant-item__chat-link">
+                            <Link to={`/merchant-chat/${merchant._id}-${user._id}?amount=${encodeURIComponent(amount)}`} className="merchant-item__chat-link">
                                 <FaCommentDots size={20} />
                             </Link>
                         </div>

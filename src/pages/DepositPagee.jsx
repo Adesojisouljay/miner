@@ -41,6 +41,7 @@ export const DepositPage = () => {
   return (
     <div className="deposit-page">
       <h2>Deposit</h2>
+        <img src={selectedAsset.image} alt="" className='dep-img'/>
       <div className="deposit-asset">
         <label htmlFor="asset-select">Select Asset:</label>
         <select
