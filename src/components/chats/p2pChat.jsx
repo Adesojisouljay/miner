@@ -16,7 +16,8 @@ export const P2pChat = () => {
     const messagesEndRef = useRef(null);
     const [isAtBottom, setIsAtBottom] = useState(true);
     const [merchantInfo, setMerchantInfo] = useState(null);
-    
+    const [expandedMessages, setExpandedMessages] = useState({});
+
     const queryParams = new URLSearchParams(window.location.search);
     const amount = queryParams.get('amount'); 
 
@@ -41,16 +42,10 @@ export const P2pChat = () => {
             });
 
             newSocket.on('receiveMessage', (msg) => {
-                if (msg.sender !== user._id) {
-                    setMessages((prevMessages) => [...prevMessages, msg]);
-
-                    if (!isAtBottom) {
-                        setNewMessagesCount((prevCount) => prevCount + 1);
-                    } else {
-                        scrollToBottom();
-                    }
+                setMessages((prevMessages) => [...prevMessages, msg]);
+                if (!isAtBottom && msg.sender !== user._id) {
+                    setNewMessagesCount((prevCount) => prevCount + 1);
                 } else {
-                    setMessages((prevMessages) => [...prevMessages, msg]);
                     scrollToBottom();
                 }
             });
@@ -67,7 +62,6 @@ export const P2pChat = () => {
             try {
                 const merchantId = chatId.split('-')[0];
                 const merchantData = await getMerchantById(merchantId);
-                console.log(merchantData)
                 setMerchantInfo(merchantData.data);
             } catch (error) {
                 console.error('Error fetching merchant info:', error);
@@ -83,8 +77,7 @@ export const P2pChat = () => {
         setIsAtBottom(true);
     };
 
-    const sendMessage = (e) => {
-        e.preventDefault();
+    const sendMessage = () => {
         if (message.trim() && socket) {
             const [merchantId, userId] = chatId.split('-');
             const msgObject = { userId, merchantId, message, sender: user._id };
@@ -93,6 +86,54 @@ export const P2pChat = () => {
 
             setMessage('');
         }
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    };
+
+    const renderMessage = (msg) => {
+        const isExpanded = expandedMessages[msg._id || msg.timestamp] || false;
+
+        const toggleShowFullMessage = () => {
+            setExpandedMessages((prev) => ({
+                ...prev,
+                [msg._id || msg.timestamp]: !isExpanded,
+            }));
+        };
+
+        const showNextChars = (message, startIndex) => {
+            const endIndex = startIndex + 300;
+            return message.substring(startIndex, endIndex);
+        };
+
+        const messageParts = [];
+        let startIndex = 0;
+
+        while (startIndex < msg.message.length) {
+            const part = showNextChars(msg.message, startIndex);
+            messageParts.push(part);
+            startIndex += 300;
+        }
+
+        return (
+            <div className={`message ${msg.sender === user._id ? 'sent' : 'received'}`} key={msg._id || msg.timestamp}>
+                {messageParts.map((part, index) => (
+                    <span key={index}>
+                        {index === 0 ? part : (isExpanded ? part : '')}
+                    </span>
+                ))}
+                {msg.message.length > 300 && !isExpanded && '...'}
+                {msg.message.length > 300 && (
+                    <button onClick={toggleShowFullMessage} className="read-more">
+                        {isExpanded ? 'Read less' : 'Read more'}
+                    </button>
+                )}
+            </div>
+        );
     };
 
     return (
@@ -115,7 +156,7 @@ export const P2pChat = () => {
                 <div className="chat-container">
                     <div className='chat-header'>
                         <h2>Chat with {merchantInfo?.username}</h2>
-                        <span>{merchantInfo?.online ? "Online" : "offline" }</span>
+                        <span>{merchantInfo?.online ? "Online" : "Offline"}</span>
                     </div>
                     {newMessagesCount > 0 && (
                         <div className="new-messages-banner" onClick={scrollToBottom}>
@@ -125,29 +166,25 @@ export const P2pChat = () => {
 
                     <ScrollToBottom className="messages-container">
                         <div style={{ display: "flex", flexDirection: "column" }}>
-                            {messages.map((msg, index) => (
-                                <div
-                                    key={index}
-                                    className={`message ${msg.sender === user._id ? 'sent' : 'received'}`}
-                                >
-                                    {msg.message}
-                                </div>
-                            ))}
+                            {messages.map(renderMessage)}
                             <div ref={messagesEndRef} />
                         </div>
                     </ScrollToBottom>
                     
-                    <form onSubmit={sendMessage} className="chat-form">
-                        <input
-                            type="text"
-                            value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                            placeholder="Type a message..."
-                            className="chat-input"
-                        />
-                        <button type="submit" className="chat-submit">
-                            Send
-                        </button>
+                    <form onSubmit={(e) => e.preventDefault()} className="chat-form">
+                        <div className="input-container">
+                            <button type="submit" className="chat-submit" onClick={sendMessage}>Send</button>
+                            <textarea
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                placeholder="Type a message..."
+                                className="chat-input"
+                                rows="1"
+                                style={{ resize: 'none', overflowY: 'auto' }}
+                                maxRows={5}
+                            />
+                        </div>
                     </form>
                 </div>
             </div>
