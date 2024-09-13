@@ -35,6 +35,7 @@ import { CustomerSupport } from "./components/chats/csChat";
 import { P2pChat } from "./components/chats/p2pChat";
 import { MerchantList } from "./components/merchant-list/MerchantList";
 import { FiatDepositPage } from "./pages/FiatDeposit";
+import { CryptoWithdrawal } from "./pages/CryptoWithdrawal";
 
 function App() {
   const dispatch = useDispatch()
@@ -84,6 +85,7 @@ function App() {
             {/* ///////TESTINGS  BETA PAGES*/}
             <Route path="/deposit" element={<DepositPage />} />
             <Route path="/fiat-deposit" element={<FiatDepositPage />} />
+            <Route path="/withdrawal" element={<CryptoWithdrawal />} />
             <Route path="/trade" element={<Trade />} />
 
             <Route path="/support-chat" element={<CustomerSupport />} />

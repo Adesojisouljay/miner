@@ -1,5 +1,6 @@
 .p2p-page{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     width: 100%;
     padding: 50px;
@@ -16,6 +17,21 @@
     flex-direction: column;
     justify-content: center;
     gap: 30px;
+
+    .merchant-btn-wrapper{
+        display: flex;
+        gap: 10px;
+
+        .merchant-btn{
+            padding: 10px;
+            cursor: pointer;
+            font-size: 14px;
+
+            &:hover{
+                background-color: #b56f68;
+            }
+        }
+    }
 }
 .chat-container {
     display: flex;
@@ -131,3 +147,16 @@
 .new-messages-banner:hover {
     background-color: #0b5ed7;
 }
+
+
+.file-input {
+    margin-right: 10px;
+  }
+  
+  .message-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 5px 0;
+  }
+  

@@ -1,14 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import ScrollToBottom from 'react-scroll-to-bottom';
-import { getMerchantById } from '../../api/ekzat';
+import { getMerchantById, createNairaDepositRequest, confirmFiatDeposit, cancelFiatDeposit } from '../../api/ekzat';
 import './p2p-chat.scss';
 
 export const P2pChat = () => {
     const { chatId } = useParams();
+    console.log(chatId)
+    const navigate = useNavigate();
+
     const user = useSelector((state) => state.ekzaUser.user);
+   
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
     const [newMessagesCount, setNewMessagesCount] = useState(0);
@@ -17,15 +22,18 @@ export const P2pChat = () => {
     const [isAtBottom, setIsAtBottom] = useState(true);
     const [merchantInfo, setMerchantInfo] = useState(null);
     const [expandedMessages, setExpandedMessages] = useState({});
+    const [narration, setNarration] = useState("");
+    const [depositInfo, setDepositInfo] = useState(null);
 
     const queryParams = new URLSearchParams(window.location.search);
-    const amount = queryParams.get('amount'); 
+    const amount = queryParams.get('amount');
+    const merchantId = queryParams.get('merchant_id');
 
     useEffect(() => {
         if (chatId) {
             const [merchantId, userId] = chatId.split('-');
 
-            const newSocket = io(`${process.env.REACT_APP_EKZA_URL}/chat` || 'http://localhost:2000/api/chat', {
+            const newSocket = io( 'http://localhost:2000/api/chat', {
                 query: { merchantId, userId },
                 transports: ['websocket'],
             });
@@ -60,7 +68,6 @@ export const P2pChat = () => {
     useEffect(() => {
         const fetchMerchantInfo = async () => {
             try {
-                const merchantId = chatId.split('-')[0];
                 const merchantData = await getMerchantById(merchantId);
                 setMerchantInfo(merchantData.data);
             } catch (error) {
@@ -70,6 +77,10 @@ export const P2pChat = () => {
 
         fetchMerchantInfo();
     }, [chatId]);
+
+    useEffect(() => {
+        getDepositNarration();
+    }, []);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -136,8 +147,118 @@ export const P2pChat = () => {
         );
     };
 
+    const getDepositNarration = () => {
+        const prefix = 'FO';
+        const surfix = 'OT';
+        const randomPart = Math.random().toString(36).substring(2, 6).toUpperCase();
+        setNarration(`${prefix}${randomPart}${surfix}`);
+    };
+
+    const createDeposit = async () => {
+        const depositData = {
+            amount,
+            narration,
+            depositMethod: "p2p",
+            merchantId: merchantInfo._id,
+        };
+
+        try {
+            const deposit = await createNairaDepositRequest(depositData);
+            toast.success("Deposit request made successfully", {
+                style: {
+                    backgroundColor: 'rgba(229, 229, 229, 0.1)',
+                    color: '#fff',
+                    fontSize: '16px',
+                    marginTop: "60px"
+                },
+            });
+            socket.emit('depositMade', deposit.data.depositRequest);
+            setDepositInfo(deposit)
+            console.log(deposit.data.depositRequest)
+        } catch (error) {
+            console.error('Error creating deposit request:', error);
+        }
+    };
+
+    const handleConfirmDeposit = async (depositId) => {
+        try {
+          await confirmFiatDeposit(depositId);
+          toast.success('Deposit confirmed successfully', {
+            style: {
+              backgroundColor: 'rgba(229, 229, 229, 0.1)',
+              color: '#fff',
+              fontSize: '16px',
+              marginTop: "60px"
+            },
+          });
+          socket.emit('depositConfirmed', depositId);
+        } catch (error) {
+          toast.error('Failed to confirm deposit', {
+            style: {
+              backgroundColor: 'rgba(229, 229, 229, 0.1)',
+              color: '#fff',
+              fontSize: '16px',
+              marginTop: "60px"
+            },
+          });
+        }
+      };
+    
+      const handleCancelDeposit = async (depositId) => {
+        try {
+          await cancelFiatDeposit(depositId);
+          toast.success('Deposit canceled successfully', {
+            style: {
+              backgroundColor: 'rgba(229, 229, 229, 0.1)',
+              color: '#fff',
+              fontSize: '16px',
+              marginTop: "60px"
+            },
+          });
+          socket.emit('depositCanceled', depositId)
+        } catch (error) {
+          toast.error('Failed to cancel deposit', {
+            style: {
+              backgroundColor: 'rgba(229, 229, 229, 0.1)',
+              color: '#fff',
+              fontSize: '16px',
+              marginTop: "60px"
+            },
+          });
+        }
+      };
+
+    const renderButtons = () => {
+        const isUser = user.role === 'user';
+    
+        if (isUser) {
+            return (
+                <>
+                    {depositInfo && depositInfo.data.depositRequest.status === "pending" ? (
+                        <div className='merchant-btn-wrapper'>
+                            <button className='merchant-btn'>Appeal/Report an issue</button>
+                        </div>
+                    ) : (
+                        <div className='merchant-btn-wrapper'>
+                            <button className='merchant-btn' onClick={() => navigate("/fiat-deposit")}>Cancel Deposit</button>
+                            <button className='merchant-btn' onClick={createDeposit}>I have made payment</button>
+                        </div>
+                    )}
+                </>
+            );
+        } else {
+            return (
+                <div className='merchant-btn-wrapper'>
+                    <button className='merchant-btn' onClick={() => handleConfirmDeposit(depositInfo?.data?.depositRequest?._id)}>Confirm Payment</button>
+                    <button className='merchant-btn' onClick={() => handleCancelDeposit(depositInfo?.data?.depositRequest?._id)}>Cancel Payment</button>
+                </div>
+            );
+        }
+    };
+    
     return (
         <div className='p2p-page'>
+            <h1>Fiat Deposit P2P</h1>
             <div className='p2p-page-wrapper'>
                 <div className="merchant-info-container">
                     {merchantInfo ? (
@@ -146,8 +267,17 @@ export const P2pChat = () => {
                             <p><strong>Username:</strong> {merchantInfo.username}</p>
                             <p><strong>Account Name:</strong> {merchantInfo.accountName}</p>
                             <p><strong>Account Number:</strong> {merchantInfo.accountNumber}</p>
+                            <p><strong>Narration:</strong> {narration}</p>
                             <p><strong>Bank:</strong> {merchantInfo.bankName}</p>
                             <p><strong>Amount:</strong> ₦{amount}</p>
+                            {(depositInfo && depositInfo.data.depositRequest.status === "pending") ? 
+                            <div className='merchant-btn-wrapper'>
+                                <button className='merchant-btn'>Appeal/Report an issue</button>
+                            </div>:
+                            <div className='merchant-btn-wrapper'>
+                                {renderButtons()}
+                            </div>
+                            }
                         </>
                     ) : (
                         <p>Loading merchant info...</p>
@@ -170,7 +300,7 @@ export const P2pChat = () => {
                             <div ref={messagesEndRef} />
                         </div>
                     </ScrollToBottom>
-                    
+
                     <form onSubmit={(e) => e.preventDefault()} className="chat-form">
                         <div className="input-container">
                             <button type="submit" className="chat-submit" onClick={sendMessage}>Send</button>

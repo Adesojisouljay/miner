@@ -60,21 +60,36 @@ export const FiatDepositPage = () => {
     const depositData = {
       amount: depositAmount,
       narration: merchantInfo.narration,
+      depositMethod: depositType,
       merchantId: merchantInfo.data._id,
     };
+    console.log(depositData)
     try {
-      await createNairaDepositRequest(depositData);
-      toast.success("Deposit request made successfully", {
-        style: {
-          backgroundColor: 'rgba(229, 229, 229, 0.1)',
-          color: '#fff',
-          fontSize: '16px',
-          marginTop: "60px"
-        },
-      });
-      setDepositAmount("");
-      setStep(1);
-      setLoading(false);
+      const res = await createNairaDepositRequest(depositData);
+      console.log(res)
+      if(res?.success){
+        toast.success("Deposit request made successfully", {
+          style: {
+            backgroundColor: 'rgba(229, 229, 229, 0.1)',
+            color: '#fff',
+            fontSize: '16px',
+            marginTop: "60px"
+          },
+        });
+        setDepositAmount("");
+        setStep(1);
+        setLoading(false);
+      } else {
+        toast.error("Something went wrong", {
+          style: {
+            backgroundColor: 'rgba(229, 229, 229, 0.1)',
+            color: '#fff',
+            fontSize: '16px',
+            marginTop: "60px"
+          },
+        })
+        setLoading(false);
+      }
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -93,13 +108,13 @@ export const FiatDepositPage = () => {
                 className={depositType === "bank" ? "active" : ""}
                 onClick={() => handleDepositTypeChange("bank")}
               >
-                Bank Deposit with Merchant
+                Bank Deposit
               </button>
               <button
                 className={depositType === "p2p" ? "active" : ""}
                 onClick={() => handleDepositTypeChange("p2p")}
               >
-                P2P Deposit with Merchant
+                P2P Deposit
               </button>
             </div>
             <div className="fiat-depsit-amount">

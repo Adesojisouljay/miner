@@ -310,7 +310,18 @@ export const getAllFiatDeposits = async () => {
     throw error;
   }
 };
+export const getFiatDepositById = async (narration) => {
+  try {
+    const response = await api.get(`/deposits/fiat/${narration}`);
+    console.log(response)
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch fiat deposits:', error);
+    throw error;
+  }
+};
 
+///why all these parameters???? I will check, not sure they are needed
 export const confirmFiatDeposit = async (depositRequestId, sender, receiver, accountNumber, accountHolderName, bankName) => {
   try {
     const response = await api.post(

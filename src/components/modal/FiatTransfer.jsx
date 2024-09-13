@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { fiatTransfer } from '../../api/ekzat';
-import { getUserProfile, getReceiverProfile } from '../../api/profile';
+import { getUserProfile, getGeneralProfile } from '../../api/profile';
 import { Loader } from '../loader/Loader';
 import './deposit-modal.scss';
 
@@ -60,7 +60,7 @@ export const DepositModal = ({ isOpen, onClose }) => {
     if(!receiver) return;
     try {
 
-      const data = await getReceiverProfile(receiver);
+      const data = await getGeneralProfile(receiver);
       console.log(data)
       setReceiverInfo(data)
       setLoading(false);

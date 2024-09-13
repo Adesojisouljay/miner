@@ -76,7 +76,7 @@ export const MerchantList = () => {
                             <p className="merchant-item__online-status">
                                 {merchant.online ? 'Online' : 'Offline'}
                             </p>
-                            <Link to={`/merchant-chat/${merchant._id}-${user._id}?amount=${encodeURIComponent(amount)}`} className="merchant-item__chat-link">
+                            <Link to={`/merchant-chat/${merchant.userId._id}-${user._id}?amount=${encodeURIComponent(amount)}&merchant_id=${merchant._id}`} className="merchant-item__chat-link">
                                 <FaCommentDots size={20} />
                             </Link>
                         </div>
