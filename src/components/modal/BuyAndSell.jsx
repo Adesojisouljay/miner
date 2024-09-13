@@ -9,11 +9,10 @@ import { useSelector } from 'react-redux';
 import { Loader } from '../loader/Loader';
 import { getUserProfile } from '../../api/profile';
 
-export const BuySellModal = ({ isOpen, onClose, assets }) => {
+export const BuySellModal = ({ isOpen, onClose, assets, transactionType, setTransactionType}) => {
   const [currency, setCurrency] = useState(assets[0]?.currency || '');
   const [amount, setAmount] = useState('');
   const [amountType, setAmountType] = useState('crypto');
-  const [transactionType, setTransactionType] = useState('buy');
   const [message, setMessage] = useState('');
   const [conversionResult, setConversionResult] = useState(null);
   const [step, setStep] = useState(1);

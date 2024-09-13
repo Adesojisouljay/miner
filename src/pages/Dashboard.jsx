@@ -147,26 +147,30 @@ export const Dashboard = () => {
               </div>
               <div className="bal-action-wrap">
                <FaRegEye className="show-balance" onClick={toggleBalanceView} />
-                {/* <div className="bal-action-main-wrap">
-                <div className="bal-deposit-wrap" onClick={() => openDepositModal(assets[0])}>
-                 <TbTransferIn /> <span>Deposit</span>
-                </div>
-                <div className="bal-withdraw-wrap" onClick={openWithdrawalModal}>
-                 <TbTransferOut />  <span>Withdraw</span>
-                </div>
-                </div> */}
               </div>
             </div>
             <div className="bal-btn-wrap-main">
             <div className={`show-more-wrap ${!showMore ? "margin-bottom-large" : "margin-bottom-small"}`}><span className="show-more" onClick={handleShowMore }>{!showMore ? "Show more" : "Show less"}</span></div>
             <div className="bal-btn-wrap">
-              <btn className="bal-btn">
+              <btn className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={() => openDepositModal(assets[0])}>
+                <div className="bal-icon-wrap">
+                <HiCircleStack />
+                </div>
+                <span>Receive Crypto</span>
+              </btn>
+              <btn className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openWithdrawalModal}>
+                <div className="bal-icon-wrap">
+                <HiCircleStack />
+                </div>
+                <span>Send Crypto</span>
+              </btn>
+              <btn className="bal-btn" onClick={()=> openBuySellModal("buy")}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
                 <span>Buy Assets</span>
               </btn>
-              <btn className="bal-btn">
+              <btn className="bal-btn" onClick={()=> openBuySellModal("sell")}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
@@ -194,18 +198,6 @@ export const Dashboard = () => {
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
-                <span>Fiat Withdrawal</span>
-              </btn>
-              <btn className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openFiatWithdrawalModal}>
-                <div className="bal-icon-wrap">
-                <HiCircleStack />
-                </div>
-                <span>Fiat Withdrawal</span>
-              </btn>
-              <btn className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openFiatWithdrawalModal}>
-                <div className="bal-icon-wrap">
-                <HiCircleStack />
-                </div>
                 <span>Swap</span>
               </btn>
               
@@ -221,14 +213,6 @@ export const Dashboard = () => {
               </div>
               <h4>Assets</h4>
             </div>
-
-            {/* <div className="card-bal">
-              <h2>${user.totalUsdValue.toFixed(3)}</h2>
-              <h2>
-                <span className="strike-naira">N</span>
-                {user.totalNairaValue.toFixed(3)}
-              </h2>
-            </div> */}
           
             <div className="card-component-wrap">
                 <div className="  card-component-1 border-line">
@@ -236,7 +220,6 @@ export const Dashboard = () => {
                     <img src={hive} alt="" />
                     <div className="">
                       <h5>Hive</h5>
-                      {/* <p>30</p> */}
                     </div>
                   </div>
                   <div> <span>N0.00</span> </div>
@@ -251,7 +234,6 @@ export const Dashboard = () => {
                     <img src={usdt} alt="" />
                     <div className="">
                       <h5>Usdt</h5>
-                      {/* <p>30</p> */}
                     </div>
                   </div>
                   <div> <span>N0.00</span> </div>
@@ -266,7 +248,6 @@ export const Dashboard = () => {
                     <img src={usdc} alt="" />
                     <div className="">
                       <h5>Usdc</h5>
-                      {/* <p>30</p> */}
                     </div>
                   </div>
                   <div> <span>N0.00</span> </div>
@@ -281,7 +262,6 @@ export const Dashboard = () => {
                     <img src={usdc} alt="" />
                     <div className="">
                       <h5>Usdc</h5>
-                      {/* <p>30</p> */}
                     </div>
                   </div>
                   <div> <span>N0.00</span> </div>
@@ -292,67 +272,53 @@ export const Dashboard = () => {
                   </div>
                 </div>
 
-
-              {/* ))} */}
             </div>
           </div>
         </div>
         </div>
-<div className="bal-big-container-wrap">
-    <div className="tabs-wrap">
-        <div className="left-tabs-wrap">
-            <div
-                className={`coin-price ${activeTab === 'coin-price' ? 'activetab' : ''}`}
-                onClick={() => handleTabClick('coin-price')}
-            >
-                Coin Price
-            </div>
-            <div
-                className={`transaction ${activeTab === 'transaction' ? 'activetab' : ''}`}
-                onClick={() => handleTabClick('transaction')}
-            >
-                Transaction
-            </div>
-            <div
-                className={`staked-asset ${activeTab === 'stake' ? 'activetab' : ''}`}
-                onClick={() => handleTabClick('stake')}
-            >
-                Stake Asset
-            </div>
-        </div>
+      <div className="bal-big-container-wrap">
+          <div className="tabs-wrap">
+              <div className="left-tabs-wrap">
+                  <div
+                      className={`coin-price ${activeTab === 'coin-price' ? 'activetab' : ''}`}
+                      onClick={() => handleTabClick('coin-price')}
+                  >
+                      Coin Price
+                  </div>
+                  <div
+                      className={`transaction ${activeTab === 'transaction' ? 'activetab' : ''}`}
+                      onClick={() => handleTabClick('transaction')}
+                  >
+                      Transaction
+                  </div>
+                  <div
+                      className={`staked-asset ${activeTab === 'stake' ? 'activetab' : ''}`}
+                      onClick={() => handleTabClick('stake')}
+                  >
+                      Stake Asset
+                  </div>
+              </div>
 
-        <div className="right-tabs-wrap">
-            <input className={`search-bal-input ${activeTab === 'transaction' ? 'activetab' : ''}`} type="text" placeholder="Search..." />
-            <input className={`search-coin-price ${activeTab === 'coin-price' ? 'activetab' : ''}`} type="text" placeholder=" name or ID..."  value={searchQueryCoinPrice}
-                onChange={(e) => setSearchQueryCoinPrice(e.target.value)}/>
-            <FiSearch size={19} />
-        </div>
-    </div>
+              <div className="right-tabs-wrap">
+                  <input className={`search-bal-input ${activeTab === 'transaction' ? 'activetab' : ''}`} type="text" placeholder="Search..." />
+                  <input className={`search-coin-price ${activeTab === 'coin-price' ? 'activetab' : ''}`} type="text" placeholder=" name or ID..."  value={searchQueryCoinPrice}
+                      onChange={(e) => setSearchQueryCoinPrice(e.target.value)}/>
+                  <FiSearch size={19} />
+              </div>
+          </div>
 
-    <div className="display-area">
-        <div className={`coin-price-component ${activeTab === 'coin-price' ? 'activetab' : ''}`}>
-            <ListedTokens setSearchQuery={setSearchQueryCoinPrice} searchQuery={searchQueryCoinPrice}  />
-        </div>
-        <div className={`transction-component ${activeTab === 'transaction' ? 'activetab' : ''}`}>
-            <DBTransctionHistory  />
-        </div>
-        <div className={`stake-component ${activeTab === 'stake' ? 'activetab' : ''}`}>
-            <h1>Staking is coming soon</h1>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-        
+          <div className="display-area">
+              <div className={`coin-price-component ${activeTab === 'coin-price' ? 'activetab' : ''}`}>
+                  <ListedTokens setSearchQuery={setSearchQueryCoinPrice} searchQuery={searchQueryCoinPrice}  />
+              </div>
+              <div className={`transction-component ${activeTab === 'transaction' ? 'activetab' : ''}`}>
+                  <DBTransctionHistory  />
+              </div>
+              <div className={`stake-component ${activeTab === 'stake' ? 'activetab' : ''}`}>
+                <h1>Staking is coming soon</h1>
+              </div>
+          </div>
+      </div>
         <div className="dashboard-footer">
           <FaRegCopyright />
           <p>Adesojisouljay, All Rights Reserved</p>
@@ -369,6 +335,7 @@ export const Dashboard = () => {
           onClose={closeBuySellModal}
           assets={assets}
           transactionType={transactionType}
+          setTransactionType={setTransactionType}
         />
       )}
       {withdrawalOpen && <WithdrawalModal isOpen={withdrawalOpen} assets={assets} onClose={closeWithdrawalModal} />}
