@@ -680,3 +680,34 @@
   .search-coin-price.activetab {
     display: block;
   }
+
+
+//////////////quotes
+  .dashboard-quotes-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    // background-color: #402222;
+    width: 400px;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .quote-img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+  
+  .dashboard-quotes-section h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+  }
+  
+  .dashboard-quotes-section p {
+    font-size: 1.25rem;
+  }
+  

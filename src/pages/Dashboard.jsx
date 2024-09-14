@@ -24,6 +24,21 @@ import DBTransctionHistory from "../components/transaction-history/DBTransctionH
 import usdt from "../assets/usdt.svg"
 import usdc from "../assets/usdc.svg"
 
+const quotes = [
+  "The only way to do great work is to love what you do. - Kesolink",
+  "Success is not the key to happiness. Happiness is the key to success. - Souljay",
+  "In the middle of every difficulty lies opportunity. - Souljay",
+  "Your limitation—it's only your imagination.",
+  "Push yourself, because no one else is going to do it for you. - Kesolink",
+  "Great things never come from comfort zones. - Kesolink",
+  "Dream it. Wish it. Do it. - Souljay",
+  "Success doesn’t just find you. You have to go out and get it. - Kesolink"
+];
+
+const getRandomQuote = () => {
+  return quotes[Math.floor(Math.random() * quotes.length)];
+};
+
 export const Dashboard = () => {
   const user = useSelector((state) => state.ekzaUser.user);
   const selectedCurrency = useSelector((state) => state.currency.selectedCurrency);
@@ -43,8 +58,15 @@ export const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('coin-price'); // Default to 'coin-price'
   const [searchQueryCoinPrice, setSearchQueryCoinPrice] = useState('');
   const [showMore, setShowMore] = useState(false)
+  const [currentQuote, setCurrentQuote] = useState(getRandomQuote());
 
-    
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentQuote(getRandomQuote());
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (selectedCurrency) {
@@ -205,6 +227,12 @@ export const Dashboard = () => {
             </div>
 
           </div>
+
+          {/* <div className="dashboard-quotes-section">
+              <h2>Motivational Quotes</h2>
+              <img className="quote-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROhuTdLL3qV-93rNnSS-4R2vVPcdVyKOJ6KA&s" alt="" />
+              <p>{currentQuote}</p>
+            </div> */}
           <div className="portfolio-reward-wraper">
           <div className="card-wrap border-transparent">
             <div className="card-title-wrap">
@@ -276,49 +304,49 @@ export const Dashboard = () => {
           </div>
         </div>
         </div>
-      <div className="bal-big-container-wrap">
-          <div className="tabs-wrap">
-              <div className="left-tabs-wrap">
-                  <div
-                      className={`coin-price ${activeTab === 'coin-price' ? 'activetab' : ''}`}
-                      onClick={() => handleTabClick('coin-price')}
-                  >
-                      Coin Price
-                  </div>
-                  <div
-                      className={`transaction ${activeTab === 'transaction' ? 'activetab' : ''}`}
-                      onClick={() => handleTabClick('transaction')}
-                  >
-                      Transaction
-                  </div>
-                  <div
-                      className={`staked-asset ${activeTab === 'stake' ? 'activetab' : ''}`}
-                      onClick={() => handleTabClick('stake')}
-                  >
-                      Stake Asset
-                  </div>
-              </div>
+    <div className="bal-big-container-wrap">
+        <div className="tabs-wrap">
+            <div className="left-tabs-wrap">
+                <div
+                    className={`coin-price ${activeTab === 'coin-price' ? 'activetab' : ''}`}
+                    onClick={() => handleTabClick('coin-price')}
+                >
+                    Coin Price
+                </div>
+                <div
+                    className={`transaction ${activeTab === 'transaction' ? 'activetab' : ''}`}
+                    onClick={() => handleTabClick('transaction')}
+                >
+                    Transaction
+                </div>
+                <div
+                    className={`staked-asset ${activeTab === 'stake' ? 'activetab' : ''}`}
+                    onClick={() => handleTabClick('stake')}
+                >
+                    Stake Asset
+                </div>
+            </div>
 
-              <div className="right-tabs-wrap">
-                  <input className={`search-bal-input ${activeTab === 'transaction' ? 'activetab' : ''}`} type="text" placeholder="Search..." />
-                  <input className={`search-coin-price ${activeTab === 'coin-price' ? 'activetab' : ''}`} type="text" placeholder=" name or ID..."  value={searchQueryCoinPrice}
-                      onChange={(e) => setSearchQueryCoinPrice(e.target.value)}/>
-                  <FiSearch size={19} />
-              </div>
-          </div>
+            <div className="right-tabs-wrap">
+                <input className={`search-bal-input ${activeTab === 'transaction' ? 'activetab' : ''}`} type="text" placeholder="Search..." />
+                <input className={`search-coin-price ${activeTab === 'coin-price' ? 'activetab' : ''}`} type="text" placeholder=" name or ID..."  value={searchQueryCoinPrice}
+                    onChange={(e) => setSearchQueryCoinPrice(e.target.value)}/>
+                <FiSearch size={19} />
+            </div>
+        </div>
 
-          <div className="display-area">
-              <div className={`coin-price-component ${activeTab === 'coin-price' ? 'activetab' : ''}`}>
-                  <ListedTokens setSearchQuery={setSearchQueryCoinPrice} searchQuery={searchQueryCoinPrice}  />
-              </div>
-              <div className={`transction-component ${activeTab === 'transaction' ? 'activetab' : ''}`}>
-                  <DBTransctionHistory  />
-              </div>
-              <div className={`stake-component ${activeTab === 'stake' ? 'activetab' : ''}`}>
-                <h1>Staking is coming soon</h1>
-              </div>
-          </div>
-      </div>
+        <div className="display-area">
+            <div className={`coin-price-component ${activeTab === 'coin-price' ? 'activetab' : ''}`}>
+                <ListedTokens setSearchQuery={setSearchQueryCoinPrice} searchQuery={searchQueryCoinPrice} openBuySellModal={openBuySellModal}  />
+            </div>
+            <div className={`transction-component ${activeTab === 'transaction' ? 'activetab' : ''}`}>
+                <DBTransctionHistory  />
+            </div>
+            <div className={`stake-component ${activeTab === 'stake' ? 'activetab' : ''}`}>
+              <h1>Staking is coming soon</h1>
+            </div>
+        </div>
+    </div>
         <div className="dashboard-footer">
           <FaRegCopyright />
           <p>Adesojisouljay, All Rights Reserved</p>

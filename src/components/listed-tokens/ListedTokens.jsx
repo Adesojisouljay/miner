@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './listed-tokens.scss';
 
-export const ListedTokens = ( {searchQuery, setSearchQuery}) => {
+export const ListedTokens = ( {searchQuery, setSearchQuery, openBuySellModal}) => {
     const global = useSelector((state) => state);
     console.log(global);
     
@@ -73,7 +73,7 @@ export const ListedTokens = ( {searchQuery, setSearchQuery}) => {
                                     {/* <Link to={`/coin/${coin.id}`} className="token-name-link">
                                         {coin.name}
                                     </Link> */}
-                                    <button className="buy-button">Buy</button>
+                                    <button className="buy-button" onClick={()=> openBuySellModal("buy")}>Buy</button>
                                 </div>
                                 <div className="token-content-wrap">
                                 <Link to={`/coin/${coin.id}`} className="token-name-link">
