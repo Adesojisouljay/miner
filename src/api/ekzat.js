@@ -361,7 +361,6 @@ export const fetchCryptoData = async () => {
   try {
     const response = await api.get('/crypto-data');
     if (response?.data?.success) {
-      console.log(response?.data);
     } else {
       console.error('Failed to fetch data:', response?.data?.message);
     }

@@ -40,10 +40,10 @@ export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
 
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
-    {/* <div className={`modal-overlay  ${isOpen ? 'open' : ''}`}  onClick={onClose}> </div> */}
-    <div className={`modal-overlay ${isOpen ? 'open' : ''}`}>
+    <div className={`modal-overlay  ${isOpen ? 'open' : ''}`}  onClick={onClose}> </div>
+    {/* <div className={`modal-overlay ${isOpen ? 'open' : ''}`}> */}
       <div className="modal">
-        <span className="close-btn" onClick={onClose}>X</span>
+        <span className="close-modal" onClick={onClose}>X</span>
         <h2>Withdrawal</h2>
         {message && <p className='warning'>{message}</p>}
         {step === 1 && <div className="input-group">
@@ -101,6 +101,6 @@ export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
         </div>}
       </div>
     </div>
-    </div>
+    // </div>
   );
 };

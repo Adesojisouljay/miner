@@ -40,9 +40,9 @@ export const DepositHiveModal = ({ isOpen, onClose, assets }) => {
 
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
-    {/* <div className={`modal-overlay  ${isOpen ? 'open' : ''}`} onClick={onClose}> </div> */}
+    <div className={`modal-overlay  ${isOpen ? 'open' : ''}`} onClick={onClose}> </div>
       <div className="modal animate-slide-in  animate-slide-in-mobile">
-        <span className="close-btn" onClick={onClose}>X</span>
+        <span className="close-modal" onClick={onClose}>X</span>
         <h2>Deposit</h2>
         <div className="deposit-asset">
           <label htmlFor="asset-select">Select Asset:</label>
@@ -68,7 +68,6 @@ export const DepositHiveModal = ({ isOpen, onClose, assets }) => {
           {<button className="generate-address-btn" onClick={handleCopyMemo}>Copy Memo</button>}
         </div>
       </div>
-    
     </div>
   );
 };
