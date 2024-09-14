@@ -5,7 +5,11 @@
   height: max-content;
   display: flex;
   flex-direction: column;
-  background-color: var(--modal-background-color);
+  background: linear-gradient(
+    127deg,
+    hsla(0, 0%, 100%, 0.16) 17.35%,
+    hsla(0, 0%, 85%, 0.04) 76.2%
+  );
   padding: 20px;
   border-radius: 12px;
   position: relative;

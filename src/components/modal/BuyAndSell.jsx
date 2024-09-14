@@ -9,11 +9,10 @@ import { useSelector } from 'react-redux';
 import { Loader } from '../loader/Loader';
 import { getUserProfile } from '../../api/profile';
 
-export const BuySellModal = ({ isOpen, onClose, assets }) => {
+export const BuySellModal = ({ isOpen, onClose, assets, transactionType, setTransactionType}) => {
   const [currency, setCurrency] = useState(assets[0]?.currency || '');
   const [amount, setAmount] = useState('');
   const [amountType, setAmountType] = useState('crypto');
-  const [transactionType, setTransactionType] = useState('buy');
   const [message, setMessage] = useState('');
   const [conversionResult, setConversionResult] = useState(null);
   const [step, setStep] = useState(1);
@@ -164,20 +163,21 @@ export const BuySellModal = ({ isOpen, onClose, assets }) => {
 
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`}>
+      <div className={`modal-overlay  ${isOpen ? 'open' : ''}`} onClick={onClose}> </div>
       <div className="modal">
-        <span className="close-btn" onClick={onClose}>X</span>
+        <span className="close-modal" onClick={onClose}>X</span>
         {(isLoading) && <Loader />}
         {step === 1 && (<>
           <h2>{transactionType === 'buy' ? 'Buy' : 'Sell'} Assets</h2>
           <div className="toggle-buttons">
             <button
-              className={`${transactionType === 'buy' ? 'active btn' : ''} btn buy-sell-btn`}
+              className={`${transactionType === 'buy' ? 'active btn' : 'trans'} btn buy-sell-btn`}
               onClick={() => setTransactionType('buy')}
             >
               Buy
             </button>
             <button
-              className={`${transactionType === 'sell' ? 'active btn' : ''} btn buy-sell-btn`}
+              className={`${transactionType === 'sell' ? 'active btn' : 'trans'} btn buy-sell-btn`}
               onClick={() => setTransactionType('sell')}
             >
               Sell

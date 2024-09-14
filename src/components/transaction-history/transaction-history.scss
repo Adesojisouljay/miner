@@ -47,7 +47,7 @@
               .transaction-history__table-body {
                 tr {
                   td {
-                    padding: 10px;
+                    // padding: 10px;
                     border-top: 1px solid #e0e0e0;
       
                     &.transaction-history__deposit {
@@ -120,6 +120,7 @@
           }
       }
 }
+
   
   
 .table-wrap {
@@ -160,8 +161,8 @@
     text-align: left;
     border-bottom: 1px solid;
     border-color: rgba(229, 229, 229, 0.1);
-    padding-left: 26px;
-    padding-right: 26px;
+    // padding-left: 26px;
+    // padding-right: 26px;
     @include respond(phone) {
       padding-left: 7px;
       padding-right: 7px;

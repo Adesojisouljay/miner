@@ -192,7 +192,7 @@
   }
   
 
-  .trade-close-btn {
+  .close-modal {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -206,4 +206,9 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+  }
+
+  .trans{
+    background-color: transparent;
+    color: #fff;
   }

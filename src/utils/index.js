@@ -1,7 +1,25 @@
 import { toast } from "react-toastify";
 import { jwtDecode } from 'jwt-decode';
+import axios from "axios"
 
-export const usdPrice = 1700; //should serve as placeholder
+
+export const getPrice = async () => {
+  try {
+    const response = await axios.get('https://api.coingecko.com/api/v3/simple/price', {
+      params: {
+        ids: 'usd',
+        vs_currencies: 'ngn'
+      }
+    });
+    
+    const nairaToUsdRate = response.data.usd.ngn;
+    return nairaToUsdRate
+  } catch (error) {
+    console.error('Error fetching exchange rate:', error);
+  }
+};
+
+export const usdPrice = await getPrice();
 
 export const formatNumbers = (n)=> {
     if(n) return n?.toFixed(3)

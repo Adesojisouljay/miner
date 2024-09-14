@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { fetchCryptoData } from '../api/ekzat';
 import './single-coin-info.scss';
 
 export const SingleCoinInfo = () => {
@@ -9,7 +11,9 @@ export const SingleCoinInfo = () => {
   const [priceHistory, setPriceHistory] = useState([]);
   const [timeRange, setTimeRange] = useState('1'); 
 
- 
+  const params = useParams()
+  console.log(params.id)
+
   const coinIds = "ids=bitcoin,hive,hive_dollar,tether,dogecoin,tron,toncoin,gala,solana,ethereum";
 
   const coins = {
@@ -81,11 +85,11 @@ export const SingleCoinInfo = () => {
         <p>{coinName}'s Market Value</p>
         <h2>₦{formattedPrice}</h2>
         <div className="time-range-buttons">
-          <button onClick={() => setTimeRange('1')}>1 Day</button>
-          <button onClick={() => setTimeRange('7')}>7 Days</button>
-          <button onClick={() => setTimeRange('30')}>1 Month</button>
-          <button onClick={() => setTimeRange('90')}>3 Months</button>
-          <button onClick={() => setTimeRange('180')}>6 Months</button>
+          <button className='btn' onClick={() => setTimeRange('1')}>1 Day</button>
+          <button className='btn' onClick={() => setTimeRange('7')}>7 Days</button>
+          <button className='btn' onClick={() => setTimeRange('30')}>1 Month</button>
+          <button className='btn' onClick={() => setTimeRange('90')}>3 Months</button>
+          <button className='btn' onClick={() => setTimeRange('180')}>6 Months</button>
         </div>
         <div className="btc-chart">
           <ResponsiveContainer width="100%" height={200}>

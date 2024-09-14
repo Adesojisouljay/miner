@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './listed-tokens.scss';
 
-export const ListedTokens = () => {
+export const ListedTokens = ( {searchQuery, setSearchQuery, openBuySellModal}) => {
     const global = useSelector((state) => state);
     console.log(global);
     
@@ -12,8 +12,6 @@ export const ListedTokens = () => {
     const [filteredData, setFilteredData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [searchQuery, setSearchQuery] = useState('');
-    
     const currencySymbol = global.currency.selectedCurrency === "USD" ? "$" : "N";
 
     useEffect(() => {
@@ -59,66 +57,38 @@ export const ListedTokens = () => {
     return (
         <div className="listed-tokens-container">
             <h2 className="listed-tokens-title">Tokens on Ekzatrade</h2>
-            <input
-                type="text"
-                className="listed-token-search-input"
-                placeholder="Search by coin name or ID..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <div className='listed-token-table-wrap'> 
-                <table className="listed-tokens-table">
-                    <thead>
-                        <tr>
-                            <th>Coin</th>
-                            <th>Symbol</th>
-                            <th>Current Price ({currencySymbol})</th>
-                            <th>Market Cap ({currencySymbol})</th>
-                            <th>24h % Change</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredData.map((coin) => {
-                            const percentageChangeClass = coin.price_change_percentage_24h >= 0 
-                                ? 'positive-change' 
-                                : 'negative-change';
+            <div className="listed-token-grid">
+                {loading && <p className="listed-tokens-loading">Loading...</p>}
+                {error && <p className="listed-tokens-error">{error}</p>}
+                {!loading && !error && filteredData.map((coin) => {
+                    const percentageChangeClass = coin.price_change_percentage_24h >= 0 
+                        ? 'positive-change' 
+                        : 'negative-change';
 
-                            return (
-                                <tr key={coin.id} className="listed-tokens-row">
-                                    <td className="listed-tokens-coin-name symbol-image-td">
-                                        <img src={coin.image} alt={coin.name} className='td-image' />
-                                        <Link to={`/coin/${coin.id}`} className="coin-link">
-                                            {coin.name}
-                                        </Link>
-                                    </td>
-                                    <td className='symbol-image-td'>
-                                        <Link to={`/coin/${coin.id}`} className="coin-link">
-                                            {coin.symbol.toUpperCase()}
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <Link to={`/coin/${coin.id}`} className="coin-link">
-                                            {currencySymbol}{coin.current_price.toLocaleString()}
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <Link to={`/coin/${coin.id}`} className="coin-link">
-                                            {currencySymbol}{coin.market_cap.toLocaleString()}
-                                        </Link>
-                                    </td>
-                                    <td className={percentageChangeClass}>
-                                        <Link to={`/coin/${coin.id}`} className="coin-link">
-                                            {coin.price_change_percentage_24h.toFixed(2)}%
-                                        </Link>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
+                    return (
+                        <div key={coin.id} className="listed-token-container">
+                            <div className="token-box">
+                                <div className="token-content-wrap">
+                                    <img src={coin.image} alt={coin.name} className="token-image" />
+                                    {/* <Link to={`/coin/${coin.id}`} className="token-name-link">
+                                        {coin.name}
+                                    </Link> */}
+                                    <button className="buy-button" onClick={()=> openBuySellModal("buy")}>Buy</button>
+                                </div>
+                                <div className="token-content-wrap">
+                                <Link to={`/coin/${coin.id}`} className="token-name-link">
+                                        {coin.name}
+                                    </Link> <span className="token-price">{currencySymbol}{coin.current_price.toLocaleString()}</span>
+                                </div>
+                                <div className={`token-content-wrap ${percentageChangeClass}`}>
+                                    <span className="token-symbol">{coin.symbol.toUpperCase()}</span>
+                                    <span className="token-change">{coin.price_change_percentage_24h.toFixed(2)}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
-            {loading && <p className="listed-tokens-loading">Loading...</p>}
-            {error && <p className="listed-tokens-error">{error}</p>}
         </div>
     );
 };

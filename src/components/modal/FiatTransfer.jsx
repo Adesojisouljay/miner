@@ -83,8 +83,9 @@ export const DepositModal = ({ isOpen, onClose }) => {
 
   return (
     <div className={`modal-overlay ${isOpen ? 'open' : ''}`}>
+      <div className={`modal-overlay  ${isOpen ? 'open' : ''}`} onClick={onClose}> </div>
       <div className="modal">
-        <span className="close-btn" onClick={onClose}>X</span>
+        <span className="close-modal" onClick={onClose}>X</span>
         <h2>Transfer Fiat</h2> 
         {loading && <Loader />}
         <div className="input-group">

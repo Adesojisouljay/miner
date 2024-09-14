@@ -27,6 +27,12 @@
   .btc-market-value {
     margin-top: 20px;
   }
+
+  .time-range-buttons{
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+  }
   
   .btc-market-value h2 {
     font-size: 2rem;

@@ -27,7 +27,8 @@
   --modal-background-color: #151f2b;
   --header-background-color: #02080f;
   --header-border-color: hsla(0,0%,90%,.1);
-  --header-height: 64px
+  --header-height: 64px;
+  --light--1:linear-gradient(127deg, hsla(0, 0%, 100%, .16) 17.35%, hsla(0, 0%, 85%, .04) 76.2%);
 }
 
 body {
@@ -66,9 +67,9 @@ a{
   color: inherit;
 }
 
-a:hover {
-  color: #091e32;
-}
+// a:hover {
+//   color: #091e32;
+// }
 .up-down-animation{
     animation-name: alltuchtopdown;
     animation-duration: 6s;

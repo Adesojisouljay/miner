@@ -66,14 +66,15 @@ function Fiatdeposit({ isOpen, onClose }) {
 
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`}>
-      <div className="modal-fiat animate-slide-in animate-slide-in-mobile">
+      <div className={`modal-overlay  ${isOpen ? 'open' : ''}`} onClick={onClose}> </div>
+      <div className="modal animate-slide-in animate-slide-in-mobile">
         {loading && <Loader />}
         <div className="fiat-d-modal-content">
           {step === 1 && (
             <>
               <div className="fiat-deposit-wrap">
                 <h3>Fiat Deposit</h3>
-                <span className="close-btn" onClick={onClose}>X</span>
+                <span className="close-modal" onClick={onClose}>X</span>
                 <div className="fiat-deposit-amount">
                   <label>Enter amount to Deposit</label>
                   <input
