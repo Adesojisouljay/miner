@@ -156,7 +156,7 @@ export const Dashboard = () => {
             <div className="bal-top-wrap">
               <div className="total-fait-wrap">
                <div className="bal-text-select-wrap">
-                <p>Total Assets</p> 
+                <h2>Balance</h2> 
                 <select className="change-currency" name="" id="currencySelect" onChange={(e) => handleCurrencyChange(e.target.value)}>
                   <option className="currencySelect"  value="NGN">NGN</option>
                   <option value="USD">USD</option>
