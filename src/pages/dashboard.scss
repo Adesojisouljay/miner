@@ -11,11 +11,38 @@
   padding-right: 200px;
   position: fixed;
   overflow-y: scroll;
-  @include respond(phone) {
+
+  @include respond(xs-phone) {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  @include respond(sm-phone) {
     padding-left: 10px;
     padding-right: 10px;
   }
+
+  @include respond(phone) {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  @include respond(tab) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  @include respond(desktop) {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  @include respond(lg-desktop) {
+    padding-left: 200px;
+    padding-right: 200px;
+  }
 }
+
 
 .dashboard-content {
   width: 100%;
@@ -166,7 +193,12 @@
   @include respond(phone) {
     width: 100%;
     padding: 10px;
-    gap: 20px;
+    gap: 5px;
+  }
+  @include respond(tab) {
+    width: 100%;
+    padding: 10px;
+    gap: 5px;
   }
 }
 .bal-top-wrap{
@@ -400,6 +432,11 @@
     display: none;
     flex-direction: column;
     margin-top: 20px;
+  }
+  @include respond(tab) {
+    display: none;
+    // flex-direction: column;
+    // margin-top: 20px;
   }
 }
 .card-wrap {

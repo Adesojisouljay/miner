@@ -41,7 +41,7 @@ function DBTransctionHistory() {
   const totalPages = Math.ceil(trxHistory.length / transactionsPerPage);
   return (
     <div className="db-transaction-history-container">
-      <div className="db-transaction-history">
+      <div className="transaction-history">
         <div className="transaction-history__header">
           <h3 >Transaction History</h3>
         </div>
@@ -106,7 +106,7 @@ function DBTransctionHistory() {
           </table>
         </div>
 
-        <div className="transaction-history__pagination">
+        {trxHistory.length > 6 && <div className="transaction-history__pagination">
           <button
             className="transaction-history__page-btn"
             onClick={handlePrevious}
@@ -132,7 +132,7 @@ function DBTransctionHistory() {
           >
             Next
           </button>
-        </div>
+        </div>}
       </div>
     </div>
   )
