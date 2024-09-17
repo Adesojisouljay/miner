@@ -38,18 +38,26 @@ function RightNav({ rightNav, handleRightNav }) {
           <div className="user-info-section">
             <div className="welcom-wrap"><span>Welcome</span><h4>{user?.username}</h4></div>
 
-            {/* <span style={{ color: "green" }}>Welcome to ekzatrade, where you Experience boundless crypto transactions</span> */}
             <h4>Email: {user?.email}</h4>
-            {/* <h4>userId: {formatString(user._id)}</h4> */}
             <div className="verified-wrap"><span> Verified </span> <MdVerified size={20} color='green' /></div>
           </div>
         </div>
         <hr className='divide-line'/>
 
-
         <ul>
           {menuLinks.map((data) => (
-            <Link to={data.path}><li ><span className='icon-wrap'><span>{data.logo}</span></span> <span className='tab-title'>{data.text}</span></li></Link>
+            <Link to={data.path} onClick={handleRightNav}>
+              <li style={{backgroundColor: "red"}}>
+                <span className='icon-wrap' >
+                  <span>
+                    {data.logo}
+                  </span>
+                </span>
+                <span className='tab-title'>
+                  {data.text}
+                </span>
+              </li>
+            </Link>
           ))}
         </ul>
         <div className="logout-wrap">

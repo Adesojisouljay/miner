@@ -86,6 +86,7 @@ ol {
       width: 30px;
       height: 30px;
       border-radius: 50%;
+      cursor: pointer;
       @include respond(phone) {
         width: 32px;
       }
@@ -280,6 +281,11 @@ ol {
     gap: 15px;
   }
 
+  .nav-menu-wrap{
+    cursor: pointer;
+    font-size: 25px;
+  }
+
   .menu-cont{
     display: flex;
     flex-direction: column;
@@ -287,8 +293,10 @@ ol {
   }
   .avatar-container {
     position: relative;
-    display: inline-block;
-    cursor: pointer;
+    // display: inline-block;
+    display: flex;
+    align-items: center;
+    // cursor: pointer;
   
     
   

@@ -43,6 +43,27 @@
   }
 }
 
+@keyframes slideIn {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.greetings-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.welcome-greetings {
+  display: inline-block;
+  font-size: 2rem;
+  animation: slideIn 20s linear infinite;
+}
+
 
 .dashboard-content {
   width: 100%;
