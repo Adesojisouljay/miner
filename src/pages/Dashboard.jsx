@@ -349,7 +349,7 @@ export const Dashboard = () => {
     </div>
         <div className="dashboard-footer">
           <FaRegCopyright />
-          <p>Adesojisouljay, All Rights Reserved</p>
+          <p>Ekzatrade, All Rights Reserved</p>
         </div>
       </div>
       {isOpen && <DepositHiveModal

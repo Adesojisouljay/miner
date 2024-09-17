@@ -81,8 +81,8 @@ export const ListedTokens = ( {searchQuery, setSearchQuery, openBuySellModal}) =
                                     </Link> <span className="token-price">{currencySymbol}{coin.current_price.toLocaleString()}</span>
                                 </div>
                                 <div className={`token-content-wrap ${percentageChangeClass}`}>
-                                    <span className="token-symbol">{coin.symbol.toUpperCase()}</span>
-                                    <span className="token-change">{coin.price_change_percentage_24h.toFixed(2)}%</span>
+                                    <span className="token-symbol">{coin?.symbol.toUpperCase()}</span>
+                                    <span className="token-change">{coin?.price_change_percentage_24h?.toFixed(2)}%</span>
                                 </div>
                             </div>
                         </div>
