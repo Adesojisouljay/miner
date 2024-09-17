@@ -7,19 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/userReducer';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { formatDate, formatString } from '../../utils';
-import { 
-  FaHome, 
-  FaEnvelope, 
-  FaTachometerAlt, 
-  FaSpinner, 
-  FaUsers, 
-  FaUser, 
-  FaCogs, 
-  FaWallet, 
-  FaIdCard, 
-  FaSignOutAlt  
-
-} from "react-icons/fa";
 import { PiGreaterThanBold } from 'react-icons/pi';
 import RightNav from './RightNav';
 
@@ -89,7 +76,7 @@ export const NavBar = () => {
         </div>        
       </div>
     </nav>
-    <RightNav rightNav={rightNav } handleRightNav={handleRightNav} />
+    {isAuthenticated && <RightNav rightNav={rightNav } handleRightNav={handleRightNav} handleLogout={handleLogout}/>}
     </>
   );
 };

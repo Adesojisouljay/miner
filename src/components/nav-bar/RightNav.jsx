@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { MdOutlineVerified, MdVerified } from 'react-icons/md';
 import { FiLogOut } from 'react-icons/fi';
 
-function RightNav({ rightNav, handleRightNav }) {
+function RightNav({ rightNav, handleRightNav, handleLogout }) {
   // const isAuthenticated = useSelector(state => state?.ekzaUser?.isAuthenticated);
   const user = useSelector(state => state?.ekzaUser?.user);
 
@@ -60,7 +60,8 @@ function RightNav({ rightNav, handleRightNav }) {
             </Link>
           ))}
         </ul>
-        <div className="logout-wrap">
+        <div className="logout-wrap" onClick={handleLogout}>
+          <h3>Logout</h3>
         <Link to="/"><FiLogOut size={23} className='bold-icon'/></Link>
         </div>
 

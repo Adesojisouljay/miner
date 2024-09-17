@@ -13,7 +13,7 @@ import "aos/dist/aos.css"
 import { Dashboard } from "./pages/Dashboard";
 import Spinner from "./pages/Spinner";
 import { getUserProfile } from "./api/profile";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProtectedRoute from "./protected-routes/ProtectedRoutes";
 import { Kyc } from "./components/submit-kyc/Kyc";
 import NotFound from "./components/not-found/NotFound";
@@ -36,7 +36,7 @@ import FloatingNav from "./components/nav-bar/FloatingNav";
 import RightNav from "./components/nav-bar/RightNav";
 
 function App() {
-  const dispatch = useDispatch()
+  const user = useSelector((state) => state.ekzaUser);
   const navigate = useNavigate();
   const { pathname }  = useLocation();
   const isProtectedRoute = protectedRoutesArray.includes(pathname);
@@ -88,7 +88,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
-      <FloatingNav />
+      {user.isAuthenticated && <FloatingNav />}
     </div>
   );
 }

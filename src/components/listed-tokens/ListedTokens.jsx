@@ -6,7 +6,6 @@ import './listed-tokens.scss';
 
 export const ListedTokens = ( {searchQuery, setSearchQuery, openBuySellModal}) => {
     const global = useSelector((state) => state);
-    console.log(global);
     
     const [cryptoData, setCryptoData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -25,7 +24,6 @@ export const ListedTokens = ( {searchQuery, setSearchQuery, openBuySellModal}) =
     const getCryptoData = async () => {
         try {
             const response = await fetchCryptoData();
-            console.log(response);
     
             if (response?.data?.success) {
                 const { usdData, ngnData } = response.data.cryptoData;
