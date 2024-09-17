@@ -15,6 +15,7 @@ export const WalletPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const user = useSelector((state) => state.ekzaUser.user);
+  console.log(user)
   const selectedCurrency = useSelector((state) => state.currency.selectedCurrency);
   const dispatch = useDispatch()
 
@@ -146,7 +147,7 @@ export const WalletPage = () => {
             <div className="wallet-page-card-title">
               <div className="wallet-page-card-icon">
                 <FaGift size={20} />
-              </div>
+              </div> 
               <h4>Assets</h4>
             </div>
 
@@ -177,32 +178,39 @@ export const WalletPage = () => {
                     <div className="wallet-page-reward-value wallet-page-token-item-coin-info">
                       <img src={u.image} alt={u.currency} />
                       <div>
-                        <h5>{u.currency.toUpperCase()}</h5>
+                        <h5>{u.symbol.toUpperCase()}</h5>
                         <p>{u.balance?.toFixed(3)}</p>
                       </div>
                     </div>
-                    <div className="wallet-page-reward-value">
-                      <p>
-                        {selectedCurrency === 'USD' 
-                          ? `$${u.asseUsdtWorth?.toFixed(3)}`
-                          : `₦${u.assetNairaWorth?.toFixed(3)}`}
-                      </p>
-                      <p style={{ color: u.percentageChange < 0 ? 'red' : 'green' }}>
-                        {u.percentageChange.toFixed(3)}% 
+                    <div className="wallet-page-reward-value wallet-balance">
+                      <div>
+                        <p>
+                          {selectedCurrency === 'USD' 
+                            ? `$${u.asseUsdtWorth?.toFixed(3)}`
+                            : `₦${u.assetNairaWorth?.toFixed(3)}`}
+                        </p>
+                      </div>
+                      <div style={{ color: u.percentageChange < 0 ? 'red' : 'green' }}>
+                        <span>
+                          {u.percentageChange.toFixed(3)}%
+                        </span>
                         <span>
                           ({u.percentageChange < 0 ? '↓' : '↑'})
                         </span>
-                      </p>
+                      </div>
                     </div>
                     <div className="wallet-page-reward-value">
-                      <p style={{ color: u.percentageChange < 0 ? 'red' : 'green' }}>
-                        {selectedCurrency === 'USD' 
-                          ? (u.balance * u.priceChangeUsd).toFixed(3)
-                          : (u.balance * u.priceChangeNgn).toFixed(3)}
+                      <div style={{ color: u.percentageChange < 0 ? 'red' : 'green' }}>
+                        <span>
+                          {selectedCurrency === 'USD' 
+                            ? (u.balance * u.priceChangeUsd).toFixed(3)
+                            : (u.balance * u.priceChangeNgn).toFixed(3)
+                            }
+                        </span>
                         <span>
                           ({u.percentageChange < 0 ? '↓' : '↑'})
                         </span>
-                      </p>
+                      </div>
                     </div>
                     <div className="wallet-page-reward-value wallet-actions">
                       Send<FaArrowUp title="Send" />

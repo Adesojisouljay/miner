@@ -13,7 +13,7 @@ import "aos/dist/aos.css"
 import { Dashboard } from "./pages/Dashboard";
 import Spinner from "./pages/Spinner";
 import { getUserProfile } from "./api/profile";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProtectedRoute from "./protected-routes/ProtectedRoutes";
 import { Kyc } from "./components/submit-kyc/Kyc";
 import NotFound from "./components/not-found/NotFound";
@@ -32,9 +32,11 @@ import { TransactionHistory } from "./components/transaction-history/Transaction
 import { Trade } from "./pages/Trade";
 import { DepositPage } from "./pages/DepositPagee";
 import Fiatdeposit from "./components/modal/Fiatdeposit";
+import FloatingNav from "./components/nav-bar/FloatingNav";
+import RightNav from "./components/nav-bar/RightNav";
 
 function App() {
-  const dispatch = useDispatch()
+  const user = useSelector((state) => state.ekzaUser);
   const navigate = useNavigate();
   const { pathname }  = useLocation();
   const isProtectedRoute = protectedRoutesArray.includes(pathname);
@@ -55,6 +57,7 @@ function App() {
   return (
     <div className="app">
       <NavBar/>
+      <RightNav />
       <div className='app-container'>
       {!tokenValid && isProtectedRoute && <InvalidTokenModal /> }
         <Routes>
@@ -80,10 +83,12 @@ function App() {
             <Route path="/deposit" element={<DepositPage />} />
             <Route path="/fiat-deposit" element={<Fiatdeposit />} />
             <Route path="/trade" element={<Trade />} />
+            <Route path="/page" element={<Pagetest />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
+      {user.isAuthenticated && <FloatingNav />}
     </div>
   );
 }

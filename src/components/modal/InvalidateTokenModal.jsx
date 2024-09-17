@@ -20,15 +20,18 @@ export const InvalidTokenModal = () => {
 
     return (
         <>
-            {showModal && <div className="modal">
-                <div className="modal-content">
-                    <h2>Session Expired</h2>
-                    <p>Your session has expired. Please log in again.</p>
-                    <button onClick={handleLogout}>
-                    Go to Login
-                    </button>
-                </div>
-            </div>}
+            <div className={`fadded-container modal-overlay ${showModal ? 'open' : ''}`} >
+                <div className={`modal-overlay  ${showModal ? 'open' : ''}`}> </div>
+                {showModal && <div className="modal">
+                    <div className="modal-content">
+                        <h2>Session Expired</h2>
+                        <p>Your session has expired. Please log in again.</p>
+                        <button onClick={handleLogout}>
+                        Go to Login
+                        </button>
+                    </div>
+                </div>}
+            </div>
         </>
     )
   };

@@ -20,17 +20,24 @@ ol {
   list-style:none; 
 }
 .navbar {
-    background-color: #091e32;
+    background-color: #02080f;
     display: flex;
     align-items: center;
     height: 80px;
     position: sticky;
     top: 0;
     z-index: 999;
+    padding-left: 200px;
+    padding-right: 200px;
+    @include respond(phone) {
+      padding-left: 10px;
+      padding-right: 10px;
+      height: 70px;
+    }
   }
   
   .nav-content{
-    padding: 50px;
+    // padding: 50px;
     height: 100%;
     width: 100%;
     display: flex;
@@ -41,31 +48,63 @@ ol {
   .logo{
     display: flex;
     align-items: center;
-    position: relative;
-    margin-left: 50px;
+    gap: 7px;
+    img {
+      width: 40px;
+      @include respond(phone) {
+        width: 30px;
+      }
+    }
+    .project-name{
+      display: flex;
+      flex-direction: column;
+      p:first-child{
+        font-size: 30px;
+        font-weight: bold;
+        @include respond(phone) {
+          font-size: 25px;
+        }
+      }
+      p:nth-child(2) {
+        font-size: 16px;
+        padding: 0px;
+
+        
+      }
+    }
   }
 
-  .logo img {
-    width: 60px;
-    object-fit: cover;
+  .user-top-info{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 12px;
+    // background-color: #091e32;
+    background-color: rgba(21, 31, 43, 0.4);
+    padding: 5px 10px;
+    .user-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      @include respond(phone) {
+        width: 32px;
+      }
+    }
+    .left-arrow-icon{
+      @include respond(phone) {
+        display: none;
+      }
+    }
+    span{
+      font-size: 20px;
+      @include respond(phone) {
+        display: none;
+      }
+    }
   }
 
-  .hhh{
-    position: absolute;
-    right: 50px;
-    font-size: 35px;
-    font: bold;
-    font-family: cursive;
-    color: aquamarine;
-  }
-  .fff{
-    position: absolute;
-    left: 50px;
-    font-size: 35px;
-    font: bold;
-    font-family: cursive;
-    color: aquamarine;
-  }
+
   
   .nav-links {
     list-style: none;
@@ -211,6 +250,9 @@ ol {
     .nav-content{
       padding: 50px 30px ;
       padding-left: 0px;
+      @include respond(phone) {
+        padding: 0px ;
+      }
     }
     .nav-links {
       display: none;
@@ -232,15 +274,16 @@ ol {
 
   ////KESOLINK CAN REMOVE THIS, I DIDNT ALTER ANY OTHER STYLE I JUST ADDED THIS TO GET WHAT I WANTED
   
-  .user-top-info{
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  
   .avatar-sect{
     display: flex;
     align-items: center;
     gap: 15px;
+  }
+
+  .nav-menu-wrap{
+    cursor: pointer;
+    font-size: 25px;
   }
 
   .menu-cont{
@@ -250,14 +293,12 @@ ol {
   }
   .avatar-container {
     position: relative;
-    display: inline-block;
-    cursor: pointer;
+    // display: inline-block;
+    display: flex;
+    align-items: center;
+    // cursor: pointer;
   
-    .user-avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-    }
+    
   
     .dropdown-menu {
       position: absolute;
