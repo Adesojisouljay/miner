@@ -32,6 +32,8 @@ import { TransactionHistory } from "./components/transaction-history/Transaction
 import { Trade } from "./pages/Trade";
 import { DepositPage } from "./pages/DepositPagee";
 import Fiatdeposit from "./components/modal/Fiatdeposit";
+import FloatingNav from "./components/nav-bar/FloatingNav";
+import RightNav from "./components/nav-bar/RightNav";
 
 function App() {
   const dispatch = useDispatch()
@@ -55,6 +57,7 @@ function App() {
   return (
     <div className="app">
       <NavBar/>
+      <RightNav />
       <div className='app-container'>
       {!tokenValid && isProtectedRoute && <InvalidTokenModal /> }
         <Routes>
@@ -80,10 +83,12 @@ function App() {
             <Route path="/deposit" element={<DepositPage />} />
             <Route path="/fiat-deposit" element={<Fiatdeposit />} />
             <Route path="/trade" element={<Trade />} />
+            <Route path="/page" element={<Pagetest />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
+      <FloatingNav />
     </div>
   );
 }
