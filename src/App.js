@@ -31,7 +31,11 @@ import { SingleCoinInfo } from "./pages/SingleCoinInfo";
 import { TransactionHistory } from "./components/transaction-history/TransactionHistory";
 import { Trade } from "./pages/Trade";
 import { DepositPage } from "./pages/DepositPagee";
-import Fiatdeposit from "./components/modal/Fiatdeposit";
+import { CustomerSupport } from "./components/chats/csChat";
+import { P2pChat } from "./components/chats/p2pChat";
+import { MerchantList } from "./components/merchant-list/MerchantList";
+import { FiatDepositPage } from "./pages/FiatDeposit";
+import { CryptoWithdrawal } from "./pages/CryptoWithdrawal";
 
 function App() {
   const dispatch = useDispatch()
@@ -77,9 +81,16 @@ function App() {
             <Route path="/wallet" element={<WalletPage />} />
             <Route path="/coin/:id" element={<SingleCoinInfo />} />
             <Route path="/transactions" element={<TransactionHistory />} />
+
+            {/* ///////TESTINGS  BETA PAGES*/}
             <Route path="/deposit" element={<DepositPage />} />
-            <Route path="/fiat-deposit" element={<Fiatdeposit />} />
+            <Route path="/fiat-deposit" element={<FiatDepositPage />} />
+            <Route path="/withdrawal" element={<CryptoWithdrawal />} />
             <Route path="/trade" element={<Trade />} />
+
+            <Route path="/support-chat" element={<CustomerSupport />} />
+            <Route path="/merchant-chat/:chatId" element={<P2pChat />} />
+            <Route path="/merchants" element={<MerchantList/>} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

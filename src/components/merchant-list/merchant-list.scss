@@ -1,0 +1,107 @@
+.merchant-list {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+
+    &__title {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+    &__loading,
+    &__error,
+    &__no-merchants {
+        text-align: center;
+        font-size: 18px;
+        margin-top: 20px;
+    }
+
+    &__items {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+.merchant-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    &.online {
+        background-color: #35342e;
+        border-color: #4b4c55;
+    }
+
+    &.offline {
+        background-color: #7e2b2b;
+        border-color: #ff3333;
+    }
+
+    &__image {
+        flex-shrink: 0;
+        margin-right: 20px;
+
+        img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+        }
+    }
+
+    &__details {
+        flex-grow: 1;
+
+        & > * {
+            margin: 5px 0;
+        }
+
+        &__username {
+            margin: 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        &__status,
+        &__transactions {
+            font-size: 16px;
+            color: #555;
+        }
+
+        &__online-status {
+            font-size: 16px;
+            color: #4caf50;
+        }
+
+        &__chat-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #0056b3;
+            }
+
+            svg {
+                margin-left: 8px;
+            }
+        }
+    }
+
+    &:hover {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+}
