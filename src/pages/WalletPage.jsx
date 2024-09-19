@@ -15,7 +15,6 @@ export const WalletPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const user = useSelector((state) => state.ekzaUser.user);
-  console.log(user)
   const selectedCurrency = useSelector((state) => state.currency.selectedCurrency);
   const dispatch = useDispatch()
 
@@ -51,7 +50,6 @@ export const WalletPage = () => {
   const addTokenToWallet = async (coinId) => {
     try {
       const response = await addAsset(coinId)
-      console.log(response)
       if(response.success){
         toast.success(response.message,{
           style: {
@@ -87,7 +85,6 @@ export const WalletPage = () => {
   const removeTokenFromWallet = async (coinId) => {
     try {
       const response = "Asset removed successfully"
-      console.log(response)
         toast.success(response,{
           style: {
             backgroundColor: 'rgba(229, 229, 229, 0.1)',
@@ -124,7 +121,6 @@ export const WalletPage = () => {
     return user?.assets?.some(asset => asset.coinId === coinId);
   };
 
-  console.log(isAssetAdded("bitcoin"))
   return (
     <div className="wallet-page-container">
       <h2 className="wallet-page-title">{user.username}'s Crypto Portfolio</h2>
@@ -178,7 +174,7 @@ export const WalletPage = () => {
                     <div className="wallet-page-reward-value wallet-page-token-item-coin-info">
                       <img src={u.image} alt={u.currency} />
                       <div>
-                        <h5>{u.symbol.toUpperCase()}</h5>
+                        <h5>{u.symbol?.toUpperCase()}</h5>
                         <p>{u.balance?.toFixed(3)}</p>
                       </div>
                     </div>
@@ -192,7 +188,7 @@ export const WalletPage = () => {
                       </div>
                       <div style={{ color: u.percentageChange < 0 ? 'red' : 'green' }}>
                         <span>
-                          {u.percentageChange.toFixed(3)}%
+                          {u.percentageChange?.toFixed(3)}%
                         </span>
                         <span>
                           ({u.percentageChange < 0 ? '↓' : '↑'})
@@ -203,8 +199,8 @@ export const WalletPage = () => {
                       <div style={{ color: u.percentageChange < 0 ? 'red' : 'green' }}>
                         <span>
                           {selectedCurrency === 'USD' 
-                            ? (u.balance * u.priceChangeUsd).toFixed(3)
-                            : (u.balance * u.priceChangeNgn).toFixed(3)
+                            ? (u.balance * u.priceChangeUsd)?.toFixed(3)
+                            : (u.balance * u.priceChangeNgn)?.toFixed(3)
                             }
                         </span>
                         <span>

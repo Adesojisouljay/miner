@@ -413,3 +413,18 @@ export const generateAddress = async (coinId) => {
     console.error('Failed to generate wallet address:', error.response?.data?.message || error.message);
   }
 };
+
+export const getCryptoNewsById = async (id) => {
+  try {
+    const response = await api.get(`/crypto-data/news/${id}`);
+    if (response?.data?.success) {
+      return response.data;
+    } else {
+      console.error('Failed to fetch news item:', response?.data?.message);
+      throw new Error(response?.data?.message || 'Failed to fetch news item');
+    }
+  } catch (error) {
+    console.error('Error fetching news item:', error);
+    throw error.response?.data || { message: 'An error occurred while fetching the news item.' };
+  }
+};
