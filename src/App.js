@@ -34,6 +34,8 @@ import { DepositPage } from "./pages/DepositPagee";
 import Fiatdeposit from "./components/modal/Fiatdeposit";
 import FloatingNav from "./components/nav-bar/FloatingNav";
 import RightNav from "./components/nav-bar/RightNav";
+import { CryptoNews } from "./pages/CryptoNews";
+import { SingleNewsPage } from "./pages/SingleNewsPage";
 
 function App() {
   const user = useSelector((state) => state.ekzaUser);
@@ -84,6 +86,8 @@ function App() {
             <Route path="/fiat-deposit" element={<Fiatdeposit />} />
             <Route path="/trade" element={<Trade />} />
             <Route path="/page" element={<Pagetest />} />
+            <Route path="/crypto-news" element={<CryptoNews />} />
+            <Route path="/crypto-news/:id" element={<SingleNewsPage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
