@@ -79,4 +79,6 @@ export const isTokenValid = (token) => {
   }
 };
 
+export const getFirstItem = string => Number(string?.split(" ")[0])
+
     

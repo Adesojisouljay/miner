@@ -23,7 +23,7 @@ import { FiSearch } from "react-icons/fi";
 import DBTransctionHistory from "../components/transaction-history/DBTransctionHistory";
 import usdt from "../assets/usdt.svg";
 import usdc from "../assets/usdc.svg";
-import TestBuySell from "../components/modal/TestBuySell";
+import { TestBuySell } from "../components/modal/TestBuySell";
 
 
 const quotes = [
@@ -206,7 +206,7 @@ export const Dashboard = () => {
                 </div>
                 <span>Buy Assets</span>
               </btn>
-              <btn className="bal-btn" onClick={()=> openTestBuySellModal("sell")}>
+              <btn className="bal-btn" onClick={()=> openTestBuySellModal("buy")}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
