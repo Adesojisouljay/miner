@@ -21,8 +21,10 @@ import hive from "../assets/hive-logo.png"
 import { TransactionHistory } from "../components/transaction-history/TransactionHistory";
 import { FiSearch } from "react-icons/fi";
 import DBTransctionHistory from "../components/transaction-history/DBTransctionHistory";
-import usdt from "../assets/usdt.svg"
-import usdc from "../assets/usdc.svg"
+import usdt from "../assets/usdt.svg";
+import usdc from "../assets/usdc.svg";
+import TestBuySell from "../components/modal/TestBuySell";
+
 
 const quotes = [
   "The only way to do great work is to love what you do. - Kesolink",
@@ -59,6 +61,7 @@ export const Dashboard = () => {
   const [searchQueryCoinPrice, setSearchQueryCoinPrice] = useState('');
   const [showMore, setShowMore] = useState(false)
   const [currentQuote, setCurrentQuote] = useState(getRandomQuote());
+  const [testBuySellOpen, setTestBuySellOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -148,6 +151,14 @@ export const Dashboard = () => {
     setBuySellOpen(false);
   };
 
+  const openTestBuySellModal = (type) => {
+    setTransactionType(type);
+    setTestBuySellOpen(true);
+  };
+  const closeTestBuySellModal = () => {
+    setTestBuySellOpen(false);
+  };
+
   return (
     <div className="dashboard-container" onClick={actionToggleClose}>
       <div className="dashboard-content">
@@ -194,6 +205,12 @@ export const Dashboard = () => {
                 <HiCircleStack />
                 </div>
                 <span>Buy Assets</span>
+              </btn>
+              <btn className="bal-btn" onClick={()=> openTestBuySellModal("sell")}>
+                <div className="bal-icon-wrap">
+                <HiCircleStack />
+                </div>
+                <span>Test buy-sell</span>
               </btn>
               <btn className="bal-btn" onClick={()=> openBuySellModal("sell")}>
                 <div className="bal-icon-wrap">
@@ -364,6 +381,15 @@ export const Dashboard = () => {
         <BuySellModal
           isOpen={buySellOpen}
           onClose={closeBuySellModal}
+          assets={assets}
+          transactionType={transactionType}
+          setTransactionType={setTransactionType}
+        />
+      )}
+      {testBuySellOpen && (
+        <TestBuySell
+          isOpen={testBuySellOpen}
+          onClose={closeTestBuySellModal}
           assets={assets}
           transactionType={transactionType}
           setTransactionType={setTransactionType}

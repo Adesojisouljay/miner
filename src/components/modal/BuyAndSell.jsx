@@ -1,38 +1,62 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { usdPrice } from '../../utils';
-import debounce from 'lodash/debounce';
-import { useDispatch } from 'react-redux';
-import './buy-and-sell.scss';
-import { buyAsset, sellAsset, calculateTransaction } from '../../api/ekzat';
-import { formatNumbers } from '../../utils';
-import { useSelector } from 'react-redux';
-import { Loader } from '../loader/Loader';
-import { getUserProfile } from '../../api/profile';
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { usdPrice } from "../../utils";
+import debounce from "lodash/debounce";
+import { useDispatch } from "react-redux";
+import "./buy-and-sell.scss";
+import { buyAsset, sellAsset, calculateTransaction } from "../../api/ekzat";
+import { formatNumbers } from "../../utils";
+import { useSelector } from "react-redux";
+import { Loader } from "../loader/Loader";
+import { getUserProfile } from "../../api/profile";
+import { RiArrowDownSFill, RiArrowRightSFill } from "react-icons/ri";
+import nigeria from "../../assets/nigria.png"
+import Hive from "../../assets/hive-logo.png"
+import tusd from "../../assets/tusd.svg"
+import usdc from "../../assets/usdc.svg"
+import usdt from "../../assets/usdt.svg"
+import { IoCloseSharp } from "react-icons/io5";
+import { TbArrowsExchange2 } from "react-icons/tb";
+import "./buy-and-sell.scss"
 
-export const BuySellModal = ({ isOpen, onClose, assets, transactionType, setTransactionType}) => {
-  const [currency, setCurrency] = useState(assets[0]?.currency || '');
-  const [amount, setAmount] = useState('');
-  const [amountType, setAmountType] = useState('crypto');
-  const [message, setMessage] = useState('');
+export const BuySellModal = ({
+  isOpen,
+  onClose,
+  assets,
+  transactionType,
+  setTransactionType,
+}) => {
+  const [currency, setCurrency] = useState(assets[0]?.currency || "");
+  const [amount, setAmount] = useState("");
+  const [amountType, setAmountType] = useState("crypto");
+  const [message, setMessage] = useState("");
   const [conversionResult, setConversionResult] = useState(null);
   const [step, setStep] = useState(1);
+  const [newStep, setNewStep] = useState(1);
   const [selectedAssetBalance, setSelectedAssetBalance] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [openList, setOpenList] = useState(false)
 
-  const dispatch = useDispatch()
-  
+
+  const dispatch = useDispatch();
+
   const abortControllerRef = useRef(null);
 
-  const global = useSelector(state => state.ekzaUser);
-  const cur = useSelector(state => state.currency);
+  const global = useSelector((state) => state.ekzaUser);
+  const cur = useSelector((state) => state.currency);
   const { user } = global;
-  const isUsd = cur.selectedCurrency === "USD"
+  const isUsd = cur.selectedCurrency === "USD";
 
   useEffect(() => {
-    const selectedAsset = user.assets.find(asset => asset.currency === currency);
+    const selectedAsset = user.assets.find(
+      (asset) => asset.currency === currency
+    );
     setSelectedAssetBalance(selectedAsset ? selectedAsset.balance : 0);
   }, [currency, user.assets]);
-
+   
+  
+  const handleOpencoinList = ()=>{
+    setOpenList(!openList)
+  }
   useEffect(() => {
     if (amount) debouncedHandleCalculate(amount);
   }, [currency, amountType]);
@@ -45,7 +69,7 @@ export const BuySellModal = ({ isOpen, onClose, assets, transactionType, setTran
   );
 
   useEffect(() => {
-    if(!amount) setConversionResult(null)
+    if (!amount) setConversionResult(null);
     setConversionResult(null);
     debouncedHandleCalculate(amount);
   }, [amount]);
@@ -64,7 +88,7 @@ export const BuySellModal = ({ isOpen, onClose, assets, transactionType, setTran
     const { signal } = abortControllerRef.current;
 
     setIsLoading(true);
-    setMessage('');
+    setMessage("");
     setConversionResult(null);
 
     try {
@@ -73,10 +97,10 @@ export const BuySellModal = ({ isOpen, onClose, assets, transactionType, setTran
         currency,
         amountType,
         transactionType,
-        signal,  // Pass signal to fetch request
+        signal, // Pass signal to fetch request
       });
-      console.log(a)
-      console.log(conversionData)
+      console.log(a);
+      console.log(conversionData);
       if (conversionData.success === true) {
         setConversionResult(conversionData);
         setIsLoading(false);
@@ -85,10 +109,10 @@ export const BuySellModal = ({ isOpen, onClose, assets, transactionType, setTran
         setIsLoading(false);
       }
     } catch (error) {
-      if (error.name === 'AbortError') {
-        console.log('Fetch aborted');
+      if (error.name === "AbortError") {
+        console.log("Fetch aborted");
       } else {
-        setMessage(error.message || 'An error occurred during calculation');
+        setMessage(error.message || "An error occurred during calculation");
       }
       setIsLoading(false);
     }
@@ -96,58 +120,65 @@ export const BuySellModal = ({ isOpen, onClose, assets, transactionType, setTran
 
   const handleTransaction = async (e) => {
     e.preventDefault();
-  
+
     if (!amount || isNaN(amount)) {
-      setMessage('Please enter a valid amount');
+      setMessage("Please enter a valid amount");
       return;
     }
-  
+
     const amountNumber = Number(amount);
-  
-    if (amountType === 'fiat') {
+
+    if (amountType === "fiat") {
       if (amountNumber < 500) {
-        setMessage('Amount must not be less than 500 Naira');
+        setMessage("Amount must not be less than 500 Naira");
         return;
       }
-    } else if (amountType === 'crypto') {
+    } else if (amountType === "crypto") {
       if (!conversionResult || conversionResult.convertedAmount < 500) {
-        setMessage('The equivalent amount in Naira must be at least 500');
+        setMessage("The equivalent amount in Naira must be at least 500");
         return;
       }
     }
-  
+
     setIsLoading(true);
-    setMessage('');
-  
+    setMessage("");
+
     try {
       const transactionData = {
-        amount: transactionType === 'buy'
-          ? (amountType === 'fiat' ? Number(amountNumber) : Number(conversionResult?.convertedCryptoAmount?.split(" ")[0]))
-          : (amountType === 'fiat' ? Number(conversionResult?.convertedCryptoAmount?.split(" ")[0]) : Number(amountNumber)),
+        amount:
+          transactionType === "buy"
+            ? amountType === "fiat"
+              ? Number(amountNumber)
+              : Number(conversionResult?.convertedCryptoAmount?.split(" ")[0])
+            : amountType === "fiat"
+            ? Number(conversionResult?.convertedCryptoAmount?.split(" ")[0])
+            : Number(amountNumber),
         currency,
-        amountType
+        amountType,
       };
-      console.log( Number(conversionResult?.convertedCryptoAmount.split(" ")[0]) + 1)
-      console.log(transactionData)
-  
-      if (transactionType === 'buy') {
+      console.log(
+        Number(conversionResult?.convertedCryptoAmount.split(" ")[0]) + 1
+      );
+      console.log(transactionData);
+
+      if (transactionType === "buy") {
         await buyAsset(transactionData);
-      } else if (transactionType === 'sell') {
+      } else if (transactionType === "sell") {
         await sellAsset(transactionData);
       }
-      getUserProfile(dispatch)
+      getUserProfile(dispatch);
       setStep(2);
     } catch (error) {
-      setMessage(error.message || 'An error occurred during the transaction');
+      setMessage(error.message || "An error occurred during the transaction");
     } finally {
       setIsLoading(false);
     }
-  };    
+  };
 
   const handleAmountChange = (e) => {
     const newAmount = e.target.value;
 
-    if (newAmount === '') {
+    if (newAmount === "") {
       setConversionResult(null);
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
@@ -158,15 +189,26 @@ export const BuySellModal = ({ isOpen, onClose, assets, transactionType, setTran
   };
 
   const toggleAmountType = () => {
-    setAmountType(prevType => (prevType === 'crypto' ? 'fiat' : 'crypto'));
+    setAmountType((prevType) => (prevType === "crypto" ? "fiat" : "crypto"));
   };
-
+ const data = [
+  {"img": nigeria, "name": "Btc"},
+  {"img": Hive, "name": "Ltc"},
+  {"img": usdc, "name": "Bnb"},
+  {"img": usdt, "name": "Dash"},
+ ]
+ console.log(assets)
   return (
-    <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`}>
-      <div className={`modal-overlay  ${isOpen ? 'open' : ''}`} onClick={onClose}> </div>
+    <div className={`fadded-container modal-overlay ${isOpen ? "open" : ""}`}>
+      <div
+        className={`modal-overlay  ${isOpen ? "open" : ""}`}
+        onClick={onClose}
+      >
+        {" "}
+      </div>
       <div className="modal">
-        <span className="close-modal" onClick={onClose}>X</span>
-        {(isLoading) && <Loader />}
+        <IoCloseSharp size={18} className="close-modal" onClick={onClose} />
+        {isLoading && <Loader />}
         {step === 1 && (<>
           <h2>{transactionType === 'buy' ? 'Buy' : 'Sell'} Assets</h2>
           <div className="toggle-buttons">
@@ -296,6 +338,8 @@ export const BuySellModal = ({ isOpen, onClose, assets, transactionType, setTran
               <button onClick={onClose} className="btn">Close</button>
             </div>
           )}
+
+        
       </div>
     </div>
   );
