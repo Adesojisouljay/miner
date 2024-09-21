@@ -186,63 +186,65 @@ export const Dashboard = () => {
               </div>
             </div>
             <div className="bal-btn-wrap-main">
-            <div className={`show-more-wrap ${!showMore ? "margin-bottom-large" : "margin-bottom-small"}`}><span className="show-more" onClick={handleShowMore }>{!showMore ? "Show more" : "Show less"}</span></div>
+            <div className={`show-more-wrap ${!showMore ? "margin-bottom-large" : "margin-bottom-small"}`}>
+              <span className="show-more" onClick={handleShowMore }>{!showMore ? "Show more" : "Show less"}</span>
+            </div>
             <div className="bal-btn-wrap">
-              <btn className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={() => openDepositModal(assets[0])}>
+              <span className="bal-btn" onClick={() => openDepositModal(assets[0])}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
                 <span>Receive Crypto</span>
-              </btn>
-              <btn className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openWithdrawalModal}>
+              </span>
+              <span className="bal-btn" onClick={openWithdrawalModal}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
                 <span>Send Crypto</span>
-              </btn>
-              <btn className="bal-btn" onClick={()=> openBuySellModal("buy")}>
+              </span>
+    
+              <span className="bal-btn" onClick={()=> openTestBuySellModal("buy")}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
-                <span>Buy Assets</span>
-              </btn>
-              <btn className="bal-btn" onClick={()=> openTestBuySellModal("buy")}>
+                <span>Buy</span>
+              </span>
+
+              <span className="bal-btn" onClick={()=> openTestBuySellModal("sell")}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
-                <span>Test buy-sell</span>
-              </btn>
-              <btn className="bal-btn" onClick={()=> openBuySellModal("sell")}>
-                <div className="bal-icon-wrap">
-                <HiCircleStack />
-                </div>
-                <span>Sell Assets</span>
-              </btn>
-              <btn className="bal-btn" onClick={openFiatTransferModal}>
+                <span>Sell</span>
+              </span>
+          
+              <span className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openFiatTransferModal}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
                 <span>Fiat Transfer</span>
-              </btn>
-              <btn className="bal-btn" onClick={openFiatDepositModal}>
+              </span>
+
+              <span className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openFiatDepositModal}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
                 <span>Fiat Deposit</span>
-              </btn>
-              <btn className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openFiatWithdrawalModal}>
+              </span>
+
+              <span className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openFiatWithdrawalModal}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
                 <span>Fiat Withdrawal</span>
-              </btn>
-              <btn className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openFiatWithdrawalModal}>
+              </span>
+
+              <span className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openFiatWithdrawalModal}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
                 <span>Swap</span>
-              </btn>
-              
+              </span>
+
             </div>
             </div>
 
