@@ -23,7 +23,7 @@ import { FiSearch } from "react-icons/fi";
 import DBTransctionHistory from "../components/transaction-history/DBTransctionHistory";
 import usdt from "../assets/usdt.svg";
 import usdc from "../assets/usdc.svg";
-import { TestBuySell } from "../components/modal/TestBuySell";
+import { BuySell } from "../components/modal/BuySell";
 
 
 const quotes = [
@@ -389,7 +389,7 @@ export const Dashboard = () => {
         />
       )}
       {testBuySellOpen && (
-        <TestBuySell
+        <BuySell
           isOpen={testBuySellOpen}
           onClose={closeTestBuySellModal}
           assets={assets}

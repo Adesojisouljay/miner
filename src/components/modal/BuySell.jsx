@@ -3,7 +3,7 @@ import { Loader } from '../loader/Loader'
 import { IoCloseSharp } from 'react-icons/io5'
 import debounce from "lodash/debounce";
 import { useDispatch } from "react-redux";
-import "./test-buy-sell.scss";
+import "./buysell.scss";
 import { buyAsset, sellAsset, calculateTransaction } from "../../api/ekzat";
 import { formatNumbers, getFirstItem } from "../../utils";
 import { useSelector } from "react-redux";
@@ -12,8 +12,9 @@ import { getUserProfile } from "../../api/profile";
 import { RiArrowDownSFill, RiArrowRightSFill } from "react-icons/ri";
 import nigeria from "../../assets/nigria.png"
 import { TbArrowsExchange2 } from "react-icons/tb";
+import { IoIosArrowBack, IoIosArrowRoundBack } from 'react-icons/io';
 
-export const  TestBuySell = ({ isOpen,onClose,assets, transactionType, setTransactionType,}) => {
+export const  BuySell = ({ isOpen,onClose,assets, transactionType, setTransactionType,}) => {
 
   const dispatch = useDispatch();
 
@@ -43,6 +44,7 @@ export const  TestBuySell = ({ isOpen,onClose,assets, transactionType, setTransa
     setConversionResult(null);
     debouncedHandleCalculate(amount);
   }, [amount, currency]);
+  console.log(conversionResult); 
 
   const handleCalculate = async (a) => {
     if (!a) {
@@ -183,12 +185,13 @@ export const  TestBuySell = ({ isOpen,onClose,assets, transactionType, setTransa
         {" "}
       </div>
       <div className="b-s-modal">
+        {step === 2 && (<IoIosArrowRoundBack onClick={()=> setStep(1)} size={30} className='backmodal'/>)}
         <IoCloseSharp size={18} className="close-modal" onClick={onClose} />
         {isLoading && <Loader />}
         
 
         <div className="buysell-container" >
-        <div className="toggle-buttons">
+        {step === 1 && (<div className="toggle-buttons">
             <button
               className={`${transactionType === 'buy' ? 'active' : 'trans'}  buy-sell-btn`}
               onClick={() => setTransactionType('buy')}
@@ -201,7 +204,7 @@ export const  TestBuySell = ({ isOpen,onClose,assets, transactionType, setTransa
             >
               Sell
             </button>
-          </div>
+          </div>)}
           {message && <p className='warning'>{message}</p>}
           {step === 1 && (<div className="buy-sell-parent-wrap" >
           <div className="spend-wrap">
@@ -221,18 +224,18 @@ export const  TestBuySell = ({ isOpen,onClose,assets, transactionType, setTransa
               />
             </div>
 
-            <div className="rate-wrap">
+            <div className="fiat-bal-wrap">
+              <span>NGN balance:</span> 
+              <span>{user?.nairaBalance?.toFixed(3)} </span>
+            </div>
+          </div>
+
+          <div className="rate-wrap">
             1 {currency.currency?.toUpperCase()} === {global.currency.selectedCurrency === "NGN" ? 
             currency.nairaValue : 
             currency.usdValue
             }
             </div>
-
-            <div className="fiat-bal-wrap">
-              <span>{currency.currency?.toUpperCase()} balance:</span> 
-              <span>{formatNumbers(currency.balance)} {currency.currency?.toUpperCase()}</span>
-            </div>
-          </div>
 
           <div className="get-wrap">
             <h3>Crypto</h3>
@@ -249,6 +252,10 @@ export const  TestBuySell = ({ isOpen,onClose,assets, transactionType, setTransa
                 value={amountType === "crypto" ? amount : getFirstItem(conversionResult?.convertedCryptoAmount)}
                 onChange={handleCryptoAmountChange}
               />
+            </div>
+            <div className="crypto-bal-wrap">
+              <span>{currency.currency} balance:</span> 
+              <span>{parseFloat(currency.balance).toFixed(3)}</span>
             </div>
             <div className={`coin-list-wrap ${openList ? "openlist": "openclose"}`}>
            {user?.assets?.map((asset)=> (<div className={`coin-list  `} >
@@ -325,21 +332,23 @@ export const  TestBuySell = ({ isOpen,onClose,assets, transactionType, setTransa
                   <span>Converting</span>
                   <div className="review-coin-wrap">
                     <img src={nigeria} alt="" />
-                    <span>{conversionResult?.convertedNairaAmount}</span>
+                    {/* <span>{conversionResult?.convertedNairaAmount}</span> */}
+                    <span>{conversionResult?.convertedNairaAmount.split(' ')[0]}</span>
+
                   </div>
                   <span>{conversionResult?.convertedCryptoAmount}</span>
                 </div>
                 <div className="arrow-right-wrap">
                 <svg width="159" height="7" viewBox="0 0 159 7" fill="none" class="absolute left-1/2 top-1/2 block translate-x-[-50%] translate-y-[-50%] light:hidden mobile:hidden"><path d="M1 3.5H151" stroke="url(#paint0_linear_622_17075)" stroke-width="1.5" stroke-linecap="square" stroke-dasharray="0.1 5"></path><path d="M155 6.5L159 3.5L155 0.5" fill="#FBFBFB"></path><defs><linearGradient id="paint0_linear_622_17075" x1="146.604" y1="4.74994" x2="0.249478" y2="6.49899" gradientUnits="userSpaceOnUse"><stop stop-color="white"></stop><stop offset="1" stop-color="white" stop-opacity="0"></stop></linearGradient></defs></svg>
                 <div className="exchange-iconwrap">
-                <TbArrowsExchange2 size={24} />
+                <TbArrowsExchange2 size={24} className='exc-icon' />
                 </div>
                 </div>
                 <div className="box-left">
                   <span>You get</span>
                   <div className="review-coin-wrap">
                     <img src={currency.image} alt="" />
-                    <span>{conversionResult?.convertedCryptoAmount}</span>
+                    <span>{conversionResult?.convertedCryptoAmount.split(' ')[0]}</span>
                   </div>
                   <span>{conversionResult?.convertedNairaAmount}</span>
                 </div>
@@ -397,18 +406,19 @@ export const  TestBuySell = ({ isOpen,onClose,assets, transactionType, setTransa
 
 
               <div className="buy-btn-wrap">
-                <button onClick={()=> setStep(1)} className='back'>Back</button>
+                {/* <button onClick={()=> setStep(1)} className='back'>Back</button> */}
                 <button onClick={handleTransaction}>{transactionType === "buy" ? "Buy" : "Sell"}</button>
               </div>
             </div>
           )}
-        </div>
-        {step === 3 && (
+          {step === 3 && (
             <div className="succe">
               <h3>Transaction Successful</h3>
               <button onClick={onClose} className="btn">Close</button>
             </div>
           )}
+        </div>
+        
       </div>
     </div>
 

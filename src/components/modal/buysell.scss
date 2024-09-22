@@ -1,3 +1,4 @@
+@import '../../mixins.scss';
 .b-s-modal-overlay {
     position: fixed;
     top: 0;
@@ -35,6 +36,18 @@
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     background-color: var(--modal-background-color);
+    @include respond(phone) {
+      width: 95%;
+      // top: calc(60% - 55px);
+
+    }
+  }
+
+  .backmodal{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
   }
 
 
@@ -44,6 +57,9 @@
   .spend-wrap{
     h3{
       font-size: 18px;
+      @include respond(phone) {
+        font-size: 16px;
+      }
     }
     .fiat-bal-wrap{
       display: flex;align-items: center;
@@ -64,11 +80,14 @@
       display: flex;
       margin-top: 5px;
       padding: 7px 20px;
-      background-color: rgb(29 35 43);
+      // background-color: rgb(29 35 43);
       border-radius: 8px;
       width: 100%;
       transition: border-color 0.3s ease; /* Smooth transition */
       border: 2px solid transparent; /* Initial border state */
+      @include respond(phone) {
+        padding: 7px 20px;
+      }
       &:focus-within {
         border-color:  rgb(73 131 230); /* Change border to yellow on focus */
         border-width: 1.5px;
@@ -82,6 +101,9 @@
         border: none; /* Remove default input border */
         outline: none;
         color: #fff;
+        @include respond(phone) {
+          height: 30px;
+        }
       }
     }
     .spend-select-wrap {
@@ -96,6 +118,9 @@
       }
       span {
         font-size: 16px;
+        @include respond(phone) {
+          font-size: 14px;
+        }
       }
     }
   
@@ -104,6 +129,9 @@
       position: relative;
       h3{
         font-size: 18px;
+        @include respond(phone) {
+          font-size: 16px;
+        }
       }
     }
     .get-component{
@@ -123,6 +151,9 @@
         border: none; /* Remove default input border */
         outline: none;
         color: #fff;
+        @include respond(phone) {
+          height: 30px;
+        }
       }
     }
     .get-select-wrap{
@@ -138,6 +169,9 @@
       }
       span {
         font-size: 16px;
+        @include respond(phone) {
+          font-size: 14px;
+        }
       }
     }
     .buy-sell-btn-wrap{
@@ -175,6 +209,9 @@
     width: 100%;
     margin-top: 5px;
     border-radius: 7px;
+    max-height: 170px;
+    overflow-y: auto;
+    padding-bottom: 10px;
   }
   .coin-list{
     display: flex;
@@ -203,6 +240,7 @@
 
     &:hover{
       background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 5px;
     }
   }
   
@@ -212,6 +250,25 @@
   .openclose{
     display: none;
   }
+
+  .rate-wrap{
+    text-align: center;
+    font-size: 12px;
+    padding-top: 10px;
+  }
+  .crypto-bal-wrap{
+    display: flex;align-items: center;
+    gap: 4px;
+    padding: 3px 8px ;
+    margin-top: 5px;
+    border-radius: 12px;
+    background-color: rgba(26, 39, 54, 0.8);
+    width: fit-content;
+    font-size: 12px;
+    span:nth-child(1){
+      color: rgb(212 212 212);
+    }
+  }
   
   
   // *******************step====2******************
@@ -219,7 +276,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 10px 0px;
+    margin: 20px 0px;
+    margin-top: 30px;
     .box-left{
       display: flex;
       flex-direction: column;
@@ -231,15 +289,24 @@
       background-color: rgb(29 35 43 );
       border-color: rgb(42 51 62);
       width: 250px;
+      @include respond(phone) {
+        align-items: flex-start;
+      }
       span{
         font-size: 12px;
         margin-bottom: 4px;
+        @include respond(phone) {
+          margin-bottom: 7px;
+        }
       }
       .review-coin-wrap{
         display: flex;
         align-items: center;
         margin-bottom: 4px;
         gap: 6px;
+        @include respond(phone) {
+          margin-bottom: 7px;
+        }
         img{
           width: 25px;
           height: 25px;
@@ -247,6 +314,10 @@
         }
         span{
           font-size: 24px;
+          margin: 0px;
+          @include respond(phone) {
+            font-size: 18px;
+          }
         }
       }
       
@@ -254,6 +325,15 @@
     .arrow-right-wrap{
       margin: 0px 12px;
       position: relative;
+      @include respond(phone) {
+        margin: 0px 30px;
+      }
+      svg{
+        @include respond(phone) {
+          width: 1px;
+          // margin: 0px 12px;
+        }
+      }
       .exchange-iconwrap{
         position: absolute;
         top: 50%;  /* Position in the middle vertically */
@@ -268,6 +348,18 @@
         display: flex;
         justify-content: center;  /* Center horizontally */
         align-items: center;      /* Center vertically */
+        @include respond(phone) {
+          // position: relative;
+          width:35px;
+          height: 35px;
+          // margin: 0px 10px;
+        }
+        .exc-icon{
+          @include respond(phone) {
+            width:35px;
+
+          }
+        }
       }
   
     }
@@ -293,7 +385,10 @@
       justify-content: space-between;
       margin-bottom: 5px;
       span{
-        font-size: 16px;
+        font-size: 14px;
+        @include respond(phone) {
+          font-size: 12px;
+        }
       }
   
     }
@@ -309,8 +404,11 @@
       margin: 0 auto;
       color: #fff;
       font-size: 18px;
-      background-color: rgb(29 35 43 );
+      background-color: rgb(23, 57, 102);
       cursor: pointer;
+      @include respond(phone) {
+        font-size: 14px;
+      }
       // background: linear-gradient(127deg, hsla(0, 0%, 100%, .16) 17.35%, hsla(0, 0%, 85%, .04) 76.2%);
     }
   }

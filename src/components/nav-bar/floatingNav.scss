@@ -8,10 +8,13 @@
   display: flex;
   gap: 20px; 
   background-color: rgba(26, 39, 54, 0.8); 
-  padding: 20px 50px;
+  padding: 10px 50px;
   border-radius: 50px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 1000; 
+  @include respond(phone) {
+    height: 55px;
+  }
 }
 
 .nav-link {
