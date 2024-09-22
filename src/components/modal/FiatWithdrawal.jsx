@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { requestWithdrawalToken, requestFiatWithdrawal } from '../../api/ekzat';
+import { requestToken, requestFiatWithdrawal } from '../../api/ekzat';
 import { getUserProfile } from '../../api/profile';
 import './fiat-withdrawal.scss';
 import { Link } from 'react-router-dom';
@@ -54,7 +54,7 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
 
     try {
       setIsLoading(true);
-      const response = await requestWithdrawalToken();
+      const response = await requestToken();
       if (response.success) {
         toast.success('Withdrawal token sent to your email', {
           style: {

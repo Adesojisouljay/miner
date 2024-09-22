@@ -1,0 +1,176 @@
+.profile-container {
+    padding: 20px;
+    width: 60%;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    
+    .profile-avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 20px;
+    }
+  
+    h2 {
+      font-size: 24px;
+      margin: 0;
+    }
+
+    .kyc-status {
+        font-weight: bold;
+    
+        &.kyc-approved {
+            color: green;
+        }
+    
+        &.kyc-rejected {
+            color: red;
+        }
+    
+        &.kyc-pending {
+            color: orange;
+        }
+    }    
+  
+    .edit-button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-left: auto;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+  
+  .profile-details {
+    display: flex;
+    flex-direction: column;
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+  
+      span {
+        font-weight: bold;
+      }
+  
+      input {
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 60%;
+        background: transparent;
+        color: #fff;
+      }
+    }
+  
+    h3 {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  
+    ul {
+      list-style-type: none;
+      padding: 0;
+      
+      li {
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 5px;
+      }
+    }
+  
+    .add-account {
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+  
+      input {
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+  
+      .add-button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        align-self: flex-start;
+  
+        &:hover {
+          background-color: #218838;
+        }
+      }
+    }
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  
+    .save-button,
+    .cancel-button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  
+      &.save-button {
+        background-color: #28a745;
+        color: white;
+        margin-right: 10px;
+  
+        &:hover {
+          background-color: #218838;
+        }
+      }
+  
+      &.cancel-button {
+        background-color: #dc3545;
+        color: white;
+  
+        &:hover {
+          background-color: #c82333;
+        }
+      }
+    }
+  }
+  
+
+  .edit-pencil-wrap{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #007bff;
+    cursor: pointer;
+  }
