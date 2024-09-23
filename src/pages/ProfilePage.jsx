@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { BsPencilFill, BsPlusCircleFill, BsTrashFill } from 'react-icons/bs';
+import { toast } from 'react-toastify';
 import { PasswordReset } from '../components/modal/PasswordReset';
 import { AddAccount } from '../components/modal/AddAccount';
+import { ConfirmModal } from '../components/modal/ConfirmModal';
+import { deleteBankAccount } from '../api/ekzat';
+import { getUserProfile } from '../api/profile';
 import './profile.scss';
 
 export const Profile = () => {
   
     const global = useSelector(state => state.ekzaUser)
-    const user = global?.user
+    const user = global?.user;
+    const dispatch = useDispatch()
 
   const [editMode, setEditMode] = useState(false);
   const [newEmail, setNewEmail] = useState('');
@@ -18,12 +22,9 @@ export const Profile = () => {
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
   const [openAccountModal, setOpenAccountModal] = useState(false);
   const [tooltipText, setTooltipText] = useState("")
-
-  const [newAccount, setNewAccount] = useState({
-    accountNumber: '',
-    accountName: '',
-    bankName: ''
-  });
+  const [openDeleteAcc, setOpenDeleteAcc] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [accountId, setAccountId] = useState("")
 
   const handleEdit = () => {
     setEditMode(true);
@@ -58,6 +59,12 @@ const openAccount = () => {
 const closeAccount = () => {
     setOpenAccountModal(false)
 }
+const closeDeleteAccount = () => {
+  setOpenDeleteAcc(false)
+}
+const openDeleteAccount = () => {
+  setOpenDeleteAcc(true)
+}
 
 const showTooltip = (type) => {
   setShowTitle(true)
@@ -66,6 +73,35 @@ const showTooltip = (type) => {
     setTooltipText("Change Password")
   } else if(type === "account") {
     setTooltipText("Add new account")
+  }
+}
+
+const deleteAcc = async ()=> {
+  setLoading(true)
+  try {
+    const data = await deleteBankAccount(accountId);
+    toast.success("Account deleted successfully.", {
+      style: {
+        backgroundColor: 'rgba(229, 229, 229, 0.1)',
+        color: '#fff',
+        fontSize: '16px',
+        marginTop: "60px"
+      },
+    });
+    getUserProfile(dispatch)
+    setLoading(false)
+    closeDeleteAccount();
+  } catch (error) {
+    toast.error("An error occured.", {
+      style: {
+        backgroundColor: 'rgba(229, 229, 229, 0.1)',
+        color: '#fff',
+        fontSize: '16px',
+        marginTop: "60px"
+      },
+    });
+    console.log(error)
+    setLoading(false)
   }
 }
 
@@ -135,7 +171,12 @@ const showTooltip = (type) => {
                         <li key={index}>
                           {account.accountName} - {account.bankName} ({account.accountNumber})
                         </li>
-                        <BsTrashFill className='delete-icon'/>
+                        <BsTrashFill 
+                          className='delete-icon'  
+                          onClick={()=>{
+                            openDeleteAccount()
+                            setAccountId(account.id)
+                        }}/>
                       </div>
                     ))}
                   </ul>
@@ -160,8 +201,25 @@ const showTooltip = (type) => {
               </div>
 
       </div>
-        {openAccountModal && <AddAccount isOpen={openAccountModal} onClose={closeAccount}/>}
-        {openPasswordModal && <PasswordReset isOpen={openPasswordModal} onClose={closePassword}  />}
+        {openAccountModal && 
+        <AddAccount 
+          isOpen={openAccountModal} 
+          onClose={closeAccount}/>
+        }
+        
+        {openPasswordModal && 
+        <PasswordReset 
+          isOpen={openPasswordModal} 
+          onClose={closePassword}  
+        />}
+
+        {openDeleteAcc && 
+        <ConfirmModal 
+          isOpen={openPasswordModal} 
+          onClose={closeDeleteAccount} 
+          func={deleteAcc}
+          loading={loading}
+        />}
     </div>
   );
 };

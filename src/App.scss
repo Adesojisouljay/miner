@@ -97,6 +97,15 @@ a{
   cursor: pointer;
 }
 
+.cancel-button{
+  background-color: #0f101e;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 @keyframes alltuchtopdown {
   0% {
       transform: rotateX(0deg) translateY(0)
