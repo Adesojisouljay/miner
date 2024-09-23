@@ -31,8 +31,9 @@ export const GeneralDropdown = (props) => {
                         handleOpenList();
                     }}
                 >
-                        <span >{item.bankName || item.name}</span>
-                        <span>{item?.accountNumber || null}</span>
+                    {item.image && <img className='gd-select-image' src={item.image} alt="" />}
+                    <span >{item.bankName || item.name}</span>
+                    <span>{item?.accountNumber || null}</span>
                 </div>
             </div>))}
         </div>
