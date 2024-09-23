@@ -123,7 +123,7 @@ export const processHiveWithdrawal = async (withdrawalData) => {
   }
 };
 
-export const requestWithdrawalToken = async () => {
+export const requestToken = async () => {
   try {
     const response = await api.post('/withdrawals/request-token', {}, {
       headers: {
@@ -135,6 +135,19 @@ export const requestWithdrawalToken = async () => {
     console.log(error)
   }
 }
+
+export const resetPassword = async (data) => {
+  try {
+    const response = await api.post('/auth/password-reset', data, {
+      headers: {
+        Authorization: authToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
 
 /////////DEPOSIT
 export const createNairaDepositRequest = async (depositData) => {

@@ -36,6 +36,7 @@ import FloatingNav from "./components/nav-bar/FloatingNav";
 import RightNav from "./components/nav-bar/RightNav";
 import { CryptoNews } from "./pages/CryptoNews";
 import { SingleNewsPage } from "./pages/SingleNewsPage";
+import { Profile } from "./pages/ProfilePage";
 
 function App() {
   const user = useSelector((state) => state.ekzaUser);
@@ -88,6 +89,7 @@ function App() {
             <Route path="/page" element={<Pagetest />} />
             <Route path="/crypto-news" element={<CryptoNews />} />
             <Route path="/crypto-news/:id" element={<SingleNewsPage />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

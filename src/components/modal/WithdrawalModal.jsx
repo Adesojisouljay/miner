@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { processHiveWithdrawal, requestWithdrawalToken } from '../../api/ekzat';
+import { processHiveWithdrawal, requestToken } from '../../api/ekzat';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { Dropdown } from '../dropdown/Dropdown';
 import './withdraw-modal.scss';
@@ -12,6 +12,7 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
   const [currency, setCurrency] = useState(assets[0]?.currency || '');
   const [message, setMessage] = useState('');
   const [step, setStep] = useState(1);
+
   const [selectedAsset, setSelectedAsset] = useState(assets[0]);
   const [openList, setOpenList] = useState(true)
 
@@ -33,9 +34,9 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
     }
   };
 
-  const requestToken = async () => {
+  const getToken = async () => {
     try {
-      const data = await requestWithdrawalToken();
+      const data = await requestToken();
       if(data?.success === true){
         setStep(2)
       }
@@ -106,7 +107,7 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
             onChange={(e) => setMemo(e.target.value)}
             placeholder="Enter memo"
           />
-          <button className="withdraw-btn" onClick={requestToken}>Withdraw</button>
+          <button className="withdraw-btn" onClick={getToken}>Withdraw</button>
         </div>}
         {step === 2 && <div className="w-input-group">
           <label htmlFor="withdrawalToken">Withdrawal token</label>
