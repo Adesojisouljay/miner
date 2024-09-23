@@ -22,9 +22,6 @@ export const BankAccount = ({ authToken }) => {
     const accountNumberRegex = /^\d{10,12}$/;
     const nameRegex = /^[a-zA-Z\s]+$/;
 
-
-    
-
     if (!accountNumberRegex.test(accountNumber)) {
       setMessage('Invalid account number. It should be between 10 and 12 digits.');
       return false;

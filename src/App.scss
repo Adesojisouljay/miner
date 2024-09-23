@@ -81,8 +81,29 @@ a{
     animation-timing-function: linear;
 }
 
-.warning{
+.error{
   color: rgb(234, 139, 139);
+  font-size: 16px;
+}
+
+.warning{
+  color: orange;
+  font-size: 16px;
+}
+
+.delete-icon{
+  color: rgb(234, 139, 139);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.cancel-button{
+  background-color: #0f101e;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 @keyframes alltuchtopdown {
