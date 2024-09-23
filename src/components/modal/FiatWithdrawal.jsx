@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { requestWithdrawalToken, requestFiatWithdrawal } from '../../api/ekzat';
 import { getUserProfile } from '../../api/profile';
-import './fiat-withdrawal.scss';
 import { Link } from 'react-router-dom';
+import { GeneralDropdown } from '../dropdown/GeneralDrpdpown';
+import './fiat-withdrawal.scss';
 
 export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
   const user = useSelector(state => state?.ekzaUser?.user);
+  const userAccounts = user?.accounts
   const dispatch = useDispatch();
 
   const [selectedAccount, setSelectedAccount] = useState(user?.accounts ? user?.accounts[0] : {});
@@ -17,6 +19,7 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
   const [tokenExpiry, setTokenExpiry] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
+  const [openList, setOpenList] = useState(false)
 
   useEffect(() => {
     let timer;
@@ -33,11 +36,6 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
     }
     return () => clearInterval(timer);
   }, [tokenExpiry, isOpen]);
-
-  const handleAccountChange = (e) => {
-    const account = user?.accounts.find(account => account.accountNumber === e.target.value);
-    setSelectedAccount(account);
-  };
 
   const handleRequestToken = async () => {
     if (!withdrawalAmount) {
@@ -149,6 +147,10 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
     }
   };
 
+  const handleOpenList = () => {
+    setOpenList(!openList);
+  };
+
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`}>
       <div className={`modal-overlay  ${isOpen ? 'open' : ''}`} onClick={onClose}> </div>
@@ -166,6 +168,7 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
               <div className="withdrawal-amount">
                 <label htmlFor="amount">Withdrawal Amount:</label>
                 <input
+                className='withrawal-amount-input'
                   id="amount"
                   type="number"
                   value={withdrawalAmount}
@@ -176,18 +179,16 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
                 />
               </div>
               <div className="bank-accounts">
-                <label htmlFor="account-select">Select Bank Account:</label>
-                <select
-                  id="account-select"
-                  onChange={handleAccountChange}
-                  value={selectedAccount.accountNumber || ''}
-                >
-                  {user?.accounts?.map((account, i) => (
-                    <option key={i} value={account.accountNumber}>
-                      {account.bankName} - {account.accountNumber}
-                    </option>
-                  ))}
-                </select>
+                <p>Select Account</p>
+
+                <GeneralDropdown
+                  items={userAccounts} 
+                  selectedItem={setSelectedAccount} 
+                  handleOpenList={handleOpenList} 
+                  openList={openList}
+                  item={selectedAccount}
+                 />
+      
                 {selectedAccount.accountNumber && (
                   <div className="account-details">
                     <p><strong>Bank Name:</strong> {selectedAccount.bankName}</p>
@@ -209,6 +210,7 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
               <div className="withdrawal-token">
                 <label htmlFor="token">Withdrawal Token:</label>
                 <input
+                  className='withrawal-amount-input'
                   id="token"
                   type="text"
                   value={withdrawalToken}
@@ -241,7 +243,6 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
           )}
         </>
         }
-
       </div>
     </div>
   );
