@@ -378,6 +378,7 @@ export const Dashboard = () => {
         isOpen={isOpen}
         assets={assets}
         onClose={closeDepositModal}
+        user={user}
       />}
       {buySellOpen && (
         <BuySellModal
@@ -397,7 +398,13 @@ export const Dashboard = () => {
           setTransactionType={setTransactionType}
         />
       )}
-      {withdrawalOpen && <WithdrawalModal isOpen={withdrawalOpen} assets={assets} onClose={closeWithdrawalModal} />}
+      {withdrawalOpen && 
+      <WithdrawalModal 
+        isOpen={withdrawalOpen} 
+        assets={assets} 
+        onClose={closeWithdrawalModal}
+        user={user}
+      />}
       {fiatTransferOpen && <DepositModal isOpen={fiatTransferOpen} onClose={closeFiatTransferModal} />}
       {fiatDepositOpen && <Fiatdeposit onClose={closeFiatDepositModal} isOpen={fiatDepositOpen} />}
       {fiatWithdrawalOpen && <FiatWithdrawalModal onClose={closeFiatWithdrawalModal} isOpen={fiatWithdrawalOpen} assets={assets} />}

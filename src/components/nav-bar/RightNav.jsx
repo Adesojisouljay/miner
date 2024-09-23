@@ -15,7 +15,6 @@ function RightNav({ rightNav, handleRightNav, handleLogout }) {
   const menuLinks = [
     // { logo: <FaHome size={25} />, text: "Home", path: "/" },
     { logo: <FaTachometerAlt size={20} />, text: "Dashboard", path: "/dashboard" },
-    { logo: <FaEnvelope size={20} />, text: "Buy/Sell", path: "/trade" },
     { logo: <FaTachometerAlt size={20} />, text: "Wallet", path: "/wallet" },
     { logo: <FaTachometerAlt size={20} />, text: "Transactions", path: "/transactions" },
     { logo: <FaSpinner size={20} />, text: "Spinner", path: "/spinner" },

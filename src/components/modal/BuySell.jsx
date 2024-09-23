@@ -13,6 +13,7 @@ import { RiArrowDownSFill, RiArrowRightSFill } from "react-icons/ri";
 import nigeria from "../../assets/nigria.png"
 import { TbArrowsExchange2 } from "react-icons/tb";
 import { IoIosArrowBack, IoIosArrowRoundBack } from 'react-icons/io';
+import { Dropdown } from '../dropdown/Dropdown';
 
 export const  BuySell = ({ isOpen,onClose,assets, transactionType, setTransactionType,}) => {
 
@@ -258,18 +259,14 @@ export const  BuySell = ({ isOpen,onClose,assets, transactionType, setTransactio
               <span>{parseFloat(currency.balance).toFixed(3)}</span>
             </div>
             <div className={`coin-list-wrap ${openList ? "openlist": "openclose"}`}>
-           {user?.assets?.map((asset)=> (<div className={`coin-list  `} >
-            <div 
-              className="asset-picker"
-              onClick={() => {
-                setCurrency(asset);
-                handleOpencoinList();
-              }}
-            >
-              <img className="picker-image" src={asset.image} alt="" />
-              <span className="picker-image">{asset.currency}</span>
-              </div>
-            </div>))}
+          
+            <Dropdown 
+              user={user} 
+              setCurrency={setCurrency} 
+              handleOpencoinList={handleOpencoinList} 
+              openList={openList}
+            />
+
           </div>
           </div>
 
