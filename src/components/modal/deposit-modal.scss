@@ -49,6 +49,13 @@
     }
   }
 
+  .d-main{
+    width: 100%;
+    display: flex;
+    // flex-direction: column;
+    justify-content: center;
+  }
+
   .close-btn {
     position: absolute;
     top: 20px;
@@ -59,24 +66,6 @@
 
   .modal h2{
     margin-bottom: 20px;
-  }
-  
-  .input-group {
-    width: 70%;
-    padding: 20px;
-    margin-bottom: 20px;
-    background-color: transparent;
-  }
-  
-  .input-group label {
-    display: block;
-  }
-  
-  .input-group input {
-    width: 100%;
-    padding: 15px;
-    margin-top: 5px;
-    border-radius: 10px;
   }
   
   .generate-address-btn {
@@ -132,8 +121,32 @@
     gap: 10px;
   }
 
-  .deposit-coin-wrap{
+  .d-coin-wrap{
     width: 50px;
     height: 50px;
     border-radius: 50%;
+  }
+
+  .d-coin-select-wrapper{
+    // display: flex;
+    justify-self: center;
+    width: 50%;
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  .d-currency-select-wrap{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-around;
+    padding: 10px;
+    // width: 50%;
+    // margin-bottom: 1px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+  }
+
+  .d-picker-currency{
+    font-size: 20px;
   }

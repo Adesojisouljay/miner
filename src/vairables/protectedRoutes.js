@@ -1,3 +1,6 @@
+import nigeria from "../assets/nigria.png"
+import Usa from "../assets/Usa.webp"
+
 export  const protectedRoutesArray = [
     '/dashboard',
     '/controller',
@@ -11,3 +14,16 @@ export  const protectedRoutesArray = [
     '/fiat-withdrawal-action',
     '/fiat-deposit-action',
   ];
+
+  export const currenciesList = [
+    {
+      name: "NGN",
+      sign: "₦",
+      image: nigeria
+    },
+    {
+      name: "USD",
+      sign: "$",
+      image: Usa
+    }
+  ]

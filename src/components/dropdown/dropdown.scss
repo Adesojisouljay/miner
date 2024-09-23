@@ -1,0 +1,54 @@
+.dropdown-search-input{
+    border-radius: 30px;
+    padding: 10px;
+    width: 100%;
+    // background-color: transparent;
+    // background-repeat: gray;
+}
+.coin-list-wrap{
+    // display: none;
+    position: absolute;
+    padding: 8px;
+    background-color: rgb(29, 35, 43);
+    width: 100%;
+    margin-top: 5px;
+    border-radius: 7px;
+    height: 400px;
+    overflow: scroll;
+  }
+  .coin-list{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+    img{
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+    span{
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+
+  .asset-picker{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    width: 100%;
+    overflow: scroll;
+    padding: 10px;
+
+    &:hover{
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  }
+  
+  .openlist{
+    display: block;
+  }
+  .openclose{
+    display: none;
+  }

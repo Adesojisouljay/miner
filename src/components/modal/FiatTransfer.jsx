@@ -88,7 +88,7 @@ export const DepositModal = ({ isOpen, onClose }) => {
         <span className="close-modal" onClick={onClose}>X</span>
         <h2>Transfer Fiat</h2> 
         {loading && <Loader />}
-        <div className="input-group">
+        <div className="ftr-input-group">
           <label htmlFor="receiver">Receiver</label>
           <input 
             type="text" 
