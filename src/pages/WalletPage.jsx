@@ -48,6 +48,7 @@ export const WalletPage = () => {
   };
 
   const addTokenToWallet = async (coinId) => {
+    setLoading(true)
     try {
       const response = await addAsset(coinId)
       if(response.success){
@@ -70,8 +71,10 @@ export const WalletPage = () => {
           },
         });
       }
+      setLoading(false);
     } catch (error) {
       console.log(error)
+      setLoading(false);
       toast.error(error.message || "Error adding asset",{
         style: {
           backgroundColor: 'rgba(229, 229, 229, 0.1)',
@@ -245,12 +248,16 @@ export const WalletPage = () => {
               {isAssetAdded(coin.id) ? <button
                 className="wallet-page-btn"
                 onClick={() => removeTokenFromWallet(coin.id)}
+                style={{cursor: "not-allowed"}}
+                disabled
               >
-                Remove Coin<FaMinus />
+                Coin Added
               </button> :
               <button
                 className="wallet-page-btn"
                 onClick={() => addTokenToWallet(coin.id)}
+                disabled={loading}
+                style={{cursor: loading && "not-allowed"}}
               >
                 Add Coin<FaPlus />
               </button>}

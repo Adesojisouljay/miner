@@ -21,8 +21,11 @@ import hive from "../assets/hive-logo.png"
 import { TransactionHistory } from "../components/transaction-history/TransactionHistory";
 import { FiSearch } from "react-icons/fi";
 import DBTransctionHistory from "../components/transaction-history/DBTransctionHistory";
-import usdt from "../assets/usdt.svg"
-import usdc from "../assets/usdc.svg"
+import usdt from "../assets/usdt.svg";
+import usdc from "../assets/usdc.svg";
+import { BuySell } from "../components/modal/BuySell";
+import { currenciesList } from "../vairables/protectedRoutes";
+import { GeneralDropdown } from "../components/dropdown/GeneralDrpdpown";
 
 const quotes = [
   "The only way to do great work is to love what you do. - Kesolink",
@@ -59,6 +62,9 @@ export const Dashboard = () => {
   const [searchQueryCoinPrice, setSearchQueryCoinPrice] = useState('');
   const [showMore, setShowMore] = useState(false)
   const [currentQuote, setCurrentQuote] = useState(getRandomQuote());
+  const [testBuySellOpen, setTestBuySellOpen] = useState(false);
+  const [openList, setOpenList] = useState(false);
+  // selected 
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -68,11 +74,11 @@ export const Dashboard = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    if (selectedCurrency) {
-      document.getElementById('currencySelect').value = selectedCurrency;
-    }
-  }, [selectedCurrency]);
+  // useEffect(() => {
+  //   if (selectedCurrency) {
+  //     document.getElementById('currencySelect').value = selectedCurrency;
+  //   }
+  // }, [selectedCurrency]);
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
 };
@@ -135,10 +141,6 @@ export const Dashboard = () => {
     setFiatWithdrawalOpen(false);
   };
 
-  const handleCurrencyChange = (currency) => {
-    dispatch(setCurrency(currency));
-  };
-
   const openBuySellModal = (type) => {
     setTransactionType(type);
     setBuySellOpen(true);
@@ -146,6 +148,25 @@ export const Dashboard = () => {
 
   const closeBuySellModal = () => {
     setBuySellOpen(false);
+  };
+
+  const openTestBuySellModal = (type) => {
+    setTransactionType(type);
+    setTestBuySellOpen(true);
+  };
+  const closeTestBuySellModal = () => {
+    setTestBuySellOpen(false);
+  };
+
+  const handleCurrencyChange = (currency) => {
+    console.log(currency)
+    const selectedC = currenciesList.find(c => c.name === currency);
+    console.log(selectedC)
+    dispatch(setCurrency(currency));
+  };
+
+  const handleOpenList = () => {
+    setOpenList(!openList);
   };
 
   return (
@@ -159,11 +180,16 @@ export const Dashboard = () => {
             <div className="bal-top-wrap">
               <div className="total-fait-wrap">
                <div className="bal-text-select-wrap">
-                <h2>Balance</h2> 
-                <select className="change-currency" name="" id="currencySelect" onChange={(e) => handleCurrencyChange(e.target.value)}>
-                  <option className="currencySelect"  value="NGN">NGN</option>
-                  <option value="USD">USD</option>
-                </select>
+                {/* <h2>Balance</h2>  */}
+
+                <GeneralDropdown
+                  items={currenciesList}
+                  setSelectedItem={handleCurrencyChange} 
+                  handleOpenList={handleOpenList} 
+                  openList={openList}
+                  itemName={selectedCurrency}
+                />
+
                </div>
                 <div className="bal-show-wrap">{showBalance ? <h3>********</h3> : <span>
                   <span className="dashboard-currency-symbol">{isUsd ? "$" : "N"}</span>
@@ -175,57 +201,65 @@ export const Dashboard = () => {
               </div>
             </div>
             <div className="bal-btn-wrap-main">
-            <div className={`show-more-wrap ${!showMore ? "margin-bottom-large" : "margin-bottom-small"}`}><span className="show-more" onClick={handleShowMore }>{!showMore ? "Show more" : "Show less"}</span></div>
+            <div className={`show-more-wrap ${!showMore ? "margin-bottom-large" : "margin-bottom-small"}`}>
+              <span className="show-more" onClick={handleShowMore }>{!showMore ? "Show more" : "Show less"}</span>
+            </div>
             <div className="bal-btn-wrap">
-              <btn className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={() => openDepositModal(assets[0])}>
+              <span className="bal-btn" onClick={() => openDepositModal(assets[0])}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
                 <span>Receive Crypto</span>
-              </btn>
-              <btn className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openWithdrawalModal}>
+              </span>
+              <span className="bal-btn" onClick={openWithdrawalModal}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
                 <span>Send Crypto</span>
-              </btn>
-              <btn className="bal-btn" onClick={()=> openBuySellModal("buy")}>
+              </span>
+    
+              <span className="bal-btn" onClick={()=> openTestBuySellModal("buy")}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
-                <span>Buy Assets</span>
-              </btn>
-              <btn className="bal-btn" onClick={()=> openBuySellModal("sell")}>
+                <span>Buy</span>
+              </span>
+
+              <span className="bal-btn" onClick={()=> openTestBuySellModal("sell")}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
-                <span>Sell Assets</span>
-              </btn>
-              <btn className="bal-btn" onClick={openFiatTransferModal}>
+                <span>Sell</span>
+              </span>
+          
+              <span className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openFiatTransferModal}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
                 <span>Fiat Transfer</span>
-              </btn>
-              <btn className="bal-btn" onClick={openFiatDepositModal}>
+              </span>
+
+              <span className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openFiatDepositModal}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
                 <span>Fiat Deposit</span>
-              </btn>
-              <btn className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openFiatWithdrawalModal}>
+              </span>
+
+              <span className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openFiatWithdrawalModal}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
                 <span>Fiat Withdrawal</span>
-              </btn>
-              <btn className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openFiatWithdrawalModal}>
+              </span>
+
+              <span className={`bal-btn-less ${!showMore ? "display-none" : "display-block"}`} onClick={openFiatWithdrawalModal}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
                 <span>Swap</span>
-              </btn>
-              
+              </span>
+
             </div>
             </div>
 
@@ -359,6 +393,7 @@ export const Dashboard = () => {
         isOpen={isOpen}
         assets={assets}
         onClose={closeDepositModal}
+        user={user}
       />}
       {buySellOpen && (
         <BuySellModal
@@ -369,7 +404,22 @@ export const Dashboard = () => {
           setTransactionType={setTransactionType}
         />
       )}
-      {withdrawalOpen && <WithdrawalModal isOpen={withdrawalOpen} assets={assets} onClose={closeWithdrawalModal} />}
+      {testBuySellOpen && (
+        <BuySell
+          isOpen={testBuySellOpen}
+          onClose={closeTestBuySellModal}
+          assets={assets}
+          transactionType={transactionType}
+          setTransactionType={setTransactionType}
+        />
+      )}
+      {withdrawalOpen && 
+      <WithdrawalModal 
+        isOpen={withdrawalOpen} 
+        assets={assets} 
+        onClose={closeWithdrawalModal}
+        user={user}
+      />}
       {fiatTransferOpen && <DepositModal isOpen={fiatTransferOpen} onClose={closeFiatTransferModal} />}
       {fiatDepositOpen && <Fiatdeposit onClose={closeFiatDepositModal} isOpen={fiatDepositOpen} />}
       {fiatWithdrawalOpen && <FiatWithdrawalModal onClose={closeFiatWithdrawalModal} isOpen={fiatWithdrawalOpen} assets={assets} />}

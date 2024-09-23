@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { processHiveWithdrawal, requestToken } from '../../api/ekzat';
+import { RiArrowDownSFill } from 'react-icons/ri';
+import { Dropdown } from '../dropdown/Dropdown';
 import './withdraw-modal.scss';
 
-export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
+export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
   const [memo, setMemo] = useState('');
   const [to, setTo] = useState('');
   const [amount, setAmount] = useState('');
@@ -11,11 +13,16 @@ export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
   const [message, setMessage] = useState('');
   const [step, setStep] = useState(1);
 
+  const [selectedAsset, setSelectedAsset] = useState(assets[0]);
+  const [openList, setOpenList] = useState(true)
+
+  console.log(currency)
+
   const handleWithdrawal = async (e) => {
     e.preventDefault();
 
     try {
-      const withdrawalData = { to, amount, currency, memo, withdrawalToken };
+      const withdrawalData = { to, amount, currency: selectedAsset.currency, memo, withdrawalToken };
       console.log(withdrawalData)
       const result = await processHiveWithdrawal(withdrawalData);
       console.log(result);
@@ -38,29 +45,44 @@ export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
     }
   }
 
+  const handleAssetChange = (e) => {
+    const asset = assets?.find(asset => asset?.currency === e.target.value);
+    setSelectedAsset(asset);
+  };
+
+  const handleOpencoinList = () => {
+    setOpenList(!openList);
+  };
+
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
     <div className={`modal-overlay  ${isOpen ? 'open' : ''}`}  onClick={onClose}> </div>
     {/* <div className={`modal-overlay ${isOpen ? 'open' : ''}`}> */}
-      <div className="modal">
+      <div className="modal testing">
         <span className="close-modal" onClick={onClose}>X</span>
         <h2>Withdrawal</h2>
         {message && <p className='warning'>{message}</p>}
-        {step === 1 && <div className="input-group">
-          <label htmlFor="currency">Currency:</label>
-          <select
-            id="currency"
-            value={currency}
-            onChange={(e) => setCurrency(e.target.value)}
-          >
-            {assets.map((asset) => (
-              <option key={asset.currency} value={asset.currency}>
-                {asset.currency.toUpperCase()}
-              </option>
-            ))}
-          </select>
+        {step === 1 && <div className="w-input-group">
+
+          <div className='w-main'>
+            <div className='w-coin-select-wrapper'>
+              <div className="w-currency-select-wrap" onClick={handleOpencoinList}>
+                <img className="w-deposit-coin-image" src={selectedAsset.image} alt="" />
+                <span className='w-picker-currency'>{selectedAsset.currency}</span>
+                <RiArrowDownSFill  size={24}/>
+              </div>
+              <Dropdown 
+                user={user}
+                setCurrency={setSelectedAsset} 
+                handleOpencoinList={handleOpencoinList} 
+                openList={openList}
+              />
+            </div>
+          </div>
+
           <label htmlFor="recipient-account">Recipient Account:</label>
           <input
+            className='w-input'
             type="text"
             placeholder="Recipient Account"
             value={to}
@@ -69,6 +91,7 @@ export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
           />
           <label htmlFor="withdraw-amount">Amount:</label>
           <input
+            className='w-input'
             type="number"
             id="withdraw-amount"
             value={amount}
@@ -77,6 +100,7 @@ export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
           />
           <label htmlFor="memo">Memo:</label>
           <input
+            className='w-input'
             type="text"
             id="memo"
             value={memo}
@@ -85,9 +109,10 @@ export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
           />
           <button className="withdraw-btn" onClick={getToken}>Withdraw</button>
         </div>}
-        {step === 2 && <div className="input-group">
-          <label htmlFor="withdrawalToken">Memo:</label>
+        {step === 2 && <div className="w-input-group">
+          <label htmlFor="withdrawalToken">Withdrawal token</label>
           <input
+            className='w-input'
             type="text"
             id="withdrawalToken"
             value={withdrawalToken}

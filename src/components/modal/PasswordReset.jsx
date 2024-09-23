@@ -5,7 +5,7 @@ import { requestToken, resetPassword } from '../../api/ekzat';
 import { Loader } from '../loader/Loader';
 import { BsEyeFill } from 'react-icons/bs';
 // import './deposit-modal.scss';
-// import './password-reset.scss';
+import './password-reset.scss';
 
 
 export const PasswordReset = ({ isOpen, onClose }) => {
@@ -17,7 +17,9 @@ export const PasswordReset = ({ isOpen, onClose }) => {
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState("");
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const notAllowed = loading || !newPassword || !confirmNewPassword;
 
@@ -143,34 +145,40 @@ export const PasswordReset = ({ isOpen, onClose }) => {
         <span className="close-modal" onClick={onClose}>X</span>
         <h2>Reset Password</h2> 
         {loading && <Loader />}
-        <div className="input-group">
-            <div>
+        <div className="password-reset-input-group">
+            <div className='password-reset-input-wrap'>
                 <label htmlFor="newPassword">New password</label>
                 <input 
-                    type="password" 
+                    className='password-reset-input'
+                    type={showPassword ? "text" : "password"} 
                     // id="password" 
                     value={newPassword} 
                     onChange={(e) => setNewPassword(e.target.value)} 
                     placeholder="Enter new password" 
                 />
-                <BsEyeFill/>
+                <div className='password-reset-eye-wrap'>
+                  <BsEyeFill onClick={() => setShowPassword(!showPassword)}/>
+                </div>
           </div>
-          <div>
+          <div className='password-reset-input-wrap'>
                 <label htmlFor="transfer-password">Confirm</label>
                 <input 
-                    type="password" 
+                    className='password-reset-input'
+                    type={showConfirmPassword ? "text" : "password"}
                     // id="new-password" 
                     value={confirmNewPassword} 
                     onChange={(e) => setConfirmNewPassword(e.target.value)} 
                     placeholder="Confirm new password" 
                 />
-                <BsEyeFill/>
+                <div className="password-reset-eye-wrap">
+                  <BsEyeFill onClick={() => setShowConfirmPassword(!showConfirmPassword)}/>
+                </div>
           </div>
         </div>
         <button 
           style={{cursor: notAllowed ? "not-allowed" : "pointer"}} 
           disabled={notAllowed} 
-          className="deposit-btn" 
+          className="password-reset-btn" 
           onClick={requestResetToken}
         >Proceed</button>
       </div>}
@@ -179,9 +187,10 @@ export const PasswordReset = ({ isOpen, onClose }) => {
         <span className="close-modal" onClick={onClose}>X</span>
         <h2>Enter 6 digit reset token sent to your mail</h2> 
         {loading && <Loader />}
-        <div className="input-group">
+        <div className="password-reset-input-group">
           <label htmlFor="newPassword">Password Reset Token</label>
-          <input 
+          <input
+            className='password-reset-input'
             type="text" 
             id="token" 
             value={token} 
@@ -194,7 +203,7 @@ export const PasswordReset = ({ isOpen, onClose }) => {
         )}
         {timeRemaining === 0 && (
             <button 
-            className="resend-token-btn" 
+            className="password-reset-btn" 
             onClick={requestResetToken} 
             disabled={loading || !newPassword}
             >
@@ -204,7 +213,7 @@ export const PasswordReset = ({ isOpen, onClose }) => {
         <button 
           style={{cursor: notAllowed ? "not-allowed" : "pointer"}} 
           disabled={notAllowed} 
-          className="deposit-btn" 
+          className="password-reset-btn" 
           onClick={passwordReset}
         >Proceed</button>
       </div>}
