@@ -94,7 +94,7 @@ export const AddAccount = ({ isOpen, onClose }) => {
             <div className="success-message">
                 <h2>Bank Account added successfully!</h2>
                 <p>{message}</p>
-                <button className='account-button' onClick={()=> setIsSuccess(false)}>Go back</button>
+                <button className='account-button' onClick={onClose}>Go back</button>
             </div>
             ) : (
             <>

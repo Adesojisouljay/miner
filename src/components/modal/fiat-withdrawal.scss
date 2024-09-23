@@ -5,11 +5,30 @@
   width: 100%;
   }
   
-  .withdrawal-amount, .bank-accounts, .withdrawal-token {
+  .withdrawal-amount, .fw-bank-accounts, .withdrawal-token {
     margin-bottom: 20px;
     width: 80%;
     display: flex;
     flex-direction: column;
+  }
+
+  .fw-account-select-wrap{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+  }
+
+  .fw-icon-wrap{
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007bff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
   }
   
   .withrawal-amount-input{

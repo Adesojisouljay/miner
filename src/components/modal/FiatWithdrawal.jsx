@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { BsPlusCircleFill } from 'react-icons/bs';
 import { requestToken, requestFiatWithdrawal } from '../../api/ekzat';
 import { getUserProfile } from '../../api/profile';
-import { Link } from 'react-router-dom';
 import { GeneralDropdown } from '../dropdown/GeneralDrpdpown';
+import { AddAccount } from './AddAccount';
 import './fiat-withdrawal.scss';
 
 export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
@@ -20,6 +21,7 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [openList, setOpenList] = useState(false)
+  const [addingAccount, setAddingAccount] = useState(false)
 
   useEffect(() => {
     let timer;
@@ -90,8 +92,15 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
     }
   };
 
+  const openAddAccount = () => {
+    setAddingAccount(true)
+  }
+  const closeAddAccount = () => {
+    setAddingAccount(false)
+  }
+
   const handleSubmit = async () => {
-    if (!withdrawalAmount || !selectedAccount.accountNumber || !withdrawalToken) {
+    if (!withdrawalAmount || !selectedAccount?.accountNumber || !withdrawalToken) {
       toast.error("Please enter an amount, select an account, and enter the withdrawal token.", {
         style: {
           backgroundColor: 'rgba(229, 229, 229, 0.1)',
@@ -107,7 +116,7 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
       setIsLoading(true);
       const withdrawalData = {
         amount: withdrawalAmount,
-        accountNumber: selectedAccount.accountNumber,
+        accountNumber: selectedAccount?.accountNumber,
         withdrawalToken
       }
       const response = await requestFiatWithdrawal(withdrawalData);
@@ -160,7 +169,12 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
         {user?.accounts?.length === 0 ? 
         <>
           <h5>No account added yet</h5>
-          <Link to="/accounts">Add Abank account now</Link>
+          <button 
+          className='submit-btn'
+          onClick={openAddAccount}
+          >
+            Add Abank account now
+          </button>
         </> : 
         <>
           {!requestedToken ? (
@@ -178,22 +192,33 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
                   required
                 />
               </div>
-              <div className="bank-accounts">
-                <p>Select Account</p>
+              <div className="fw-bank-accounts">
+                <div className='fw-account-select-wrap'>
+                    <p>Select Account</p>
+                  <div 
+                    className='fw-icon-wrap'
+                    onClick={openAddAccount}
+                  >
+                    <span style={{position: "absolute", right: 150, width: "max-content", marginRight: 5}}>
+                      Add another account
+                    </span>
+                    <BsPlusCircleFill />
+                  </div>
+                </div>
 
                 <GeneralDropdown
                   items={userAccounts} 
                   setSelectedItem={setSelectedAccount} 
                   handleOpenList={handleOpenList} 
                   openList={openList}
-                  itemName={selectedAccount?.bankName}
+                  itemName={selectedAccount && selectedAccount?.bankName}
                  />
       
-                {selectedAccount.accountNumber && (
+                {selectedAccount?.accountNumber && (
                   <div className="account-details">
-                    <p><strong>Bank Name:</strong> {selectedAccount.bankName}</p>
-                    <p><strong>Account Name:</strong> {selectedAccount.accountName}</p>
-                    <p><strong>Account Number:</strong> {selectedAccount.accountNumber}</p>
+                    <p><strong>Bank Name:</strong> {selectedAccount?.bankName}</p>
+                    <p><strong>Account Name:</strong> {selectedAccount?.accountName}</p>
+                    <p><strong>Account Number:</strong> {selectedAccount?.accountNumber}</p>
                   </div>
                 )}
               </div>
@@ -235,7 +260,7 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
               <button 
                 className="submit-btn" 
                 onClick={handleSubmit} 
-                disabled={isLoading || !withdrawalToken || !withdrawalAmount || !selectedAccount.accountNumber}
+                disabled={isLoading || !withdrawalToken || !withdrawalAmount || !selectedAccount?.accountNumber}
               >
                 {isLoading ? 'Processing Withdrawal...' : 'Submit Withdrawal'}
               </button>
@@ -244,6 +269,7 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
         </>
         }
       </div>
+      {addingAccount && <AddAccount isOpen={addingAccount} onClose={closeAddAccount}/>}
     </div>
   );
 };
