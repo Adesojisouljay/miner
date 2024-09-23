@@ -183,10 +183,10 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
 
                 <GeneralDropdown
                   items={userAccounts} 
-                  selectedItem={setSelectedAccount} 
+                  setSelectedItem={setSelectedAccount} 
                   handleOpenList={handleOpenList} 
                   openList={openList}
-                  item={selectedAccount}
+                  itemName={selectedAccount?.bankName}
                  />
       
                 {selectedAccount.accountNumber && (

@@ -11,6 +11,11 @@
     border: 1px solid rgba(0, 0, 0, 0.8);
   }
 
+  .gd-select-image{
+    width: 30px;
+    height: 20px;
+  }
+
   .gd-select-title{
     font-size: 20px;
   }
@@ -26,6 +31,7 @@
     height: 400px;
     overflow: scroll;
   }
+  
   .gd-item-list{
     display: flex;
     align-items: center;
