@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { BsPencilFill } from 'react-icons/bs';
+import { BsPencilFill, BsPlusCircleFill, BsTrashFill } from 'react-icons/bs';
 import { PasswordReset } from '../components/modal/PasswordReset';
+import { AddAccount } from '../components/modal/AddAccount';
 import './profile.scss';
 
 export const Profile = () => {
   
     const global = useSelector(state => state.ekzaUser)
     const user = global?.user
-    console.log(user)
 
   const [editMode, setEditMode] = useState(false);
   const [newEmail, setNewEmail] = useState('');
   const [profileImage, setProfileImage] = useState(null);
   const [showTitle, setShowTitle] = useState(false);
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
+  const [openAccountModal, setOpenAccountModal] = useState(false);
+  const [tooltipText, setTooltipText] = useState("")
 
   const [newAccount, setNewAccount] = useState({
     accountNumber: '',
@@ -26,25 +28,6 @@ export const Profile = () => {
   const handleEdit = () => {
     setEditMode(true);
     setNewEmail(user.email);
-  };
-
-  const handleSave = async () => {
-    const updatedUser = { email: newEmail };
-
-    if (profileImage) {
-      const formData = new FormData();
-      formData.append('file', profileImage);
-      formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET);
-
-      try {
-        const uploadResponse = await axios.post(process.env.REACT_APP_CLOUDINARY_URL, formData);
-        updatedUser.profileImage = uploadResponse.data.secure_url;
-      } catch (error) {
-        console.error('Error uploading profile image:', error);
-      }
-    }
-
-    setEditMode(false);
   };
 
   const getKycStatusClass = (status) => {
@@ -63,8 +46,27 @@ export const Profile = () => {
 const openPassword = () => {
     setOpenPasswordModal(true)
 }
+
 const closePassword = () => {
     setOpenPasswordModal(false)
+}
+
+const openAccount = () => {
+  setOpenAccountModal(true)
+}
+
+const closeAccount = () => {
+    setOpenAccountModal(false)
+}
+
+const showTooltip = (type) => {
+  setShowTitle(true)
+  
+  if(type === "password") {
+    setTooltipText("Change Password")
+  } else if(type === "account") {
+    setTooltipText("Add new account")
+  }
 }
 
   return (
@@ -108,61 +110,57 @@ const closePassword = () => {
            <div 
             className='edit-pencil-wrap'
             onClick={openPassword}
-            onMouseEnter={() => setShowTitle(true)}
+            onMouseEnter={() => { 
+              showTooltip("password")
+            }}
             onMouseLeave={() => setShowTitle(false)}
-            onTouchStart={() => setShowTitle(true)}
+            onTouchStart={() => { 
+              showTooltip("password")
+            }}
             onTouchEnd={() => setShowTitle(false)}
            >
-            {showTitle && <span style={{position: "absolute", right: 40, width: "max-content", marginRight: 5}}>
-                Change Password
+            {(showTitle && tooltipText === "Change Password") && <span style={{position: "absolute", right: 40, width: "max-content", marginRight: 5}}>
+                {tooltipText}
             </span>}
             <BsPencilFill />
            </div>
-          </div>
 
-        <h3>Bank Accounts</h3>
-        <ul>
-          {user?.accounts?.map((account, index) => (
-            <li key={index}>
-              {account.accountName} - {account.bankName} ({account.accountNumber})
-            </li>
-          ))}
-        </ul>
+            </div>
+              <div className='detail-item profile-account-wrap'>
+                <div>
+                  <h3>Bank Accounts</h3>
+                  <ul>
+                    {user?.accounts?.map((account, index) => (
+                      <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", widows: "100%"}}>
+                        <li key={index}>
+                          {account.accountName} - {account.bankName} ({account.accountNumber})
+                        </li>
+                        <BsTrashFill className='delete-icon'/>
+                      </div>
+                    ))}
+                  </ul>
+                </div>
+                <div 
+                  className='edit-pencil-wrap'
+                  onClick={openAccount}
+                  onMouseEnter={() => { 
+                    showTooltip("account")
+                  }}
+                  onMouseLeave={() => setShowTitle(false)}
+                  onTouchStart={() => { 
+                    showTooltip("account")
+                  }}
+                  onTouchEnd={() => setShowTitle(false)}
+                >
+                  {(showTitle && tooltipText === "Add new account") && <span style={{position: "absolute", right: 40, width: "max-content", marginRight: 5}}>
+                      {tooltipText}
+                  </span>}
+                  <BsPlusCircleFill />
+                </div>
+              </div>
 
-        {/* {editMode && ( */}
-          <div className="add-account">
-            <h4>Add Bank Account</h4>
-            <input
-              type="text"
-              placeholder="Account Name"
-              value={newAccount.accountName}
-              onChange={(e) => setNewAccount({ ...newAccount, accountName: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Bank Name"
-              value={newAccount.bankName}
-              onChange={(e) => setNewAccount({ ...newAccount, bankName: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Account Number"
-              value={newAccount.accountNumber}
-              onChange={(e) => setNewAccount({ ...newAccount, accountNumber: e.target.value })}
-            />
-          </div>
-        {/* )} */}
       </div>
-
-      {/* {editMode && ( */}
-        <div className="button-group">
-          <button className="save-button" onClick={handleSave}>
-            Save Changes
-          </button>
-          <button className="cancel-button" onClick={() => setEditMode(false)}>
-            Cancel
-          </button>
-        </div>
+        {openAccountModal && <AddAccount isOpen={openAccountModal} onClose={closeAccount}/>}
         {openPasswordModal && <PasswordReset isOpen={openPasswordModal} onClose={closePassword}  />}
     </div>
   );
