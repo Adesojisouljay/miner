@@ -9,13 +9,16 @@ export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
   const [withdrawalToken, setWithdrawalToken] = useState('');
   const [currency, setCurrency] = useState(assets[0]?.currency || '');
   const [message, setMessage] = useState('');
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(1);
+  const [selectedAsset, setSelectedAsset] = useState(assets[0]);
+
+  console.log(currency)
 
   const handleWithdrawal = async (e) => {
     e.preventDefault();
 
     try {
-      const withdrawalData = { to, amount, currency, memo, withdrawalToken };
+      const withdrawalData = { to, amount, currency: selectedAsset.currency, memo, withdrawalToken };
       console.log(withdrawalData)
       const result = await processHiveWithdrawal(withdrawalData);
       console.log(result);
@@ -38,6 +41,11 @@ export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
     }
   }
 
+  const handleAssetChange = (e) => {
+    const asset = assets?.find(asset => asset?.currency === e.target.value);
+    setSelectedAsset(asset);
+  };
+
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
     <div className={`modal-overlay  ${isOpen ? 'open' : ''}`}  onClick={onClose}> </div>
@@ -45,13 +53,14 @@ export const WithdrawalModal = ({ isOpen, onClose, assets }) => {
       <div className="modal">
         <span className="close-modal" onClick={onClose}>X</span>
         <h2>Withdrawal</h2>
+        <img className="deposit-coin-wrap" src={selectedAsset.image} alt="" />
         {message && <p className='warning'>{message}</p>}
         {step === 1 && <div className="input-group">
           <label htmlFor="currency">Currency:</label>
           <select
             id="currency"
-            value={currency}
-            onChange={(e) => setCurrency(e.target.value)}
+            value={selectedAsset.currency}
+            onChange={handleAssetChange}
           >
             {assets.map((asset) => (
               <option key={asset.currency} value={asset.currency}>

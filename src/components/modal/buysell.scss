@@ -1,0 +1,425 @@
+@import '../../mixins.scss';
+.b-s-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .b-s-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .b-s-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 30%;
+    height: max-content;
+    display: flex;
+    border-radius: 12px;    
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    background-color: var(--modal-background-color);
+    @include respond(phone) {
+      width: 95%;
+      // top: calc(60% - 55px);
+
+    }
+  }
+
+  .backmodal{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+  }
+
+
+
+  .buysell-container {
+    width: 100%;
+  .spend-wrap{
+    h3{
+      font-size: 18px;
+      @include respond(phone) {
+        font-size: 16px;
+      }
+    }
+    .fiat-bal-wrap{
+      display: flex;align-items: center;
+      gap: 4px;
+      padding: 3px 8px ;
+      margin-top: 5px;
+      border-radius: 12px;
+      background-color: rgba(26, 39, 54, 0.8);
+      width: fit-content;
+      font-size: 12px;
+      span:nth-child(1){
+        color: rgb(212 212 212);
+      }
+    }
+  }
+    .spend-component {
+      
+      display: flex;
+      margin-top: 5px;
+      padding: 7px 20px;
+      // background-color: rgb(29 35 43);
+      border-radius: 8px;
+      width: 100%;
+      transition: border-color 0.3s ease; /* Smooth transition */
+      border: 2px solid transparent; /* Initial border state */
+      @include respond(phone) {
+        padding: 7px 20px;
+      }
+      &:focus-within {
+        border-color:  rgb(73 131 230); /* Change border to yellow on focus */
+        border-width: 1.5px;
+        // background-color: rgb(73 131 230
+      }
+      input {
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        background-color: inherit;
+        border: none; /* Remove default input border */
+        outline: none;
+        color: #fff;
+        @include respond(phone) {
+          height: 30px;
+        }
+      }
+    }
+    .spend-select-wrap {
+      display: flex;
+      align-items: center;
+  
+      img {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        margin-right: 3px;
+      }
+      span {
+        font-size: 16px;
+        @include respond(phone) {
+          font-size: 14px;
+        }
+      }
+    }
+  
+    .get-wrap {
+      margin-top: 20px;
+      position: relative;
+      h3{
+        font-size: 18px;
+        @include respond(phone) {
+          font-size: 16px;
+        }
+      }
+    }
+    .get-component{
+      display: flex;
+      margin-top: 5px;
+      padding: 7px 20px;
+      // background-color: yellow;
+      background-color: rgb(29 35 43);
+      border-radius: 8px;
+      width: 100%;
+      
+      input {
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        background-color: inherit;
+        border: none; /* Remove default input border */
+        outline: none;
+        color: #fff;
+        @include respond(phone) {
+          height: 30px;
+        }
+      }
+    }
+    .get-select-wrap{
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+  
+      img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 3px;
+      }
+      span {
+        font-size: 16px;
+        @include respond(phone) {
+          font-size: 14px;
+        }
+      }
+    }
+    .buy-sell-btn-wrap{
+      margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .buy-sell-btn{
+    background: linear-gradient(127deg, hsla(0, 0%, 100%, .16) 17.35%, hsla(0, 0%, 85%, .04) 76.2%);
+    color: white;
+    padding: 7px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    }
+    }
+  
+    .fees-review{
+      margin-top: 8px;
+      padding: 10px;
+      border: solid 1px grey;
+      border-radius: 8px;
+      p{
+        font-size: 14px;
+        margin-bottom: 3px;
+      }
+    }
+  
+  .coin-list-wrap{
+    // display: none;
+    position: absolute;
+    padding: 8px;
+    background-color: rgb(29, 35, 43);
+    width: 100%;
+    margin-top: 5px;
+    border-radius: 7px;
+    max-height: 170px;
+    overflow-y: auto;
+    padding-bottom: 10px;
+  }
+  .coin-list{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+    img{
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+    span{
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+
+  .asset-picker{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    width: 100%;
+    overflow: scroll;
+    padding: 10px;
+
+    &:hover{
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 5px;
+    }
+  }
+  
+  .openlist{
+    display: block;
+  }
+  .openclose{
+    display: none;
+  }
+
+  .rate-wrap{
+    text-align: center;
+    font-size: 12px;
+    padding-top: 10px;
+  }
+  .crypto-bal-wrap{
+    display: flex;align-items: center;
+    gap: 4px;
+    padding: 3px 8px ;
+    margin-top: 5px;
+    border-radius: 12px;
+    background-color: rgba(26, 39, 54, 0.8);
+    width: fit-content;
+    font-size: 12px;
+    span:nth-child(1){
+      color: rgb(212 212 212);
+    }
+  }
+  
+  
+  // *******************step====2******************
+  .review-box-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0px;
+    margin-top: 30px;
+    .box-left{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 14px;
+      border-radius: 12px;
+      border: 2px solid rgb(74, 96, 121);
+      background-color: rgb(29 35 43 );
+      border-color: rgb(42 51 62);
+      width: 250px;
+      @include respond(phone) {
+        align-items: flex-start;
+      }
+      span{
+        font-size: 12px;
+        margin-bottom: 4px;
+        @include respond(phone) {
+          margin-bottom: 7px;
+        }
+      }
+      .review-coin-wrap{
+        display: flex;
+        align-items: center;
+        margin-bottom: 4px;
+        gap: 6px;
+        @include respond(phone) {
+          margin-bottom: 7px;
+        }
+        img{
+          width: 25px;
+          height: 25px;
+          border-radius: 50%;
+        }
+        span{
+          font-size: 24px;
+          margin: 0px;
+          @include respond(phone) {
+            font-size: 18px;
+          }
+        }
+      }
+      
+    }
+    .arrow-right-wrap{
+      margin: 0px 12px;
+      position: relative;
+      @include respond(phone) {
+        margin: 0px 30px;
+      }
+      svg{
+        @include respond(phone) {
+          width: 1px;
+          // margin: 0px 12px;
+        }
+      }
+      .exchange-iconwrap{
+        position: absolute;
+        top: 50%;  /* Position in the middle vertically */
+        left: 50%; /* Position in the middle horizontally */
+        transform: translate(-50%, -50%);
+        width:55px;
+        height: 55px;
+        border: 1px solid rgb(74, 96, 121);
+        // border: 1px solid #fff;
+        border-radius: 50%;
+        background-color: var(--modal-background-color) ;
+        display: flex;
+        justify-content: center;  /* Center horizontally */
+        align-items: center;      /* Center vertically */
+        @include respond(phone) {
+          // position: relative;
+          width:35px;
+          height: 35px;
+          // margin: 0px 10px;
+        }
+        .exc-icon{
+          @include respond(phone) {
+            width:35px;
+
+          }
+        }
+      }
+  
+    }
+    .rate-wrap{
+      margin: 8px 0px;
+      font-size: 16px;
+  
+   }
+   
+  }
+  .fees-review{
+    margin-top: 8px;
+    padding: 10px;
+    border: solid 1px grey;
+    border-radius: 8px;
+    p{
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+    .fees-rap{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      span{
+        font-size: 14px;
+        @include respond(phone) {
+          font-size: 12px;
+        }
+      }
+  
+    }
+  }
+  .buy-btn-wrap{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0px;
+    button{
+      padding: 10px 40px;
+      border-radius: 10px;
+      margin: 0 auto;
+      color: #fff;
+      font-size: 18px;
+      background-color: rgb(23, 57, 102);
+      cursor: pointer;
+      @include respond(phone) {
+        font-size: 14px;
+      }
+      // background: linear-gradient(127deg, hsla(0, 0%, 100%, .16) 17.35%, hsla(0, 0%, 85%, .04) 76.2%);
+    }
+  }
+  }
+
+  .succe {
+    text-align: center;
+    padding: 30px 20px;
+    // background-color: #eaf7f0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
