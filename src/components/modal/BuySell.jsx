@@ -258,7 +258,6 @@ export const  BuySell = ({ isOpen,onClose,assets, transactionType, setTransactio
               <span>{currency.currency} balance:</span> 
               <span>{parseFloat(currency.balance).toFixed(3)}</span>
             </div>
-            <div className={`coin-list-wrap ${openList ? "openlist": "openclose"}`}>
           
             <Dropdown 
               user={user} 
@@ -267,7 +266,6 @@ export const  BuySell = ({ isOpen,onClose,assets, transactionType, setTransactio
               openList={openList}
             />
 
-          </div>
           </div>
 
           {transactionType === 'buy' && <div className="fees-review">

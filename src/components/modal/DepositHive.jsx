@@ -45,7 +45,6 @@ export const DepositHiveModal = ({ isOpen, onClose, assets, user }) => {
     setOpenList(!openList);
   };
 
-
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
     <div className={`modal-overlay  ${isOpen ? 'open' : ''}`} onClick={onClose}> </div>
@@ -59,12 +58,14 @@ export const DepositHiveModal = ({ isOpen, onClose, assets, user }) => {
               <span className='d-picker-currency'>{selectedAsset.currency}</span>
               <RiArrowDownSFill  size={24}/>
             </div>
+
             <Dropdown 
               user={user}
               setCurrency={setSelectedAsset} 
               handleOpencoinList={handleOpencoinList} 
               openList={openList}
             />
+
           </div>
         </div>
         <div className="deposit-address">
