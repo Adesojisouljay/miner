@@ -173,7 +173,7 @@ export const Dashboard = () => {
     <div className="dashboard-container" onClick={actionToggleClose}>
       <div className="dashboard-content">
       <div className="greetings-container">
-        <span className="welcome-greetings">Welcome to Ekzatrade😊! Where you Experience boundless crypto💰 transactions. Ekzatrade gives you the power to own you own crypto bank🏦</span>
+        {/* <span className="welcome-greetings">Welcome to Ekzatrade😊! Where you Experience boundless crypto💰 transactions. Ekzatrade gives you the power to own you own crypto bank🏦</span> */}
       </div>
         <div className={`dashboard-content-wrap `}>
           <div className="dashboard-main border-transparent">
