@@ -35,10 +35,10 @@ export const CryptoNews = () => {
             <div className="crypto-news-content">
               <h3 className="crypto-news-title">
                 <Link to={`/crypto-news/${item._id}`}>
-                  {item.title}
+                  {item.title.slice(0,20)}...
                 </Link>
               </h3>
-              <p className="crypto-news-description">{item.description}</p>
+              <p className="crypto-news-description">{item.description.slice(0,50)}...</p>
               <p className="crypto-news-date">{new Date(item.createdAt).toLocaleDateString()}</p>
             </div>
           </div>
