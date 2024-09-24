@@ -190,6 +190,8 @@ const idUpload = (e) => {
               />
               <button
                 onClick={uploadProfilePicture}
+                disabled={!userProfileImage || loading}
+                style={{cursor: (!userProfileImage || loading) && "not-allowed"}}
               >
                 {loading ? "Uploading Image..." : <>Upload Image <BsCloudUploadFill/></>}
               </button>
