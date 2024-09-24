@@ -71,12 +71,14 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
                 <span className='w-picker-currency'>{selectedAsset.currency}</span>
                 <RiArrowDownSFill  size={24}/>
               </div>
+
               <Dropdown 
                 user={user}
                 setCurrency={setSelectedAsset} 
                 handleOpencoinList={handleOpencoinList} 
                 openList={openList}
               />
+              
             </div>
           </div>
 

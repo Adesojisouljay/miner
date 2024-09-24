@@ -10,8 +10,6 @@ export const Dropdown = (props) => {
         asset.symbol?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    console.log(user)
-
   return (
     <>
        {openList && 
@@ -22,7 +20,10 @@ export const Dropdown = (props) => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
          />}
-    <div className={`coin-list-wrap ${openList ? "openlist": "openclose"}`}>
+        <div 
+            className={`coin-list-wrap ${openList ? "openlist": "openclose"}`}
+            style={{height: filteredAssets?.length <= 6 && "max-content"}}
+        >
         {filteredAssets?.map((asset)=> (<div className={`coin-list  `} >
             <div 
             className="asset-picker"
