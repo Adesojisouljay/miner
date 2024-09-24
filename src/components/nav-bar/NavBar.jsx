@@ -71,7 +71,7 @@ export const NavBar = () => {
               </div>
             </div>
           ) : (
-            <Link to="/login"><li className="login-btn">Login</li></Link>
+            <Link to="/login"><span className="login-btn">Login</span></Link>
           )}
         </div>        
       </div>
