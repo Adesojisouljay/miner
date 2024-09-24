@@ -441,3 +441,22 @@ export const getCryptoNewsById = async (id) => {
     throw error.response?.data || { message: 'An error occurred while fetching the news item.' };
   }
 };
+
+export const updateProfile = async (dataToUpdate) => {
+  try {
+    const response = await api.put(
+      '/auth/profile',
+        dataToUpdate,
+      {
+        headers: {
+          Authorization: authToken,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Failed to add asset:', error);
+    throw error.response?.data || { message: 'Error adding asset' };
+  }
+};
