@@ -27,3 +27,5 @@ export  const protectedRoutesArray = [
       image: Usa
     }
   ]
+
+  export const userAvatar = "https://static.vecteezy.com/system/resources/thumbnails/000/439/863/small/Basic_Ui__28186_29.jpg"

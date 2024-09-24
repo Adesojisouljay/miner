@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { BsPencilFill, BsPlusCircleFill, BsTrashFill } from 'react-icons/bs';
+import { BsPencilFill, BsPlusCircleFill, BsTrashFill, BsCloudUploadFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { PasswordReset } from '../components/modal/PasswordReset';
 import { AddAccount } from '../components/modal/AddAccount';
 import { ConfirmModal } from '../components/modal/ConfirmModal';
-import { deleteBankAccount } from '../api/ekzat';
+import { deleteBankAccount, updateProfile } from '../api/ekzat';
 import { getUserProfile } from '../api/profile';
+import { Loader } from '../components/loader/Loader';
 import './profile.scss';
+import { userAvatar } from '../vairables/protectedRoutes';
 
 export const Profile = () => {
   
@@ -17,7 +20,7 @@ export const Profile = () => {
 
   const [editMode, setEditMode] = useState(false);
   const [newEmail, setNewEmail] = useState('');
-  const [profileImage, setProfileImage] = useState(null);
+  const [userProfileImage, setUserProfileImage] = useState(null);
   const [showTitle, setShowTitle] = useState(false);
   const [openPasswordModal, setOpenPasswordModal] = useState(false);
   const [openAccountModal, setOpenAccountModal] = useState(false);
@@ -59,9 +62,11 @@ const openAccount = () => {
 const closeAccount = () => {
     setOpenAccountModal(false)
 }
+
 const closeDeleteAccount = () => {
   setOpenDeleteAcc(false)
 }
+
 const openDeleteAccount = () => {
   setOpenDeleteAcc(true)
 }
@@ -80,17 +85,19 @@ const deleteAcc = async ()=> {
   setLoading(true)
   try {
     const data = await deleteBankAccount(accountId);
-    toast.success("Account deleted successfully.", {
-      style: {
-        backgroundColor: 'rgba(229, 229, 229, 0.1)',
-        color: '#fff',
-        fontSize: '16px',
-        marginTop: "60px"
-      },
-    });
-    getUserProfile(dispatch)
-    setLoading(false)
-    closeDeleteAccount();
+    if(data.success) {
+      toast.success("Account deleted successfully.", {
+        style: {
+          backgroundColor: 'rgba(229, 229, 229, 0.1)',
+          color: '#fff',
+          fontSize: '16px',
+          marginTop: "60px"
+        },
+      });
+      getUserProfile(dispatch)
+      setLoading(false)
+      closeDeleteAccount();
+    }
   } catch (error) {
     toast.error("An error occured.", {
       style: {
@@ -105,11 +112,52 @@ const deleteAcc = async ()=> {
   }
 }
 
+const idUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setUserProfileImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  const uploadProfilePicture = async () => {
+    setLoading(true)
+    try {
+      const profileFormData = new FormData();
+      profileFormData.append('file', userProfileImage);
+      profileFormData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET);
+      
+      const response2 = await axios.post(process.env.REACT_APP_CLOUDINARY_URL, profileFormData);
+      const profileImage = response2.data.secure_url;
+      const dataToUpdate = { profileImage };
+      const response = await updateProfile(dataToUpdate)
+      if(response.success) {
+        toast.success("Profile image updated successfully",{
+          style: {
+            backgroundColor: 'rgba(229, 229, 229, 0.1)',
+            color: '#fff',
+            fontSize: '16px',
+            marginTop: "60px"
+          },
+        });
+        getUserProfile(dispatch)
+        setLoading(false)
+        setUserProfileImage(null)
+      }
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="profile-container">
       <div className="profile-header">
         <img
-          src={user.profileImage || 'https://static.vecteezy.com/system/resources/thumbnails/000/439/863/small/Basic_Ui__28186_29.jpg'}
+          src={user.profileImage || userAvatar}
           alt="Profile"
           className="profile-avatar"
         />
@@ -119,9 +167,9 @@ const deleteAcc = async ()=> {
         <p className={`kyc-status`}>
             KYC Status: <span className={`kyc-status ${getKycStatusClass(user?.kyc?.kycStatus)}`}>{user?.kyc?.kycStatus}</span>
         </p>
-        <button className="edit-button" onClick={handleEdit}>
-          Edit Profile
-        </button>
+        <h2 className="edit-title" onClick={handleEdit}>
+          Customize Your Profile
+        </h2>
       </div>
 
       <div className="profile-details">
@@ -134,73 +182,113 @@ const deleteAcc = async ()=> {
         </div>
           <div className="detail-item">
             <label htmlFor="profileImage">Profile Image:</label>
-            <input
-              type="file"
-              id="profileImage"
-              onChange={(e) => setProfileImage(e.target.files[0])}
-            />
+            <div className="image-select-input">
+              <input
+                type="file"
+                id="profileImage"
+                onChange={idUpload}
+              />
+              <button
+                onClick={uploadProfilePicture}
+              >
+                {loading ? "Uploading Image..." : <>Upload Image <BsCloudUploadFill/></>}
+              </button>
+            </div>
           </div>
         
-          <div className="detail-item profile-password-reset">
-           <span>Change password</span>
-           <div 
-            className='edit-pencil-wrap'
-            onClick={openPassword}
-            onMouseEnter={() => { 
-              showTooltip("password")
-            }}
-            onMouseLeave={() => setShowTitle(false)}
-            onTouchStart={() => { 
-              showTooltip("password")
-            }}
-            onTouchEnd={() => setShowTitle(false)}
-           >
-            {(showTitle && tooltipText === "Change Password") && <span style={{position: "absolute", right: 40, width: "max-content", marginRight: 5}}>
-                {tooltipText}
-            </span>}
-            <BsPencilFill />
-           </div>
+            <div className="detail-item profile-password-reset">
+            <span>Change password</span>
+            <div 
+              className='edit-pencil-wrap'
+              onClick={openPassword}
+              onMouseEnter={() => { 
+                showTooltip("password")
+              }}
+              onMouseLeave={() => setShowTitle(false)}
+              onTouchStart={() => { 
+                showTooltip("password")
+              }}
+              onTouchEnd={() => setShowTitle(false)}
+            >
+              {(showTitle && tooltipText === "Change Password") && <span style={{position: "absolute", right: 40, width: "max-content", marginRight: 5}}>
+                  {tooltipText}
+              </span>}
+              <BsPencilFill />
+            </div>
 
             </div>
-              <div className='detail-item profile-account-wrap'>
-                <div>
-                  <h3>Bank Accounts</h3>
-                  <ul>
-                    {user?.accounts?.map((account, index) => (
-                      <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", widows: "100%"}}>
-                        <li key={index}>
-                          {account.accountName} - {account.bankName} ({account.accountNumber})
-                        </li>
-                        <BsTrashFill 
-                          className='delete-icon'  
-                          onClick={()=>{
-                            openDeleteAccount()
-                            setAccountId(account.id)
-                        }}/>
-                      </div>
-                    ))}
-                  </ul>
-                </div>
-                <div 
-                  className='edit-pencil-wrap'
-                  onClick={openAccount}
-                  onMouseEnter={() => { 
-                    showTooltip("account")
-                  }}
-                  onMouseLeave={() => setShowTitle(false)}
-                  onTouchStart={() => { 
-                    showTooltip("account")
-                  }}
-                  onTouchEnd={() => setShowTitle(false)}
-                >
-                  {(showTitle && tooltipText === "Add new account") && <span style={{position: "absolute", right: 40, width: "max-content", marginRight: 5}}>
-                      {tooltipText}
-                  </span>}
-                  <BsPlusCircleFill />
-                </div>
-              </div>
 
-      </div>
+            <div className='detail-item profile-account-wrap'>
+              <div>
+                <h3>Bank Accounts</h3>
+                <ul>
+                  {user?.accounts?.map((account, index) => (
+                    <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", widows: "100%"}}>
+                      <li key={index}>
+                        {account.accountName} - {account.bankName} ({account.accountNumber})
+                      </li>
+                      <BsTrashFill 
+                        className='delete-icon'  
+                        onClick={()=>{
+                          openDeleteAccount()
+                          setAccountId(account.id)
+                      }}/>
+                    </div>
+                  ))}
+                </ul>
+              </div>
+              <div 
+                className='edit-pencil-wrap'
+                onClick={openAccount}
+                onMouseEnter={() => { 
+                  showTooltip("account")
+                }}
+                onMouseLeave={() => setShowTitle(false)}
+                onTouchStart={() => { 
+                  showTooltip("account")
+                }}
+                onTouchEnd={() => setShowTitle(false)}
+              >
+                {(showTitle && tooltipText === "Add new account") && <span style={{position: "absolute", right: 40, width: "max-content", marginRight: 5}}>
+                    {tooltipText}
+                </span>}
+                <BsPlusCircleFill />
+              </div>
+            </div>
+
+            <div className="detail-item">
+              <label htmlFor="currency">Currency:</label>
+              <div className="image-select-input">
+                <select>
+                  <option value="NGN">NGN</option>
+                  <option value="USD">USD</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="detail-item">
+              <label htmlFor="currency">Theme:</label>
+              <div className="image-select-input">
+                <select>
+                  <option value="Day">Day</option>
+                  <option value="Night">Night</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="detail-item">
+              <label htmlFor="currency">Language:</label>
+              <div className="image-select-input">
+                <select>
+                  <option value="English">English</option>
+                  <option value="Hausa">Hausa</option>
+                  <option value="Igbo">Igbo</option>
+                  <option value="Yoruba">Yoruba</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
         {openAccountModal && 
         <AddAccount 
           isOpen={openAccountModal} 
