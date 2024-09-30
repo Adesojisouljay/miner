@@ -406,11 +406,35 @@ export const addAsset = async (coinId) => {
   }
 };
 
+/////not needed
+export const removeAsset = async (coinId) => {
+  console.log(coinId)
+  try {
+    const response = await api.post(
+      '/auth/remove-asset',
+      {
+        coinId
+      },
+      {
+        headers: {
+          Authorization: authToken,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Failed to add asset:', error);
+    throw error.response?.data || { message: 'Error adding asset' };
+  }
+};
+
 ///not needed again i have added all in add asset func
 export const generateAddress = async (coinId) => {
+  console.log(coinId)
   try {
     const response = await api.put(
-      '/api/auth/generate-address',
+      '/auth/generate-address',
       {
         coinId
       },
@@ -422,6 +446,7 @@ export const generateAddress = async (coinId) => {
     );
 
     console.log('Wallet address generated successfully:', response.data);
+    return response.data;
   } catch (error) {
     console.error('Failed to generate wallet address:', error.response?.data?.message || error.message);
   }

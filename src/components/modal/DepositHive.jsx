@@ -1,16 +1,19 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { Dropdown } from '../dropdown/Dropdown';
+import { getUserProfile } from '../../api/profile';
+import { generateAddress } from '../../api/ekzat';
 import './deposit-modal.scss';
 
 export const DepositHiveModal = ({ isOpen, onClose, assets, user }) => {
 
-  // const user = useSelector(state => state.ekzaUser.user);
+  const dispatch = useDispatch()
 
   const [selectedAsset, setSelectedAsset] = useState(assets[0]);
-  const [openList, setOpenList] = useState(false)
+  const [openList, setOpenList] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText(selectedAsset?.depositAddress);
@@ -36,14 +39,32 @@ export const DepositHiveModal = ({ isOpen, onClose, assets, user }) => {
     });
   };
 
-  const handleAssetChange = (e) => {
-    const asset = assets?.find(asset => asset?.currency === e.target.value);
-    setSelectedAsset(asset);
-  };
-
   const handleOpencoinList = () => {
     setOpenList(!openList);
   };
+
+  const createAddress = async (symbol) => {
+    setLoading(true)
+    try {
+      const respone = await generateAddress(symbol);
+      if (respone.success) {
+        toast.success("Account created successfully",{
+          style: {
+            backgroundColor: 'rgba(229, 229, 229, 0.1)',
+            color: '#fff',
+            fontSize: '16px',
+            marginTop: "60px"
+          },
+        });
+
+        getUserProfile(dispatch);
+      }
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }
 
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
@@ -54,8 +75,8 @@ export const DepositHiveModal = ({ isOpen, onClose, assets, user }) => {
         <div className='d-main'>
           <div className='d-coin-select-wrapper'>
             <div className="d-currency-select-wrap" onClick={handleOpencoinList}>
-              <img className="d-coin-wrap" src={selectedAsset.image} alt="" />
-              <span className='d-picker-currency'>{selectedAsset.currency}</span>
+              <img className="d-coin-wrap" src={selectedAsset?.image} alt="" />
+              <span className='d-picker-currency'>{selectedAsset?.currency}</span>
               <RiArrowDownSFill  size={24}/>
             </div>
 
@@ -68,17 +89,29 @@ export const DepositHiveModal = ({ isOpen, onClose, assets, user }) => {
 
           </div>
         </div>
+
+        {selectedAsset?.depositAddress &&
         <div className="deposit-address">
-          {/* <span>Deposit Address:</span> */}
+          <span>Deposit Address:</span>
           <span>{selectedAsset?.depositAddress}</span>
           {<button className="generate-address-btn" onClick={handleCopyAddress}>Copy Address</button>}
-        </div>
-        <div className="deposit-address">
+        </div>}
+
+         {!selectedAsset?.depositAddress && <div className="deposit-address">
+          {<button 
+            className="generate-address-btn" 
+            onClick={() => createAddress(selectedAsset?.coinId)}
+          >
+            {loading ? `Creating address...` : `Create ${selectedAsset?.coinId} address`}
+          </button>}
+        </div>}
+
+        {selectedAsset?.memo && <div className="deposit-address">
           <span>Deposit Memo</span>
           <span className='warning'>(please make sure you copy your memo correctly)</span>
           <span>{selectedAsset?.memo}</span>
           {<button className="generate-address-btn" onClick={handleCopyMemo}>Copy Memo</button>}
-        </div>
+        </div>}
       </div>
     </div>
   );
