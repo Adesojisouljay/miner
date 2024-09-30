@@ -63,7 +63,7 @@ export const NavBar = () => {
                 <span>{user.username}</span>
                 <img 
                   className='user-avatar'
-                  src={user.profileImage || userAvatar}
+                  src={user?.profileImage || userAvatar}
                   onClick={handleRightNav}
                 />
               </div>}

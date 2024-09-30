@@ -157,7 +157,7 @@ const idUpload = (e) => {
     <div className="profile-container">
       <div className="profile-header">
         <img
-          src={user.profileImage || userAvatar}
+          src={user?.profileImage || userAvatar}
           alt="Profile"
           className="profile-avatar"
         />

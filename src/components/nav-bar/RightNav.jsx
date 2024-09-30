@@ -35,7 +35,7 @@ function RightNav({ rightNav, handleRightNav, handleLogout }) {
         </div>
         <div className="rightnav-profile">
           <img className='user-avatar'
-            src={user.profileImage || userAvatar}
+            src={user?.profileImage || userAvatar}
             alt="" 
           />
           <div className="user-info-section">
