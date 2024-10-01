@@ -225,8 +225,8 @@ const idUpload = (e) => {
                 <h3>Bank Accounts</h3>
                 <ul>
                   {user?.accounts?.map((account, index) => (
-                    <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", widows: "100%"}}>
-                      <li key={index}>
+                    <div style={{display: "flex", alignItems: "center", justifyContent: "space-between", widows: "100%"}} key={index}>
+                      <li>
                         {account.accountName} - {account.bankName} ({account.accountNumber})
                       </li>
                       <BsTrashFill 
