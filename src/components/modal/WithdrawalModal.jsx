@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { processHiveWithdrawal, requestToken } from '../../api/ekzat';
+import { processHiveWithdrawal, requestToken, processCryptoWithdrawal } from '../../api/ekzat';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { Dropdown } from '../dropdown/Dropdown';
 import './withdraw-modal.scss';
@@ -16,15 +16,38 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
   const [selectedAsset, setSelectedAsset] = useState(assets[0]);
   const [openList, setOpenList] = useState(true)
 
-  console.log(currency)
+  console.log(assets)
 
-  const handleWithdrawal = async (e) => {
-    e.preventDefault();
+  const handleGeneralWithdrawal = async (e) => {
+    if(selectedAsset.currency === "hive" || selectedAsset.currency === "hive_dollar") {
+      await handleHiveWithdrawal();
+    } else {
+      await handleCryptoWithdrawal();
+    }
+  }
+
+  const handleHiveWithdrawal = async () => {
+    // e.preventDefault();
 
     try {
       const withdrawalData = { to, amount, currency: selectedAsset.currency, memo, withdrawalToken };
       console.log(withdrawalData)
       const result = await processHiveWithdrawal(withdrawalData);
+      console.log(result);
+      setMessage(result.message);
+      setStep(3)
+    } catch (error) {
+      console.log(error);
+      setMessage(error.message);
+    }
+  };
+
+  const handleCryptoWithdrawal = async () => {
+    // e.preventDefault();
+    try {
+      const withdrawalData = { to, amount, currency: selectedAsset.currency };
+      console.log(withdrawalData)
+      const result = await processCryptoWithdrawal(withdrawalData);
       console.log(result);
       setMessage(result.message);
       setStep(3)
@@ -121,7 +144,7 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
             onChange={(e) => setWithdrawalToken(e.target.value)}
             placeholder="Enter withdrawal token"
           />
-          <button className="withdraw-btn" onClick={handleWithdrawal}>Withdraw</button>
+          <button className="withdraw-btn" onClick={handleGeneralWithdrawal}>Withdraw</button>
         </div>}
         {step === 3 && <div className="">
          <h4>Withdrawal processed successfully</h4>

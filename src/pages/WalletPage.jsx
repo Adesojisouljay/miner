@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchCryptoData, addAsset } from '../api/ekzat';
+import { fetchCryptoData, addAsset, removeAsset } from '../api/ekzat';
 import { useSelector, useDispatch } from 'react-redux';
 import './wallet-page.scss';
 import { FaGift, FaArrowUp, FaArrowDown, FaExchangeAlt, FaPlus, FaMinus } from 'react-icons/fa';
@@ -17,6 +17,7 @@ export const WalletPage = () => {
   const user = useSelector((state) => state.ekzaUser.user);
   const selectedCurrency = useSelector((state) => state.currency.selectedCurrency);
   const dispatch = useDispatch()
+  console.log(user)
 
   useEffect(() => {
     getCryptoData();
@@ -87,8 +88,10 @@ export const WalletPage = () => {
   };
   const removeTokenFromWallet = async (coinId) => {
     try {
-      const response = "Asset removed successfully"
-        toast.success(response,{
+      const response = await removeAsset(coinId)
+      console.log(coinId)
+      console.log(response)
+        toast.success("remove...",{
           style: {
             backgroundColor: 'rgba(229, 229, 229, 0.1)',
             color: '#fff',
@@ -96,17 +99,8 @@ export const WalletPage = () => {
             marginTop: "60px"
           },
         });
-        // getUserProfile(dispatch)
-      // } else {
-      //   toast.error(response.message + "try again",{
-      //     style: {
-      //       backgroundColor: 'rgba(229, 229, 229, 0.1)',
-      //       color: '#fff',
-      //       fontSize: '16px',
-      //       marginTop: "60px"
-      //     },
-        // });
-      // }
+        getUserProfile(dispatch)
+     
     } catch (error) {
       // console.log(error)
       toast.error( "Error adding asset",{
@@ -156,8 +150,8 @@ export const WalletPage = () => {
                   {selectedCurrency === 'USD' ? '$' : '₦'}
                 </span>
                 {selectedCurrency === 'USD' 
-                  ? user?.totalUsdValue?.toFixed(3)
-                  : user?.totalNairaValue?.toFixed(3)}
+                  ? user?.totalUsdValue?.toFixed(4)
+                  : user?.totalNairaValue?.toFixed(4)}
               </h2>
             </div>
 
@@ -178,7 +172,7 @@ export const WalletPage = () => {
                       <img src={u.image} alt={u.currency} />
                       <div>
                         <h5>{u.symbol?.toUpperCase()}</h5>
-                        <p>{u.balance?.toFixed(3)}</p>
+                        <p>{u.balance?.toFixed(4)}</p>
                       </div>
                     </div>
                     <div className="wallet-page-reward-value wallet-balance">
@@ -219,6 +213,9 @@ export const WalletPage = () => {
                     </div>
                     <div className="wallet-page-reward-value wallet-actions">
                       Buy/Sell<FaExchangeAlt title="Sell" />
+                    </div>
+                    <div onClick={() => removeTokenFromWallet(u.coinId)} className="wallet-page-reward-value wallet-actions">
+                      Remove<FaExchangeAlt title="Sell" />
                     </div>
                   </div>
                 </div>

@@ -98,12 +98,14 @@ export const DepositHiveModal = ({ isOpen, onClose, assets, user }) => {
         </div>}
 
          {!selectedAsset?.depositAddress && <div className="deposit-address">
-          {<button 
+          <h3>Coming soon</h3>
+          <span>No address/network available for this asset yet</span>
+          {/* {<button 
             className="generate-address-btn" 
             onClick={() => createAddress(selectedAsset?.coinId)}
           >
             {loading ? `Creating address...` : `Create ${selectedAsset?.coinId} address`}
-          </button>}
+          </button>} */}
         </div>}
 
         {selectedAsset?.memo && <div className="deposit-address">

@@ -485,3 +485,17 @@ export const updateProfile = async (dataToUpdate) => {
     throw error.response?.data || { message: 'Error adding asset' };
   }
 };
+
+/////crypto
+export const processCryptoWithdrawal = async (withdrawalData) => {
+  try {
+    const response = await api.post('blockchain/send', withdrawalData, {
+      headers: {
+        Authorization: authToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
