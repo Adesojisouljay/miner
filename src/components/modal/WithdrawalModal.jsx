@@ -14,7 +14,7 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
   const [step, setStep] = useState(1);
 
   const [selectedAsset, setSelectedAsset] = useState(assets[0]);
-  const [openList, setOpenList] = useState(true)
+  const [openList, setOpenList] = useState(false)
 
   console.log(assets)
 
@@ -27,7 +27,6 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
   }
 
   const handleHiveWithdrawal = async () => {
-    // e.preventDefault();
 
     try {
       const withdrawalData = { to, amount, currency: selectedAsset.currency, memo, withdrawalToken };
@@ -43,7 +42,6 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
   };
 
   const handleCryptoWithdrawal = async () => {
-    // e.preventDefault();
     try {
       const withdrawalData = { to, amount, currency: selectedAsset.currency };
       console.log(withdrawalData)
@@ -105,35 +103,43 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
             </div>
           </div>
 
-          <label htmlFor="recipient-account">Recipient Account:</label>
-          <input
-            className='w-input'
-            type="text"
-            placeholder="Recipient Account"
-            value={to}
-            onChange={(e) => setTo(e.target.value)}
-            id="recipient-account"
-          />
-          <label htmlFor="withdraw-amount">Amount:</label>
-          <input
-            className='w-input'
-            type="number"
-            id="withdraw-amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder="Enter amount"
-          />
-          <label htmlFor="memo">Memo:</label>
-          <input
-            className='w-input'
-            type="text"
-            id="memo"
-            value={memo}
-            onChange={(e) => setMemo(e.target.value)}
-            placeholder="Enter memo"
-          />
-          <button className="withdraw-btn" onClick={getToken}>Withdraw</button>
+          {selectedAsset.depositAddress ? <>
+            <label htmlFor="recipient-account">Recipient Address:</label>
+            <input
+              className='w-input'
+              type="text"
+              placeholder="Recipient Address"
+              value={to}
+              onChange={(e) => setTo(e.target.value)}
+              id="recipient-account"
+            />
+            <label htmlFor="withdraw-amount">Amount:</label>
+            <input
+              className='w-input'
+              type="number"
+              id="withdraw-amount"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="Enter amount"
+            />
+            {selectedAsset?.memo && <>
+              <label htmlFor="memo">Memo:</label>
+              <input
+                className='w-input'
+                type="text"
+                id="memo"
+                value={memo}
+                onChange={(e) => setMemo(e.target.value)}
+                placeholder="Enter memo"
+              />
+            </>}
+            <button className="withdraw-btn" onClick={getToken}>Withdraw</button>
+            </> : <div className="withdrawal-info-wrapper">
+            <h3 className='warning'>{selectedAsset?.currency}({selectedAsset?.symbol?.toUpperCase()}) withdrawal is coming soon...</h3>
+            <span className='withdrawal-address-info-el'>No address/network available for this asset yet</span>
+          </div>}
         </div>}
+
         {step === 2 && <div className="w-input-group">
           <label htmlFor="withdrawalToken">Withdrawal token</label>
           <input

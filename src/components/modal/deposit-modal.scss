@@ -88,9 +88,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     margin-bottom: 10px;
   }
+
+  .deposit-address-info-el {
+    background-color: rgb(29, 35, 43);
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+  }
+
   .address-wrap{
     display: flex;
     gap: 3px;
