@@ -6,6 +6,7 @@ import { Dropdown } from '../dropdown/Dropdown';
 import { getUserProfile } from '../../api/profile';
 import { generateAddress } from '../../api/ekzat';
 import './deposit-modal.scss';
+import { FaCopy } from 'react-icons/fa';
 
 export const DepositHiveModal = ({ isOpen, onClose, assets, user }) => {
 
@@ -93,26 +94,28 @@ export const DepositHiveModal = ({ isOpen, onClose, assets, user }) => {
         {selectedAsset?.depositAddress &&
         <div className="deposit-address">
           <span>Deposit Address:</span>
-          <span>{selectedAsset?.depositAddress}</span>
-          {<button className="generate-address-btn" onClick={handleCopyAddress}>Copy Address</button>}
+            <span 
+            className='deposit-address-info-el'
+            onClick={handleCopyAddress}
+            >
+              {selectedAsset?.depositAddress}  <FaCopy size={20}/>
+          </span>
         </div>}
 
          {!selectedAsset?.depositAddress && <div className="deposit-address">
-          <h3>Coming soon</h3>
-          <span>No address/network available for this asset yet</span>
-          {/* {<button 
-            className="generate-address-btn" 
-            onClick={() => createAddress(selectedAsset?.coinId)}
-          >
-            {loading ? `Creating address...` : `Create ${selectedAsset?.coinId} address`}
-          </button>} */}
+          <h3 className='warning'>{selectedAsset?.currency}({selectedAsset?.symbol?.toUpperCase()})  deposit is coming soon...</h3>
+          <span className='deposit-address-info-el'>No address/network available for this asset yet</span>
         </div>}
 
         {selectedAsset?.memo && <div className="deposit-address">
           <span>Deposit Memo</span>
           <span className='warning'>(please make sure you copy your memo correctly)</span>
-          <span>{selectedAsset?.memo}</span>
-          {<button className="generate-address-btn" onClick={handleCopyMemo}>Copy Memo</button>}
+          <span 
+            className='deposit-address-info-el'
+            onClick={handleCopyMemo}
+          >
+            {selectedAsset?.memo} <FaCopy size={20}/>
+          </span>
         </div>}
       </div>
     </div>
