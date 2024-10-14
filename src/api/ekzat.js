@@ -499,3 +499,28 @@ export const processCryptoWithdrawal = async (withdrawalData) => {
     throw error.response.data;
   }
 };
+
+  // Get transaction fees
+export const getTransactionFees = async (coinId, fromAddress = null, toAddress = null) => {
+
+  try {
+    let response;
+      
+    if(coinId === "tether" && fromAddress && toAddress) {
+       response = await api.get(`/blockchain/fees/${coinId}/${fromAddress}/${toAddress}`, {
+          headers: {
+              Authorization: `${authToken}`,
+          },
+      });
+    } else {
+      response = await api.get(`/blockchain/fees/${coinId}`, {
+        headers: {
+            Authorization: `${authToken}`,
+        },
+    });
+    }
+      return response.data;
+  } catch (error) {
+      throw error.response.data;
+  }
+};

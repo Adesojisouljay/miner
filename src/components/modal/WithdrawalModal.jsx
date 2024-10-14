@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { processHiveWithdrawal, requestToken, processCryptoWithdrawal } from '../../api/ekzat';
+import React, { useState, useEffect } from 'react';
+import { processHiveWithdrawal, requestToken, processCryptoWithdrawal, getTransactionFees } from '../../api/ekzat';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { Dropdown } from '../dropdown/Dropdown';
 import './withdraw-modal.scss';
@@ -12,11 +12,14 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
   const [currency, setCurrency] = useState(assets[0]?.currency || '');
   const [message, setMessage] = useState('');
   const [step, setStep] = useState(1);
+  const [fee, setFee] = useState(0.000)
 
   const [selectedAsset, setSelectedAsset] = useState(assets[0]);
-  const [openList, setOpenList] = useState(true)
+  const [openList, setOpenList] = useState(false)
 
-  console.log(assets)
+  useEffect(() => {
+    handleGetFees(selectedAsset?.currency)
+  }, [selectedAsset])
 
   const handleGeneralWithdrawal = async (e) => {
     if(selectedAsset.currency === "hive" || selectedAsset.currency === "hive_dollar") {
@@ -27,7 +30,6 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
   }
 
   const handleHiveWithdrawal = async () => {
-    // e.preventDefault();
 
     try {
       const withdrawalData = { to, amount, currency: selectedAsset.currency, memo, withdrawalToken };
@@ -43,7 +45,6 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
   };
 
   const handleCryptoWithdrawal = async () => {
-    // e.preventDefault();
     try {
       const withdrawalData = { to, amount, currency: selectedAsset.currency };
       console.log(withdrawalData)
@@ -77,6 +78,18 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
     setOpenList(!openList);
   };
 
+  const handleGetFees = async () => {
+    try {
+      console.log(selectedAsset.depositAddress, to)
+        const result = await getTransactionFees(selectedAsset.currency, selectedAsset.depositAddress, selectedAsset.depositAddress);
+        console.log('Transaction Fees:', result);
+        setFee(result.fee)
+    } catch (error) {
+        console.error('Error fetching transaction fees:', error);
+    }
+};
+
+
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
     <div className={`modal-overlay  ${isOpen ? 'open' : ''}`}  onClick={onClose}> </div>
@@ -105,35 +118,44 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
             </div>
           </div>
 
-          <label htmlFor="recipient-account">Recipient Account:</label>
-          <input
-            className='w-input'
-            type="text"
-            placeholder="Recipient Account"
-            value={to}
-            onChange={(e) => setTo(e.target.value)}
-            id="recipient-account"
-          />
-          <label htmlFor="withdraw-amount">Amount:</label>
-          <input
-            className='w-input'
-            type="number"
-            id="withdraw-amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            placeholder="Enter amount"
-          />
-          <label htmlFor="memo">Memo:</label>
-          <input
-            className='w-input'
-            type="text"
-            id="memo"
-            value={memo}
-            onChange={(e) => setMemo(e.target.value)}
-            placeholder="Enter memo"
-          />
-          <button className="withdraw-btn" onClick={getToken}>Withdraw</button>
+          {selectedAsset.depositAddress ? <>
+            <label htmlFor="recipient-account">Recipient Address:</label>
+            <input
+              className='w-input'
+              type="text"
+              placeholder="Recipient Address"
+              value={to}
+              onChange={(e) => setTo(e.target.value)}
+              id="recipient-account"
+            />
+            <label htmlFor="withdraw-amount">Amount:</label>
+            <input
+              className='w-input'
+              type="number"
+              id="withdraw-amount"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="Enter amount"
+            />
+            <span>Fee: {fee ? fee : (0.000)}({selectedAsset.symbol.toUpperCase()})</span>
+            {selectedAsset?.memo && <>
+              <label htmlFor="memo">Memo:</label>
+              <input
+                className='w-input'
+                type="text"
+                id="memo"
+                value={memo}
+                onChange={(e) => setMemo(e.target.value)}
+                placeholder="Enter memo"
+              />
+            </>}
+            <button className="withdraw-btn" onClick={getToken}>Withdraw</button>
+            </> : <div className="withdrawal-info-wrapper">
+            <h3 className='warning'>{selectedAsset?.currency}({selectedAsset?.symbol?.toUpperCase()}) withdrawal is coming soon...</h3>
+            <span className='withdrawal-address-info-el'>No address/network available for this asset yet</span>
+          </div>}
         </div>}
+
         {step === 2 && <div className="w-input-group">
           <label htmlFor="withdrawalToken">Withdrawal token</label>
           <input

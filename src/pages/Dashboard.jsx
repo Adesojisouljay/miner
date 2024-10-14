@@ -55,14 +55,13 @@ export const Dashboard = () => {
   const [fiatDepositOpen, setFiatDepositOpen] = useState(false);
   const [fiatWithdrawalOpen, setFiatWithdrawalOpen] = useState(false);
   const [fiatTransferOpen, setFiatTransferOpen] = useState(false);
-  const [buySellOpen, setBuySellOpen] = useState(false);
   const [transactionType, setTransactionType] = useState('buy');
   const [showBalance, setShowBalance] = useState(false);
   const [activeTab, setActiveTab] = useState('coin-price'); // Default to 'coin-price'
   const [searchQueryCoinPrice, setSearchQueryCoinPrice] = useState('');
   const [showMore, setShowMore] = useState(false)
   const [currentQuote, setCurrentQuote] = useState(getRandomQuote());
-  const [testBuySellOpen, setTestBuySellOpen] = useState(false);
+  const [buySellOpen, setBuySellOpen] = useState(false);
   const [openList, setOpenList] = useState(false);
   // selected 
 
@@ -141,21 +140,21 @@ export const Dashboard = () => {
     setFiatWithdrawalOpen(false);
   };
 
+  // const openBuySellModal = (type) => {
+  //   setTransactionType(type);
+  //   setBuySellOpen(true);
+  // };
+
+  // const closeBuySellModal = () => {
+  //   setBuySellOpen(false);
+  // };
+
   const openBuySellModal = (type) => {
     setTransactionType(type);
     setBuySellOpen(true);
   };
-
   const closeBuySellModal = () => {
     setBuySellOpen(false);
-  };
-
-  const openTestBuySellModal = (type) => {
-    setTransactionType(type);
-    setTestBuySellOpen(true);
-  };
-  const closeTestBuySellModal = () => {
-    setTestBuySellOpen(false);
   };
 
   const handleCurrencyChange = (currency) => {
@@ -218,14 +217,14 @@ export const Dashboard = () => {
                 <span>Send Crypto</span>
               </span>
     
-              <span className="bal-btn" onClick={()=> openTestBuySellModal("buy")}>
+              <span className="bal-btn" onClick={()=> openBuySellModal("buy")}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
                 <span>Buy</span>
               </span>
 
-              <span className="bal-btn" onClick={()=> openTestBuySellModal("sell")}>
+              <span className="bal-btn" onClick={()=> openBuySellModal("sell")}>
                 <div className="bal-icon-wrap">
                 <HiCircleStack />
                 </div>
@@ -404,10 +403,10 @@ export const Dashboard = () => {
           setTransactionType={setTransactionType}
         />
       )}
-      {testBuySellOpen && (
+      {buySellOpen && (
         <BuySell
-          isOpen={testBuySellOpen}
-          onClose={closeTestBuySellModal}
+          isOpen={buySellOpen}
+          onClose={closeBuySellModal}
           assets={assets}
           transactionType={transactionType}
           setTransactionType={setTransactionType}

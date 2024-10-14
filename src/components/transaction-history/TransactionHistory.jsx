@@ -14,6 +14,7 @@ export const TransactionHistory = () => {
   const getTrx = async () => {
     try {
       const data = await fetchTransactionHistory();
+      console.log(data);
       if (data.success) {
         setTrxHistory(data.transactionH);
       } else {
@@ -39,6 +40,40 @@ export const TransactionHistory = () => {
   };
 
   const totalPages = Math.ceil(trxHistory.length / transactionsPerPage);
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPageNumbersToShow = 5;
+
+    if (totalPages <= maxPageNumbersToShow) {
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      pageNumbers.push(1, 2, 3);
+
+      if (currentPage > 5) pageNumbers.push('...');
+
+      for (let i = Math.max(4, currentPage - 1); i <= Math.min(totalPages - 3, currentPage + 1); i++) {
+        pageNumbers.push(i);
+      }
+
+      if (currentPage < totalPages - 4) pageNumbers.push('...');
+
+      pageNumbers.push(totalPages - 2, totalPages - 1, totalPages);
+    }
+
+    return pageNumbers.map((page, index) => (
+      <button
+        key={index}
+        className={`transaction-history__page-btn ${currentPage === page ? 'active' : ''}`}
+        onClick={() => paginate(page)}
+        disabled={typeof page === 'string'}
+      >
+        {page}
+      </button>
+    ));
+  };
 
   return (
     <div className="transaction-history-container">
@@ -69,40 +104,37 @@ export const TransactionHistory = () => {
 
               {currentTransactions.map((t, index) => (
                 <tr key={t.trxId}>
-                    <td>{indexOfFirstTransaction + index + 1}</td>
-                    <td className="transaction-history__currency-wrap">
+                  <td>{indexOfFirstTransaction + index + 1}</td>
+                  <td className="transaction-history__currency-wrap">
                     <img src={"hive"} alt="" />
                     <span>{t.currency}</span>
-                    </td>
-                    <td
+                  </td>
+                  <td
                     className={
-                        t.type === "deposit" || t.type === "buy"
-                        ? "transaction-history__deposit"
-                        : t.type === "withdrawal" || t.type === "sell"
-                        ? "transaction-history__withdrawal"
-                        : ""
+                      t.type === 'deposit' || t.type === 'buy'
+                        ? 'transaction-history__deposit'
+                        : t.type === 'withdrawal' || t.type === 'sell'
+                        ? 'transaction-history__withdrawal'
+                        : ''
                     }
-                    >
+                  >
                     {t.amount}
-                    </td>
-                    <td>
-                    {t.trxId.slice(0, 5)}...{t.trxId.slice(-5)}
-                    </td>
-                    <td>{new Date(t.timestamp).toLocaleDateString()}</td>
-                    <td
+                  </td>
+                  <td>{t.trxId.slice(0, 5)}...{t.trxId.slice(-5)}</td>
+                  <td>{new Date(t.timestamp).toLocaleDateString()}</td>
+                  <td
                     className={
-                        t.type === "deposit" || t.type === "buy"
-                        ? "transaction-history__deposit"
-                        : t.type === "withdrawal" || t.type === "sell"
-                        ? "transaction-history__withdrawal"
-                        : ""
+                      t.type === 'deposit' || t.type === 'buy'
+                        ? 'transaction-history__deposit'
+                        : t.type === 'withdrawal' || t.type === 'sell'
+                        ? 'transaction-history__withdrawal'
+                        : ''
                     }
-                    >
+                  >
                     {t.type}
-                    </td>
+                  </td>
                 </tr>
               ))}
-
             </tbody>
           </table>
         </div>
@@ -115,17 +147,7 @@ export const TransactionHistory = () => {
           >
             Previous
           </button>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index + 1}
-              className={`transaction-history__page-btn ${
-                currentPage === index + 1 ? "active" : ""
-              }`}
-              onClick={() => paginate(index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))}
+          {renderPageNumbers()}
           <button
             className="transaction-history__page-btn"
             onClick={handleNext}
