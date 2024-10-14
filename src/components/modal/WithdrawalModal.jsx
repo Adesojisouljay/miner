@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { processHiveWithdrawal, requestToken, processCryptoWithdrawal } from '../../api/ekzat';
+import React, { useState, useEffect } from 'react';
+import { processHiveWithdrawal, requestToken, processCryptoWithdrawal, getTransactionFees } from '../../api/ekzat';
 import { RiArrowDownSFill } from 'react-icons/ri';
 import { Dropdown } from '../dropdown/Dropdown';
 import './withdraw-modal.scss';
@@ -12,11 +12,14 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
   const [currency, setCurrency] = useState(assets[0]?.currency || '');
   const [message, setMessage] = useState('');
   const [step, setStep] = useState(1);
+  const [fee, setFee] = useState(0.000)
 
   const [selectedAsset, setSelectedAsset] = useState(assets[0]);
   const [openList, setOpenList] = useState(false)
 
-  console.log(assets)
+  useEffect(() => {
+    handleGetFees(selectedAsset?.currency)
+  }, [selectedAsset])
 
   const handleGeneralWithdrawal = async (e) => {
     if(selectedAsset.currency === "hive" || selectedAsset.currency === "hive_dollar") {
@@ -75,6 +78,18 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
     setOpenList(!openList);
   };
 
+  const handleGetFees = async () => {
+    try {
+      console.log(selectedAsset.depositAddress, to)
+        const result = await getTransactionFees(selectedAsset.currency, selectedAsset.depositAddress, selectedAsset.depositAddress);
+        console.log('Transaction Fees:', result);
+        setFee(result.fee)
+    } catch (error) {
+        console.error('Error fetching transaction fees:', error);
+    }
+};
+
+
   return (
     <div className={`fadded-container modal-overlay ${isOpen ? 'open' : ''}`} >
     <div className={`modal-overlay  ${isOpen ? 'open' : ''}`}  onClick={onClose}> </div>
@@ -122,6 +137,7 @@ export const WithdrawalModal = ({ isOpen, onClose, assets, user }) => {
               onChange={(e) => setAmount(e.target.value)}
               placeholder="Enter amount"
             />
+            <span>Fee: {fee ? fee : (0.000)}({selectedAsset.symbol.toUpperCase()})</span>
             {selectedAsset?.memo && <>
               <label htmlFor="memo">Memo:</label>
               <input
