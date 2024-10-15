@@ -70,7 +70,8 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard/>}/>
             {/* <Route path="/mining" element={<Miner/>}/> */}
-            <Route path="/controller" element={<Admin/>}/>
+            {/* COMMENT ALL OUT FOR TESTING SAKE */}
+            {/* <Route path="/controller" element={<Admin/>}/>
             <Route path="/test" element={<Pagetest />} />
             <Route path="spinner" element={<Spinner />} />
             <Route path="/kyc" element={<Kyc />} />
@@ -89,7 +90,7 @@ function App() {
             <Route path="/page" element={<Pagetest />} />
             <Route path="/crypto-news" element={<CryptoNews />} />
             <Route path="/crypto-news/:id" element={<SingleNewsPage />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={<Profile />} /> */}
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

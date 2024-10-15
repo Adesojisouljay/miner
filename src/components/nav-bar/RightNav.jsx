@@ -47,7 +47,7 @@ function RightNav({ rightNav, handleRightNav, handleLogout }) {
         </div>
         <hr className='divide-line'/>
 
-        <ul>
+        {/* <ul>
           {menuLinks.map((data) => (
             <Link to={data.path} onClick={handleRightNav}>
               <li style={{backgroundColor: "red"}}>
@@ -62,7 +62,7 @@ function RightNav({ rightNav, handleRightNav, handleLogout }) {
               </li>
             </Link>
           ))}
-        </ul>
+        </ul> */}
         <div className="logout-wrap" onClick={handleLogout}>
           <h3>Logout</h3>
         <Link to="/"><FiLogOut size={23} className='bold-icon'/></Link>

@@ -11,24 +11,24 @@ const FloatingNav = () => {
     setShowMenu(!showMenu)
   }
 
-  return (
-    <div className="floating-nav">
-      {showMenu ?
-      <>
-      <NavLink to="/crypto-news" className="nav-link" activeClassName="active">Trending</NavLink>
-      <NavLink to="/dashboard" className="nav-link" activeClassName="active">Dashboard</NavLink>
-      <CgMenuGridR 
-        className='float-nav-cg-menu'
-        onClick={toggleNav}
-      />
-      <NavLink to="/wallet" className="nav-link" activeClassName="active">Wallet</NavLink>
-      <NavLink to="/transactions" className="nav-link" activeClassName="active">Transactions</NavLink> 
-      </> :
-      <CgMenuGridR
-        className='float-nav-cg-menu'
-        onClick={toggleNav}
-      />}
-    </div>
+  return ( <></>
+    // <div className="floating-nav">
+    //   {showMenu ?
+    //   <>
+    //   <NavLink to="/crypto-news" className="nav-link" activeClassName="active">Trending</NavLink>
+    //   <NavLink to="/dashboard" className="nav-link" activeClassName="active">Dashboard</NavLink>
+    //   <CgMenuGridR 
+    //     className='float-nav-cg-menu'
+    //     onClick={toggleNav}
+    //   />
+    //   <NavLink to="/wallet" className="nav-link" activeClassName="active">Wallet</NavLink>
+    //   <NavLink to="/transactions" className="nav-link" activeClassName="active">Transactions</NavLink> 
+    //   </> :
+    //   <CgMenuGridR
+    //     className='float-nav-cg-menu'
+    //     onClick={toggleNav}
+    //   />}
+    // </div>
   );
 };
 
