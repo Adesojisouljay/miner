@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { submitKYC } from '../../api/kyc';
+import { Loader } from '../loader/Loader';
 import './kyc.scss';
 
 export const Kyc = () => {
@@ -15,8 +16,9 @@ export const Kyc = () => {
   const [selfieTaken, setSelfieTaken] = useState(false)
   const [message, setMessage] = useState("");
   const [submissionSuccess, setSubmissionSuccess] = useState(false);
+  const [loading, setLoading] = useState(false)
   const selfieVideoRef = useRef(null);
-  const seldieCanvasRef = useRef(null);
+  const selfieCanvasRef = useRef(null);
 
   const startCamera1 = async () => {
     setCameraActive(true)
@@ -30,15 +32,20 @@ export const Kyc = () => {
   };
 
   const capturePhoto1 = () => {
-    if (seldieCanvasRef.current && selfieVideoRef.current) {
-      const context = seldieCanvasRef.current.getContext('2d');
-      context.drawImage(selfieVideoRef.current, 0, 0, seldieCanvasRef.current.width, seldieCanvasRef.current.height);
-      setSelfie(seldieCanvasRef.current.toDataURL('image/jpeg'));
+    if (selfieCanvasRef.current && selfieVideoRef.current) {
+      const context = selfieCanvasRef.current.getContext('2d');
+      context.drawImage(selfieVideoRef.current, 0, 0, selfieCanvasRef.current.width, selfieCanvasRef.current.height);
+      setSelfie(selfieCanvasRef.current.toDataURL('image/jpeg'));
       stopCamera(selfieVideoRef);
       setCameraActive(false);
       setSelfieTaken(true);
     }
   };
+
+  const goBack = () => {
+    setCameraActive(false);
+    stopCamera(selfieVideoRef)
+  }
 
   const stopCamera = (videoRef) => {
     const stream = videoRef.current.srcObject;
@@ -61,6 +68,7 @@ export const Kyc = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
   
     if (!firstName || !lastName || !selfie || !idImage) {
       setMessage('Please fill in all required fields and capture the images.');
@@ -92,19 +100,21 @@ export const Kyc = () => {
   
       await submitKYC(kycData);
       setSubmissionSuccess(true);
-      setStep(4);
+      setStep(2);
+      setLoading(false)
     } catch (error) {
       console.error('Error submitting KYC', error);
+      setLoading(false)
     }
   };  
 
   return (
     <div className="kyc-container">
+     {step === 1 && <form onSubmit={handleSubmit} className="form">
+      {loading && <Loader/>}
       <h2>KYC Submission</h2>
-      <form onSubmit={handleSubmit} className="form">
       <span>{message}</span>
-        {step === 1 && (
-          (!cameraActive && <div className="step step-1">
+          {!cameraActive && <div className="step step-1">
             <h3>Personal Information</h3>
             <input
               type="text"
@@ -129,8 +139,7 @@ export const Kyc = () => {
               onChange={(e) => setOtherName(e.target.value)}
               className="input"
             />
-          </div>)
-        )}
+          </div>}
 
           <div className="step">
             <h3>Selfie</h3>
@@ -142,7 +151,10 @@ export const Kyc = () => {
             }
                 {!cameraActive ? 
                 !selfieTaken && <button type="button" onClick={startCamera1} className="button">Take selfie</button> :
+                <div className='kyc-seldie-btns'>
+                <button type="button" onClick={goBack} className="button">Back</button>
                 <button type="button" onClick={capturePhoto1} className="button">Capture Selfie</button>
+                </div>
                 }
         
           </div>
@@ -158,26 +170,30 @@ export const Kyc = () => {
             />
           </div>}
 
+        <canvas ref={selfieCanvasRef} style={{ display: 'none' }}></canvas>
 
-        {step === 4 && submissionSuccess && (
-          <div className="step step-4">
-            <h3>KYC Submitted Successfully!</h3>
-            <button type="button" className="button">
+        {!cameraActive && <div className="button-group">
+            <button
+            style={{cursor: loading ? "not-allowed" : "pointer"}}
+              type="submit" 
+              className="submit-button"
+              disabled={loading}
+              >
+              Submit KYC
+            </button>
+        </div>}
+      </form>}
+
+      {step === 2 && submissionSuccess && (
+          <div className="kyc-step-2">
+            <h3 className='kyc-success-text'>KYC Submitted Successfully!</h3>
+            <button type="button" className="kyc-btn">
               <Link to="/dashboard">
                 Return to Dashboard
               </Link>
             </button>
           </div>
         )}
-
-        <canvas ref={seldieCanvasRef} style={{ display: 'none' }}></canvas>
-
-        {!cameraActive && <div className="button-group">
-            <button type="submit" className="submit-button">
-              Submit KYC
-            </button>
-        </div>}
-      </form>
     </div>
   );
 };

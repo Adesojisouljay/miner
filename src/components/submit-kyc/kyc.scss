@@ -15,8 +15,8 @@
       flex-direction: column;
       align-items: center;
       padding: 30px;
-      width: 30%;
-      border: 1px solid gray;
+      width: 100%;
+      // border: 1px solid gray;
   
       .input {
         width: 80%;
@@ -102,5 +102,37 @@
       }
     }
 }
+
+.kyc-step-2{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  height: 100%;
+
+  .kyc-success-text{
+    color: greenyellow;
+  }
+
+  .kyc-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+}
+
+  .kyc-seldie-btns{
+    display: flex;
+  }
 }
   

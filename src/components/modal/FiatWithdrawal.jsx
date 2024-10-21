@@ -143,7 +143,7 @@ export const FiatWithdrawalModal = ({ isOpen, onClose }) => {
         });
       }
     } catch (error) {
-      toast.error('Error processing withdrawal', {
+      toast.error(error.message, {
         style: {
           backgroundColor: 'rgba(229, 229, 229, 0.1)',
           color: '#fff',
