@@ -15,13 +15,13 @@ function RightNav({ rightNav, handleRightNav, handleLogout }) {
 
   const menuLinks = [
     // { logo: <FaHome size={25} />, text: "Home", path: "/" },
-    { logo: <FaTachometerAlt size={20} />, text: "Dashboard", path: "/dashboard" },
-    { logo: <FaTachometerAlt size={20} />, text: "Wallet", path: "/wallet" },
-    { logo: <FaTachometerAlt size={20} />, text: "Transactions", path: "/transactions" },
-    { logo: <FaSpinner size={20} />, text: "Spinner", path: "/spinner" },
-    { logo: <FaEnvelope size={20} />, text: "Contact", path: "/contact" },
-    { logo: <FaUser size={20} />, text: "Profile", path: "/profile" },
-    { logo: <FaCogs size={20} />, text: "Settings", path: "/settings" },
+    // { logo: <FaTachometerAlt size={20} />, text: "Dashboard", path: "/dashboard" },
+    // { logo: <FaTachometerAlt size={20} />, text: "Wallet", path: "/wallet" }, 
+    // { logo: <FaTachometerAlt size={20} />, text: "Transactions", path: "/transactions" },
+    // { logo: <FaSpinner size={20} />, text: "Spinner", path: "/spinner" },
+    // { logo: <FaEnvelope size={20} />, text: "Contact", path: "/contact" },
+    // { logo: <FaUser size={20} />, text: "Profile", path: "/profile" },
+    // { logo: <FaCogs size={20} />, text: "Settings", path: "/settings" },
     // { logo: <FaWallet size={20} />, text: "Accounts", path: "/accounts" },
     { logo: <FaIdCard size={20} />, text: "KYC", path: "/kyc" }
   ];
@@ -42,13 +42,13 @@ function RightNav({ rightNav, handleRightNav, handleLogout }) {
             <div className="welcom-wrap"><span>Welcome</span><h4>{user?.username}</h4></div>
 
             <h4>Email: {user?.email}</h4>
-            {user?.kyc.kycStatus === "Verified" ? <div className="verified-wrap"><span> {user?.kyc?.kycStatus} </span> <MdVerified size={20} color='green' /></div> :
+            {user?.kyc?.kycStatus === "Verified" ? <div className="verified-wrap"><span> {user?.kyc?.kycStatus} </span> <MdVerified size={20} color='green' /></div> :
             <div className="pending-wrap"><span> {user?.kyc?.kycStatus} </span> <MdPending size={20} color='orange' /></div>}
           </div>
         </div>
         <hr className='divide-line'/>
 
-        {/* <ul>
+        <ul>
           {menuLinks.map((data) => (
             <Link to={data.path} onClick={handleRightNav}>
               <li style={{backgroundColor: "red"}}>
@@ -63,7 +63,7 @@ function RightNav({ rightNav, handleRightNav, handleLogout }) {
               </li>
             </Link>
           ))}
-        </ul> */}
+        </ul>
         <div className="logout-wrap" onClick={handleLogout}>
           <h3>Logout</h3>
         <Link to="/"><FiLogOut size={23} className='bold-icon'/></Link>
