@@ -1,11 +1,15 @@
 import React, { useRef, useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { submitKYC } from '../../api/kyc';
 import { Loader } from '../loader/Loader';
 import './kyc.scss';
 
 export const Kyc = () => {
+  const user = useSelector(state => state?.ekzaUser?.user);
+
+  console.log(user)
   const [step, setStep] = useState(1);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -110,90 +114,107 @@ export const Kyc = () => {
 
   return (
     <div className="kyc-container">
-     {step === 1 && <form onSubmit={handleSubmit} className="form">
-      {loading && <Loader/>}
-      <h2>KYC Submission</h2>
-      <span>{message}</span>
-          {!cameraActive && <div className="step step-1">
-            <h3>Personal Information</h3>
-            <input
-              type="text"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="input"
-              required
-            />
-            <input
-              type="text"
-              placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              className="input"
-              required
-            />
-            <input
-              type="text"
-              placeholder="Other Name"
-              value={otherName}
-              onChange={(e) => setOtherName(e.target.value)}
-              className="input"
-            />
-          </div>}
+     {user?.kyc.kycStatus === "Pending" ? <div className='pending-kyc'>
+        <h1>You have already submitted Kyc, please wait for review</h1>
+        <button type="button" className="kyc-btn">
+          <Link to="/dashboard">
+            Return to Dashboard
+          </Link>
+        </button>
+      </div> : user?.kyc.kycStatus === "Verified" ?
+      <div className='approved-kyc'>
+        <h1>Your kyc submission has already been approved</h1>
+        <button type="button" className="kyc-btn">
+          <Link to="/dashboard">
+            Return to Dashboard
+          </Link>
+        </button>
+      </div> :
+      <>
+      {step === 1 && <form onSubmit={handleSubmit} className="form">
+        {loading && <Loader/>}
+        <h2>KYC Submission</h2>
+        <span>{message}</span>
+            {!cameraActive && <div className="step step-1">
+              <h3>Personal Information</h3>
+              <input
+                type="text"
+                placeholder="First Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                className="input"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Last Name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                className="input"
+                required
+              />
+              <input
+                type="text"
+                placeholder="Other Name"
+                value={otherName}
+                onChange={(e) => setOtherName(e.target.value)}
+                className="input"
+              />
+            </div>}
 
-          <div className="step">
-            <h3>Selfie</h3>
-            {selfie && <img src={selfie} alt="Captured Selfie" className="preview-image" />}
-            {cameraActive && 
-              <div className='video-frame'>
-                <video ref={selfieVideoRef} className="video"></video>
+            <div className="step">
+              <h3>Selfie</h3>
+              {selfie && <img src={selfie} alt="Captured Selfie" className="preview-image" />}
+              {cameraActive && 
+                <div className='video-frame'>
+                  <video ref={selfieVideoRef} className="video"></video>
+              </div>
+              }
+                  {!cameraActive ? 
+                  !selfieTaken && <button type="button" onClick={startCamera1} className="button">Take selfie</button> :
+                  <div className='kyc-seldie-btns'>
+                  <button type="button" onClick={goBack} className="button">Back</button>
+                  <button type="button" onClick={capturePhoto1} className="button">Capture Selfie</button>
+                  </div>
+                  }
+          
             </div>
-            }
-                {!cameraActive ? 
-                !selfieTaken && <button type="button" onClick={startCamera1} className="button">Take selfie</button> :
-                <div className='kyc-seldie-btns'>
-                <button type="button" onClick={goBack} className="button">Back</button>
-                <button type="button" onClick={capturePhoto1} className="button">Capture Selfie</button>
-                </div>
-                }
-        
-          </div>
 
-          {!cameraActive && <div className="step step-3">
-            <h3>ID Document</h3>
-            {idImage && <img src={idImage} alt="Uploaded ID" className="preview-image" />}
-            <input
-              type="file"
-              accept="image/*"
-              onChange={idUpload}
-              className="input"
-            />
+            {!cameraActive && <div className="step step-3">
+              <h3>ID Document</h3>
+              {idImage && <img src={idImage} alt="Uploaded ID" className="preview-image" />}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={idUpload}
+                className="input"
+              />
+            </div>}
+
+          <canvas ref={selfieCanvasRef} style={{ display: 'none' }}></canvas>
+
+          {!cameraActive && <div className="button-group">
+              <button
+              style={{cursor: loading ? "not-allowed" : "pointer"}}
+                type="submit" 
+                className="submit-button"
+                disabled={loading}
+                >
+                Submit KYC
+              </button>
           </div>}
-
-        <canvas ref={selfieCanvasRef} style={{ display: 'none' }}></canvas>
-
-        {!cameraActive && <div className="button-group">
-            <button
-            style={{cursor: loading ? "not-allowed" : "pointer"}}
-              type="submit" 
-              className="submit-button"
-              disabled={loading}
-              >
-              Submit KYC
-            </button>
-        </div>}
-      </form>}
-
-      {step === 2 && submissionSuccess && (
-          <div className="kyc-step-2">
-            <h3 className='kyc-success-text'>KYC Submitted Successfully!</h3>
-            <button type="button" className="kyc-btn">
-              <Link to="/dashboard">
-                Return to Dashboard
-              </Link>
-            </button>
-          </div>
-        )}
+        </form>}
+        {step === 2 && submissionSuccess && (
+            <div className="kyc-step-2">
+              <h3 className='kyc-success-text'>KYC Submitted Successfully!</h3>
+              <button type="button" className="kyc-btn">
+                <Link to="/dashboard">
+                  Return to Dashboard
+                </Link>
+              </button>
+            </div>
+          )}
+      </>}
     </div>
   );
 };
