@@ -114,7 +114,7 @@ export const Kyc = () => {
 
   return (
     <div className="kyc-container">
-     {user?.kyc.kycStatus === "Pending" ? <div className='pending-kyc'>
+     {(user?.kyc?.kycStatus === "Pending" && user?.kyc?._id) ? <div className='pending-kyc'>
         <h1>You have already submitted Kyc, please wait for review</h1>
         <button type="button" className="kyc-btn">
           <Link to="/dashboard">
