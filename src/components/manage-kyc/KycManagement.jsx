@@ -41,16 +41,16 @@ export const KYCManagement = () => {
     <div className="kyc-management">
       <h1>KYC Management</h1>
       <ul className="kyc-list">
-        {kycRecords.map((record) => (
-          <li key={record._id} className="kyc-item">
+        {kycRecords?.map((record) => (
+          <li key={record?._id} className="kyc-item">
             <div className="kyc-details">
-              <p><strong>Name:</strong> {record.firstName} {record.otherName} {record.lastName}</p>
-              <p><strong>Status:</strong> <span className={`status-${record.kycStatus}`}>{record.kycStatus}</span></p>
+              <p><strong>Name:</strong> {record?.firstName} {record?.otherName} {record?.lastName}</p>
+              <p><strong>Status:</strong> <span className={`status-${record?.kycStatus}`}>{record?.kycStatus}</span></p>
               <div className="kyc-documents">
                 <div className="document">
                   <p><strong>ID Document:</strong></p>
                     <img
-                      src={record.idDocument}
+                      src={record?.idDocument}
                       alt="ID Document"
                       className="kyc-image"
                     />
@@ -58,7 +58,7 @@ export const KYCManagement = () => {
                 <div className="document">
                   <p><strong>Selfie:</strong></p>
                     <img
-                      src={record.selfie}
+                      src={record?.selfie}
                       alt="Selfie"
                       className="kyc-image"
                     />
@@ -68,20 +68,20 @@ export const KYCManagement = () => {
             <div className="kyc-actions">
               <button
                 className="btn compare"
-                onClick={() => handleCompareClick(record.idDocument, record.selfie)}
+                onClick={() => handleCompareClick(record?.idDocument, record?.selfie)}
               >
                 Compare Images
               </button>
-              {record.kycStatus === 'pending' && (
+              {record?.kycStatus === 'Pending' && (
                 <>
-                  <button className="btn approve" onClick={() => handleApprove(record._id)}>Approve</button>
-                  <button className="btn reject" onClick={() => handleReject(record._id)}>Reject</button>
+                  <button className="btn approve" onClick={() => handleApprove(record?._id)}>Approve</button>
+                  <button className="btn reject" onClick={() => handleReject(record?._id)}>Reject</button>
                 </>
               )}
-              {record.kycStatus === 'verified' && (
+              {record?.kycStatus === 'Verified' && (
                 <p className="status-text verified">This KYC record has been approved.</p>
               )}
-              {record.kycStatus === 'rejected' && (
+              {record?.kycStatus === 'Rejected' && (
                 <p className="status-text rejected">This KYC record has been rejected.</p>
               )}
             </div>
