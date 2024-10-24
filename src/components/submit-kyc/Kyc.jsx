@@ -187,7 +187,8 @@ export const Kyc = () => {
                   </div>
 
                   {!cameraActive && <div className="step step-3">
-                    <h3>ID Document</h3>
+                    <h3>Please upload an ID Document</h3>
+                    <h5 className='warning'>(Nigerian NIN/ Int Passport/ Voters Card/ Drivers Liscense)</h5>
                     {idImage && <img src={idImage} alt="Uploaded ID" className="preview-image" />}
                     <input
                       type="file"
