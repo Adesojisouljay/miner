@@ -12,6 +12,8 @@ import Google from "../assets/google-1.jfif"
 import { Loader } from "../components/loader/Loader";
 import cat from "../assets/document_shape.webp";
 import eth from "../assets/eth-icon.webp";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { PasswordReset } from "../components/modal/PasswordReset";
 import "./login.scss";
 
 const Login = () => {
@@ -19,6 +21,8 @@ const Login = () => {
   const [identifier, setIdentifier] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
+  const [openPasswordResetModal, setOpenPasswordResetModal] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const global = useSelector((state) => state);
@@ -62,6 +66,14 @@ const Login = () => {
     }
   };
 
+  const openPassword = () => {
+    setOpenPasswordResetModal(true)
+}
+
+const closePassword = () => {
+    setOpenPasswordResetModal(false)
+}
+
   return (
     <div className="login-container">
       <div className="login-left">
@@ -84,19 +96,29 @@ const Login = () => {
               required
             />
           </div>
-          <div className="login-form-group">
+          <div className="login-form-group passwd">
             {/* <label>Password</label> */}
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               required
             />
+            {!showPassword ? <FaRegEye 
+              className='eye-icon' 
+              size={20}
+              onClick={() => setShowPassword(!showPassword)}
+            /> :
+            <FaRegEyeSlash 
+              className='eye-icon' 
+              size={20}
+              onClick={() => setShowPassword(!showPassword)}
+            />}
           </div>
           {error && <p className="error-message">{error}</p>}
           <div className="Forget-Password-wrap">
-          <span>Forgot Password</span>
+          <span onClick={openPassword}>Forgot Password</span>
         </div>
           <button
             style={{ cursor: loading && "not-allowed" }}
@@ -128,6 +150,13 @@ const Login = () => {
         </div>
       </div>
       </div>
+
+      {openPasswordResetModal && 
+        <PasswordReset 
+          isOpen={openPasswordResetModal} 
+          onClose={closePassword}
+          // propsEmail={email}
+        />}
     </div>
   );
 };

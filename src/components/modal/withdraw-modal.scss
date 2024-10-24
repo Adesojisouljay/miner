@@ -53,6 +53,26 @@
       }
   }
 
+  .password-reset-input-wrap{
+    width: 100%;
+
+    .password-reset-input{
+      width: 100%;
+    }
+  }
+
+  .passwd{
+    position: relative;
+  }
+  
+  .pssd-r-eye-icon{
+    position: absolute;
+    right: 20px;
+    top: 35px;
+    color: rgb(28 100 224);
+    cursor: pointer;
+  }
+
   .withdrawal-info-wrapper{
     display: flex;
     flex-direction: column;

@@ -82,6 +82,18 @@
 
 
   }
+
+  .passwd{
+    position: relative;
+  }
+
+  .eye-icon{
+    position: absolute;
+    right: 20px;
+    top: 35px;
+    color: rgb(28 100 224);
+    cursor: pointer;
+  }
   .btn-register{
     padding: 12px 60px;
     margin-top: 10px;

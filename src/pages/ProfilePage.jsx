@@ -300,7 +300,8 @@ const idUpload = (e) => {
         {openPasswordModal && 
         <PasswordReset 
           isOpen={openPasswordModal} 
-          onClose={closePassword}  
+          onClose={closePassword}
+          propsEmail={user.email}
         />}
 
         {openDeleteAcc && 

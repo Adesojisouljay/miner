@@ -6,6 +6,7 @@ import eth from "../assets/eth-icon.webp";
 import './register.scss';
 import Logo from "../assets/download (1).png";
 import { Loader } from '../components/loader/Loader';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -16,6 +17,8 @@ const Register = () => {
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   const navigate = useNavigate();
 
@@ -176,27 +179,47 @@ const Register = () => {
               required
             />
           </div>
-          <div className="reg-form-group">
+          <div className="reg-form-group passwd">
             <label>Password</label>
             <input
               className="yep"
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               required
             />
+           {!showPassword ? <FaRegEye 
+              className='eye-icon' 
+              size={20}
+              onClick={() => setShowPassword(!showPassword)}
+            /> :
+            <FaRegEyeSlash 
+              className='eye-icon' 
+              size={20}
+              onClick={() => setShowPassword(!showPassword)}
+            />}
           </div>
-          <div className="reg-form-group">
+          <div className="reg-form-group passwd">
             <label>Confirm Password</label>
             <input
               className="test"
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm your password"
               required
             />
+            {!showConfirmPassword ? <FaRegEye 
+              className='eye-icon' 
+              size={20}
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            /> :
+            <FaRegEyeSlash 
+              className='eye-icon' 
+              size={20}
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            />}
           </div>
           {error && <span>{error}</span>}
           <button
