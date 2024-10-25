@@ -9,32 +9,32 @@ export default function Faq() {
         {
           title: "What is EkzaTrade?",
           text:
-            "EkzaTrade is a cutting-edge cryptocurrency exchange platform that allows users to trade, invest, and securely manage their digital assets. It offers a user-friendly interface and a variety of trading pairs to meet the needs of both new and experienced traders."
+            "EkzaTrade is a user-friendly cryptocurrency exchange that allows users to buy, sell, and manage Hive, HBD, and other digital assets. It simplifies the process for those who want to access the Hive ecosystem, including SpendHBD and Distraitor, where Hive and HBD can be spent or used for rewards."
         },
         {
           title: "How do I create an account?",
           text:
-            "Creating an account on EkzaTrade is simple and straightforward. Just click on the 'Register' button, fill in your details, and verify your email address to start trading. You'll be ready to buy and sell cryptocurrencies in no time!"
+            "Creating an account on EkzaTrade is easy. Click on the 'Register' button, provide your details, and verify your email address. Once you're done, you'll be ready to buy Hive, HBD, and other cryptocurrencies right away."
         },
         {
-          title: "Can I withdraw funds instantly?",
+          title: "How can I buy Hive and HBD?",
           text:
-            "EkzaTrade processes withdrawal requests swiftly. While most withdrawals are completed within minutes, the exact time can vary depending on the network conditions and the specific cryptocurrency being withdrawn."
+            "Buying Hive and HBD on EkzaTrade is straightforward. After creating an account, simply go to the trading section, choose Hive or HBD, and make your purchase using supported payment methods."
         },
         {
-            title: "What fees are associated with trading on EkzaTrade?",
+            title: "Are there any fees for trading on EkzaTrade?",
             text:
-            "EkzaTrade offers competitive trading fees. The exact percentage varies depending on the trading pair and your account tier. We also provide fee discounts for high-volume traders and those who hold our native tokens."
+            "EkzaTrade offers competitive trading fees, especially for Hive and HBD. Our platform has low fees to make sure your trading experience is affordable, with discounts available for high-volume traders."
           },
           {
-            title: "Do I need special equipment to trade on EkzaTrade?",
+            title: "Can I use Hive and HBD outside of trading?",
             text:
-            "No special equipment is required. You can trade on EkzaTrade from any device with an internet connection, whether it's a desktop computer, laptop, or mobile device. Our platform is designed to be accessible and easy to use on all devices."
+            "Yes, Hive and HBD can be used on platforms like SpendHBD to make purchases and on Distraitor to participate in community rewards and projects. EkzaTrade makes it easy to access these platforms by providing a seamless way to buy and manage Hive and HBD."
           },
           {
             title: "Is EkzaTrade a secure platform?",
             text:
-              "Security is our top priority at EkzaTrade. We employ advanced security measures, including two-factor authentication (2FA), encrypted transactions, and cold storage for the majority of our assets to ensure your funds are safe at all times."
+              "Security is our top priority. EkzaTrade uses advanced measures such as two-factor authentication (2FA), encrypted transactions, and secure storage of assets to protect your funds at all times."
           }
       ];
    
