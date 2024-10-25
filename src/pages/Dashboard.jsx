@@ -47,6 +47,7 @@ export const Dashboard = () => {
   const selectedCurrency = useSelector((state) => state.currency.selectedCurrency);
   const dispatch = useDispatch();
   const assets = user?.assets || [];
+  console.log(assets)
   const isUsd = selectedCurrency === "USD";
 
   const [isOpen, setIsOpen] = useState(false);
@@ -191,7 +192,7 @@ export const Dashboard = () => {
 
                </div>
                 <div className="bal-show-wrap">{showBalance ? <h3>********</h3> : <span>
-                  <span className="dashboard-currency-symbol">{isUsd ? "$" : "N"}</span>
+                  <span className="dashboard-currency-symbol">{isUsd ? "$" : "₦"}</span>
                   {isUsd ? (user?.nairaBalance / usdPrice)?.toFixed(3) : user?.nairaBalance.toFixed(3)}
                 </span>}</div>
               </div>
@@ -277,37 +278,31 @@ export const Dashboard = () => {
               </div>
               <h4>Assets</h4>
             </div>
+              <p style={{marginBottom: 10}}>
+                Balance: {selectedCurrency === 'USD' 
+                    ? `$${user?.totalUsdValue?.toFixed(4)}`
+                    : `₦${user?.totalNairaValue?.toFixed(4)}`}
+              </p>
           
             <div className="card-component-wrap">
-                <div className="  card-component-1 border-line">
-                  <div className="coin-wrap">
-                    <img src={hive} alt="" />
-                    <div className="">
-                      <h5>Hive</h5>
+                {assets?.map(a => (
+                  <div className="  card-component-1 border-line" key={a.coinId}>
+                    <div className="coin-wrap">
+                      <img src={a.image} alt="" />
+                      <div className="">
+                        <h5>{a.symbol}</h5>
+                      </div>
                     </div>
-                  </div>
-                  <div> <span>N0.00</span> </div>
-                  <span>0.00()</span>
-                  <div className="btn-deposit-withdrwal">
-                    <button>Withdraw</button>
-                    <button>Buy/Sell</button>
-                  </div>
+                    <div> <span>{a.balance.toFixed(3)}</span> </div>
+                    <span>{a.nairaValue}</span>
+                    <div> <span style={{color: a.percentageChange < 0 ? "red" : "green"}}>{a.percentageChange}%</span> </div>
+                    {/* <div className="btn-deposit-withdrwal">
+                      <button>Withdraw</button>
+                      <button>Buy/Sell</button>
+                    </div> */}
                 </div>
-                <div className="  card-component-1 border-line">
-                  <div className="coin-wrap">
-                    <img src={usdt} alt="" />
-                    <div className="">
-                      <h5>Usdt</h5>
-                    </div>
-                  </div>
-                  <div> <span>N0.00</span> </div>
-                  <span>0.00()</span>
-                  <div className="btn-deposit-withdrwal">
-                    <button>Withdraw</button>
-                    <button>Buy/Sell</button>
-                  </div>
-                </div>
-                <div className="  card-component-1 border-line">
+                ))}
+                {/* <div className={` ${!showMore ? "display-none":"card-component-1 border-line"}`}>
                   <div className="coin-wrap">
                     <img src={usdc} alt="" />
                     <div className="">
@@ -320,21 +315,7 @@ export const Dashboard = () => {
                     <button>Withdraw</button>
                     <button>Buy/Sell</button>
                   </div>
-                </div>
-                <div className={` ${!showMore ? "display-none":"card-component-1 border-line"}`}>
-                  <div className="coin-wrap">
-                    <img src={usdc} alt="" />
-                    <div className="">
-                      <h5>Usdc</h5>
-                    </div>
-                  </div>
-                  <div> <span>N0.00</span> </div>
-                  <span>0.00()</span>
-                  <div className="btn-deposit-withdrwal">
-                    <button>Withdraw</button>
-                    <button>Buy/Sell</button>
-                  </div>
-                </div>
+                </div> */}
 
             </div>
           </div>
