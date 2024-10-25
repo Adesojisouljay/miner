@@ -70,26 +70,27 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard/>}/>
             {/* <Route path="/mining" element={<Miner/>}/> */}
-            <Route path="/controller" element={<Admin/>}/>
-            <Route path="/test" element={<Pagetest />} />
-            <Route path="spinner" element={<Spinner />} />
+            {/* COMMENT ALL OUT FOR TESTING SAKE */}
+            {/* <Route path="/controller" element={<Admin/>}/> */}
+            {/* <Route path="/test" element={<Pagetest />} /> */}
+            {/* <Route path="spinner" element={<Spinner />} /> */}
             <Route path="/kyc" element={<Kyc />} />
-            <Route path="/manage-kyc" element={<KYCManagement />} />
-            <Route path="/merchant-action" element={<MerchantAction />} />
-            <Route path="/create-merchant" element={<CreateMerchantForm />} />
-            <Route path="/accounts" element={<BankAccount />} />
-            <Route path="/fiat-withdrawal-action" element={<FiatWithdrawalAction />} />
-            <Route path="/fiat-deposit-action" element={<FiatDepositAction />} />
-            <Route path="/wallet" element={<WalletPage />} />
-            <Route path="/coin/:id" element={<SingleCoinInfo />} />
-            <Route path="/transactions" element={<TransactionHistory />} />
-            <Route path="/deposit" element={<DepositPage />} />
-            <Route path="/fiat-deposit" element={<Fiatdeposit />} />
-            <Route path="/trade" element={<Trade />} />
-            <Route path="/page" element={<Pagetest />} />
-            <Route path="/crypto-news" element={<CryptoNews />} />
-            <Route path="/crypto-news/:id" element={<SingleNewsPage />} />
-            <Route path="/profile" element={<Profile />} />
+            {/* <Route path="/manage-kyc" element={<KYCManagement />} /> */}
+            {/* <Route path="/merchant-action" element={<MerchantAction />} /> */}
+            {/* <Route path="/create-merchant" element={<CreateMerchantForm />} /> */}
+            {/* <Route path="/accounts" element={<BankAccount />} /> */}
+            {/* <Route path="/fiat-withdrawal-action" element={<FiatWithdrawalAction />} /> */}
+            {/* <Route path="/fiat-deposit-action" element={<FiatDepositAction />} /> */}
+            {/* <Route path="/wallet" element={<WalletPage />} /> */}
+            {/* <Route path="/coin/:id" element={<SingleCoinInfo />} /> */}
+            {/* <Route path="/transactions" element={<TransactionHistory />} /> */}
+            {/* <Route path="/deposit" element={<DepositPage />} /> */}
+            {/* <Route path="/fiat-deposit" element={<Fiatdeposit />} /> */}
+            {/* <Route path="/trade" element={<Trade />} /> */}
+            {/* <Route path="/page" element={<Pagetest />} /> */}
+            {/* <Route path="/crypto-news" element={<CryptoNews />} /> */}
+            {/* <Route path="/crypto-news/:id" element={<SingleNewsPage />} /> */}
+            {/* <Route path="/profile" element={<Profile />} /> */}
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

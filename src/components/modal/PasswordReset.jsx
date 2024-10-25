@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { requestToken, resetPassword } from '../../api/ekzat';
+import { requestToken, resetPassword, requestPasswordResetToken } from '../../api/ekzat';
 import { Loader } from '../loader/Loader';
-import { BsEyeFill } from 'react-icons/bs';
+import { FaRegEyeSlash, FaRegEye } from 'react-icons/fa';
 // import './deposit-modal.scss';
 import './password-reset.scss';
 
 
-export const PasswordReset = ({ isOpen, onClose }) => {
+export const PasswordReset = ({ isOpen, onClose, propsEmail }) => {
   const dispatch = useDispatch();
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -20,6 +20,7 @@ export const PasswordReset = ({ isOpen, onClose }) => {
   const [token, setToken] = useState("");
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [email, setEmail] = useState(propsEmail || "")
 
   const notAllowed = loading || !newPassword || !confirmNewPassword;
 
@@ -66,7 +67,7 @@ export const PasswordReset = ({ isOpen, onClose }) => {
 
     try {
       setLoading(true);
-      const response = await requestToken();
+      const response = await requestPasswordResetToken(email);
       if (response.success) {
         toast.success('Password reset token sent to your email', {
           style: {
@@ -105,12 +106,12 @@ export const PasswordReset = ({ isOpen, onClose }) => {
   };
 
   const passwordReset = async () => {
-    console.log("resetting.......")
     try {
-        const newPasswordData = {
-            newPassword,
-            token
-        }
+      const newPasswordData = {
+        newPassword,
+        token
+      }
+      console.log("resetting.......", newPasswordData)
         const response = await resetPassword(newPasswordData)
         console.log(response)
 
@@ -147,6 +148,17 @@ export const PasswordReset = ({ isOpen, onClose }) => {
         {loading && <Loader />}
         <div className="password-reset-input-group">
             <div className='password-reset-input-wrap'>
+                <label htmlFor="newPassword">Emaild</label>
+                <input 
+                    className='password-reset-input'
+                    type="text" 
+                    // id="password" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                    placeholder="Enter your registered email" 
+                />
+          </div>
+            <div className='password-reset-input-wrap passwd'>
                 <label htmlFor="newPassword">New password</label>
                 <input 
                     className='password-reset-input'
@@ -156,12 +168,20 @@ export const PasswordReset = ({ isOpen, onClose }) => {
                     onChange={(e) => setNewPassword(e.target.value)} 
                     placeholder="Enter new password" 
                 />
-                <div className='password-reset-eye-wrap'>
-                  <BsEyeFill onClick={() => setShowPassword(!showPassword)}/>
-                </div>
+                {!showPassword ? <FaRegEye 
+                  className='pssd-r-eye-icon' 
+                  size={20}
+                  onClick={() => setShowPassword(!showPassword)}
+                /> :
+                <FaRegEyeSlash 
+                  className='pssd-r-eye-icon' 
+                  size={20}
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+                }
           </div>
-          <div className='password-reset-input-wrap'>
-                <label htmlFor="transfer-password">Confirm</label>
+          <div className='password-reset-input-wrap  passwd'>
+                <label htmlFor="transfer-password">Confirm Password</label>
                 <input 
                     className='password-reset-input'
                     type={showConfirmPassword ? "text" : "password"}
@@ -170,9 +190,17 @@ export const PasswordReset = ({ isOpen, onClose }) => {
                     onChange={(e) => setConfirmNewPassword(e.target.value)} 
                     placeholder="Confirm new password" 
                 />
-                <div className="password-reset-eye-wrap">
-                  <BsEyeFill onClick={() => setShowConfirmPassword(!showConfirmPassword)}/>
-                </div>
+                {!showConfirmPassword ? <FaRegEye 
+                  className='pssd-r-eye-icon' 
+                  size={20}
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                /> :
+                <FaRegEyeSlash 
+                  className='pssd-r-eye-icon' 
+                  size={20}
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                />
+                }
           </div>
         </div>
         <button 

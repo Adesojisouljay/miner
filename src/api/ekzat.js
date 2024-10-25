@@ -135,6 +135,18 @@ export const requestToken = async () => {
     console.log(error)
   }
 }
+export const requestPasswordResetToken = async (email) => {
+  try {
+    const response = await api.post('/auth/password-reset-token', {email}, {
+      headers: {
+        Authorization: authToken,
+      },
+    });    
+    return response.data;
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const resetPassword = async (data) => {
   try {

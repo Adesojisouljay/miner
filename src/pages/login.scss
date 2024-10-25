@@ -113,6 +113,18 @@
   }
 }
 
+.passwd{
+  position: relative;
+}
+
+.eye-icon{
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  color: rgb(28 100 224);
+  cursor: pointer;
+}
+
 .Forget-Password-wrap{
   display: flex;
   justify-content: flex-end ;
