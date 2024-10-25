@@ -5,7 +5,7 @@ import { FaCogs, FaEnvelope, FaHome, FaIdCard, FaSpinner, FaTachometerAlt, FaUse
 import { useSelector } from 'react-redux';
 import { formatString } from '../../utils';
 import { Link } from 'react-router-dom';
-import { MdOutlineVerified, MdVerified } from 'react-icons/md';
+import { MdOutlineVerified, MdPending, MdVerified } from 'react-icons/md';
 import { userAvatar } from '../../vairables/protectedRoutes';
 import { FiLogOut } from 'react-icons/fi';
 
@@ -42,7 +42,8 @@ function RightNav({ rightNav, handleRightNav, handleLogout }) {
             <div className="welcom-wrap"><span>Welcome</span><h4>{user?.username}</h4></div>
 
             <h4>Email: {user?.email}</h4>
-            <div className="verified-wrap"><span> Verified </span> <MdVerified size={20} color='green' /></div>
+            {user?.kyc.kycStatus === "Verified" ? <div className="verified-wrap"><span> {user?.kyc?.kycStatus} </span> <MdVerified size={20} color='green' /></div> :
+            <div className="pending-wrap"><span> {user?.kyc?.kycStatus} </span> <MdPending size={20} color='orange' /></div>}
           </div>
         </div>
         <hr className='divide-line'/>
