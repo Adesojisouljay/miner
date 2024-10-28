@@ -81,16 +81,16 @@ function App() {
             {/* <Route path="/accounts" element={<BankAccount />} /> */}
             {/* <Route path="/fiat-withdrawal-action" element={<FiatWithdrawalAction />} /> */}
             {/* <Route path="/fiat-deposit-action" element={<FiatDepositAction />} /> */}
-            {/* <Route path="/wallet" element={<WalletPage />} /> */}
-            {/* <Route path="/coin/:id" element={<SingleCoinInfo />} /> */}
-            {/* <Route path="/transactions" element={<TransactionHistory />} /> */}
-            {/* <Route path="/deposit" element={<DepositPage />} /> */}
-            {/* <Route path="/fiat-deposit" element={<Fiatdeposit />} /> */}
-            {/* <Route path="/trade" element={<Trade />} /> */}
-            {/* <Route path="/page" element={<Pagetest />} /> */}
-            {/* <Route path="/crypto-news" element={<CryptoNews />} /> */}
-            {/* <Route path="/crypto-news/:id" element={<SingleNewsPage />} /> */}
-            {/* <Route path="/profile" element={<Profile />} /> */}
+            <Route path="/wallet" element={<WalletPage />} />
+            <Route path="/coin/:id" element={<SingleCoinInfo />} />
+            <Route path="/transactions" element={<TransactionHistory />} />
+            <Route path="/deposit" element={<DepositPage />} />
+            <Route path="/fiat-deposit" element={<Fiatdeposit />} />
+            <Route path="/trade" element={<Trade />} />
+            <Route path="/page" element={<Pagetest />} />
+            <Route path="/crypto-news" element={<CryptoNews />} />
+            <Route path="/crypto-news/:id" element={<SingleNewsPage />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
