@@ -1,0 +1,267 @@
+// @import "../mixins.scss";
+// .wallet-main-container{
+//   height: 100vh;
+//   width: 100%;
+//   padding-left: 200px;
+//   padding-right: 200px;
+// //   margin: 0px 200px;
+//   position: fixed;
+//   overflow-y: scroll;
+// //   background-color: rgba(21, 31, 43, .4);
+//   .wallet-wrapper{
+//     height: 100vh;
+//     width: 100%;
+//     background-color: rgba(21, 31, 43, .4);
+//     padding: 20px;
+//     display: flex;
+//   }
+
+//   @include respond(xs-phone) {
+//     padding-left: 5px;
+//     padding-right: 5px;
+//   }
+
+//   @include respond(sm-phone) {
+//     padding-left: 10px;
+//     padding-right: 10px;
+//   }
+
+//   @include respond(phone) {
+//     padding-left: 15px;
+//     padding-right: 15px;
+//   }
+
+//   @include respond(tab) {
+//     padding-left: 20px;
+//     padding-right: 20px;
+//   }
+
+//   @include respond(desktop) {
+//     padding-left: 50px;
+//     padding-right: 50px;
+//   }
+
+//   @include respond(lg-desktop) {
+//     padding-left: 200px;
+//     padding-right: 200px;
+//   }
+
+
+
+//     .wallet-left{
+//         width: 70%;
+
+//         .wallet-top-wrap{
+//             display: flex;
+//             justify-content: space-between;
+//             align-items: center;
+//             margin-bottom: 10px;
+//             .btn-wrap{
+//                 display: flex;
+//                 gap: 4px;
+//                 button{
+//                     padding: 6px 16px;
+//                     border-radius: 4px;
+//                 }
+//             }
+//             .total-bal-wrap{
+//                 display: flex;
+//                 flex-direction: column;
+//                 gap: 7px;
+//                 p{
+//                     font-size: 20px;
+//                     font-weight: bold;
+//                 }
+//                 .wrap{
+//                     display: flex;
+//                     align-items: center;
+//                     gap: 5px;
+//                     p{
+//                         font-size: 16px;
+//                     }
+//                 }
+//             }
+//         }
+//         .display-asset-wrap{
+//             display: flex;
+//             justify-content: space-between;
+//             margin-bottom: 10px;
+//             span{
+//                 padding: 4px 3px ;
+//                 border-bottom: 2px solid rgb(79, 105, 223);
+//                 font-size: 16px;
+//             }
+//             .wrap{
+//                 display: flex;
+//                 justify-content: space-between;
+//                 gap: 5px;
+//                 align-items: center;
+                
+//             }
+//             .search-wrap{
+//                 display: flex;
+//                 align-items: center;
+//                 border: 1px solid grey;
+//                 border-radius: 7px ;
+//                 padding: 7px 10px;
+//                 // width: 40%;
+//                 input{
+//                     background-color: inherit;
+//                 }
+//             }
+//         }
+
+
+
+
+
+
+//         .wallet-token-wrap{
+//             height: 100%;
+//             P{
+//                 background: #2e2c2c !important;
+//                 padding: 10px 10px;
+//                 border-radius: 6px 6px 0px 0px ;
+//             }
+//             table{
+
+//             }
+//             .wallet-currency-wrap{
+//                 display: flex;
+//                 align-items: center;
+//                 gap: 6px;
+//                 img{
+//                     width: 35px;
+//                     border-radius: 20px;
+//                 }
+//             }
+//         }
+
+//         .wallet__table-body{
+//             max-height: 100%;
+//             overflow-y: auto;
+
+//         }
+
+
+//         table{
+//             background-color: rgba(21, 31, 43, .9);
+//         }
+
+
+
+        
+//     }
+//     .wallet-right{
+//         width: 30%;
+//         margin-left: 20px;
+//         background: #2e2c2c !important;
+//         padding: 0px 10px;
+//         border-radius: 5px;
+
+//         .wallet-page-add-token {
+//             margin-top: 20px;
+//             flex: 1;
+//             max-height: 100%;
+//             overflow-y: auto;
+//           }
+          
+//           .wrap-token-item {
+//             max-height: 80vh;
+//             overflow-y: auto;
+//             padding-bottom: 20px;
+//           }
+          
+//           .wallet-page-token-item {
+//             display: flex;
+//             justify-content: space-between;
+//             align-items: center;
+//             gap: 10px;
+//             margin-bottom: 10px;
+//           }
+          
+//           .wallet-page-token-item-coin-info {
+//             display: flex;
+//             align-items: center;
+//             gap: 10px;
+            
+//             span {
+//               font-size: 14px;
+//             }
+//           }
+          
+//           .wallet-page-token-image {
+//             width: 30px;
+//             height: 30px;
+//           }
+          
+//           .wallet-page-search-input {
+//             width: 100%;
+//             padding: 8px;
+//             margin-bottom: 16px;
+//             font-size: 16px;
+//             border: 1px solid #ddd;
+//             border-radius: 4px;
+//           }
+          
+//           .wallet-page-btn {
+//             padding: 0.4rem 1rem;
+//             background-color: #007bff;
+//             display: flex;
+//             align-items: center;
+//             gap: 3px;
+//             color: white;
+//             border: none;
+//             border-radius: 8px;
+//             cursor: pointer;
+//             transition: background-color 0.3s;
+          
+//             &:hover {
+//               background-color: #0056b3;
+//             }
+          
+//             &:disabled {
+//               background-color: #ccc;
+//               cursor: not-allowed;
+//             }
+//           }
+          
+//           .wallet-page-loading,
+//           .wallet-page-error {
+//             text-align: center;
+//             font-size: 1.5rem;
+//             margin-top: 20px;
+//             color: #fff;
+//           }
+          
+
+
+
+        
+//     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// }

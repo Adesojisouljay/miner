@@ -37,6 +37,7 @@ import RightNav from "./components/nav-bar/RightNav";
 import { CryptoNews } from "./pages/CryptoNews";
 import { SingleNewsPage } from "./pages/SingleNewsPage";
 import { Profile } from "./pages/ProfilePage";
+import WalletMain from "./pages/WalletMain";
 
 function App() {
   const user = useSelector((state) => state.ekzaUser);
@@ -81,6 +82,7 @@ function App() {
             <Route path="/fiat-withdrawal-action" element={<FiatWithdrawalAction />} />
             <Route path="/fiat-deposit-action" element={<FiatDepositAction />} />
             <Route path="/wallet" element={<WalletPage />} />
+            <Route path="/walletmain" element={<WalletMain />} />
             <Route path="/coin/:id" element={<SingleCoinInfo />} />
             <Route path="/transactions" element={<TransactionHistory />} />
             <Route path="/deposit" element={<DepositPage />} />

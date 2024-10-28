@@ -34,10 +34,10 @@ function RightNav({ rightNav, handleRightNav, handleLogout }) {
           <IoClose size={20} />
         </div>
         <div className="rightnav-profile">
-          <img className='user-avatar'
+          {/* <img className='user-avatar'
             src={user.profileImage || userAvatar}
             alt="" 
-          />
+          /> */}
           <div className="user-info-section">
             <div className="welcom-wrap"><span>Welcome</span><h4>{user?.username}</h4></div>
 

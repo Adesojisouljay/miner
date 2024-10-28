@@ -1,0 +1,37 @@
+@import "../../mixins.scss";
+
+
+.chart-page {
+    width: 100%;
+    background-image: inherit;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+
+    .btc-market-value{
+        .top-wrap{
+            display: flex;
+            span{
+                display: flex;
+                flex-direction: column;
+            }
+            .time-range-buttons{
+                display: flex;
+                gap: 3px;
+                button{
+                    padding: 3px 7px;
+                }
+            }
+        }
+    }
+    .btc-chart {
+      width: 100%;
+      canvas {
+        width: 100% !important; 
+      }
+    }
+  }
+  

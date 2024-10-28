@@ -22,7 +22,8 @@ const FloatingNav = () => {
         onClick={toggleNav}
       />
       <NavLink to="/wallet" className="nav-link" activeClassName="active">Wallet</NavLink>
-      <NavLink to="/transactions" className="nav-link" activeClassName="active">Transactions</NavLink> 
+      <NavLink to="/transactions" className="nav-link" activeClassName="active">Transactions</NavLink>
+      <NavLink to="/walletmain" className="nav-link" activeClassName="active">Wallet-Main</NavLink> 
       </> :
       <CgMenuGridR
         className='float-nav-cg-menu'
